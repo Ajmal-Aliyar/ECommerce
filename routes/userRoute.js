@@ -62,10 +62,10 @@ userRoute.get('/filter',userController.sortFilter)
 userRoute.post('/forgotOtpSubmit',userController.forgotOtpSubmit)
 //cart
 userRoute.get('/cart',userAuth.isLogin,userController.cart)
-userRoute.post('/addToCart',userController.addToCart)
-userRoute.post('/cartProductQuantity',userController.cartProductQuantity)
-userRoute.post('/removeFromCart',userController.removeFromCart)
-userRoute.post('/moreProducts',userController.moreProduct)
+userRoute.post('/addToCart',userAuth.isLogin,userController.addToCart)
+userRoute.post('/cartProductQuantity',userAuth.isLogin,userController.cartProductQuantity)
+userRoute.post('/removeFromCart',userAuth.isLogin,userController.removeFromCart)
+userRoute.post('/moreProducts',userAuth.isLogin,userController.moreProduct)
 //checkout
 userRoute.post('/checkout',userController.checkout)
 userRoute.post('/proceedCheckout',userAuth.isLogin,userController.proceedCheckout)
@@ -74,4 +74,9 @@ userRoute.post('/proceedCheckout',userAuth.isLogin,userController.proceedCheckou
 //order
 userRoute.get('/orders',userAuth.isLogin,userController.orderPage)
 userRoute.post('/cancelOrder',userController.cancelOrder)
+
+//filter
+userRoute.get('/categoryFilter',userController.categoryFilter)
+
+
 module.exports = userRoute

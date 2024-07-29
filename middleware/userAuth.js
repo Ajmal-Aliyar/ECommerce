@@ -1,7 +1,17 @@
+const User = require('../model/userModel')
 const isLogin = async (req, res, next) => {
     try{
         if(req.session.user_id){
-            next()
+            const userId = req.session.user_id
+            const user = await User.findById(userId)
+
+            if(!user.isBlocked){
+                
+                return next()
+            }else{
+                req.session.destroy()
+                res.redirect('/signIn')
+            }
         }else{
             res.redirect('/signIn')
         }

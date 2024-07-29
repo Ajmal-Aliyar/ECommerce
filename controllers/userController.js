@@ -8,7 +8,7 @@ const Address = require('../model/addressModel')
 const Review = require('../model/reviewModel')
 const Cart = require('../model/cartModel')
 const Order = require('../model/orderModel')
-
+const Wishlist = require('../model/wishlistModel')
 
 let userdata = {}
 const faq = async (req, res) => {
@@ -24,12 +24,14 @@ const shopPage = async (req, res) => {
             const userId = req.session.user_id
             const carts = await Cart.find({ userId: userId })
             const data = await Product.find({}).limit(8)
+            const category = await Category.find({})
             const count = 8
-            res.render('shop', { userId, data, carts,count });
+            res.render('shop', { userId, data, carts,count,category });
         } else {
             const count = 8
+            const category = await Category.find({})
             const data = await Product.find({}).limit(8)
-            res.render('shop', { data,count });
+            res.render('shop', { data,count,category });
         }
     } catch (err) {
         console.log(err);
@@ -943,9 +945,34 @@ const moreProduct = async(req,res)=>{
         console.error(error.mesesage);
     }
 }
+
+const categoryFilter = async (req,res)=>{
+    try {
+        const categoryname = req.query.id
+        if (req.session.user_id) {
+            const userId = req.session.user_id
+            const carts = await Cart.find({ userId: userId })
+            const data = await Product.find({productCategory:categoryname}).limit(8)
+            const thisCategory = await Category.findOne({categoryName:categoryname})
+            const category = await Category.find({})
+            const count = 8
+            res.render('category', { userId, data, carts,count,category,thisCategory });
+        } else {
+            const count = 8
+            const category = await Category.find({})
+            const data = await Product.find({productCategory:categoryname}).limit(8)
+            const thisCategory = await Category.findOne({categoryName:categoryname})
+            console.log(thisCategory)
+            res.render('category', { data,count,category,thisCategory });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     homePage, faq, shopPage, categoryPage, wishlist, cart, contact, aboutPage, loginPage, logoutPage, productDetails, faqPage, loginedUser, errorPage, checkout, errorPage,
     forgotPassword, otpVerification, changePassword, insertUser, verifyOtp, otpResend, verifyUser, addNewAddress, address, editAddressPage, editedAddress,
     removeAddress, defaultAddress, editUser, forgotPasswordOtp, forgotOTPresend, sortFilter, addToCart, cartProductQuantity, removeFromCart, proceedCheckout,
-    orderPage,forgotOtpSubmit,changePasswordVerify,cancelOrder,moreProduct
+    orderPage,forgotOtpSubmit,changePasswordVerify,cancelOrder,moreProduct,categoryFilter
 }

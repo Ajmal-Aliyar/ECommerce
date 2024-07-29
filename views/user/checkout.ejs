@@ -25,7 +25,10 @@
                                     to enter your code</span></label>
                         </form>
                     </div><!-- End .checkout-discount -->
-                    
+                    <tr class="summary-shipping-estimate">
+                        <td>Estimate for Your Country<br> <a href="/address">Change address</a></td>
+                        <td>&nbsp;</td>
+                    </tr><!-- End .summary-shipping-estimate -->
                     <form action="/proceedCheckout" method="post">
                         <div class="row">
                             <div class="col-lg-9">
@@ -286,6 +289,7 @@
                                                 <td>Shipping:</td>
                                                 <td>Free shipping</td>
                                             </tr>
+                                             
                                             <tr class="summary-total">
                                                 <td>Total:</td>
                                                 <td>₹ <%=totalPrice%></td>

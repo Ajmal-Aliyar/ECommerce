@@ -2,13 +2,14 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <main class="main">
-        <div class="page-header text-center"
-            style="background-image: url('assets/images/interior-design-concept-sale-home-260nw-2176522145.webp')">
-            <div class="container">
-                <h1 class="page-title" style="color: white;text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);">Don’t delay,
-                    purchase today!<span style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Shop</span></h1>
+        <div class="page-header text-center" style="position: relative; background-image: url(<%=thisCategory.categoryImage[0]%>)">
+            <!-- Transparent overlay -->
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.3);"></div>
+            <div class="container" style="position: relative; z-index: 1;">
+                <h1 class="page-title" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);"><%=thisCategory.categoryName.toUpperCase()%><span style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Shop</span></h1>
             </div><!-- End .container -->
-        </div><!-- End .page-header -->
+        </div>
+        
         <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
             <div class="container">
                 <ol class="breadcrumb">
@@ -220,7 +221,7 @@
                     <div class="sidebar-filter-wrapper">
                         <div class="widget widget-clean">
                             <label><i class="icon-close"></i>Filters</label>
-                            <a href="#" class="sidebar-filter-clear">Clean All</a>
+                            <a href="/shop" class="sidebar-filter-clear">Clean All</a>
                         </div><!-- End .widget -->
                 
                         <div class="widget widget-collapsible">
@@ -233,7 +234,7 @@
                                         <% for (let i = 0; i < category.length; i++) { %>
                                             <div class="filter-item">
                                                 <div class="custom-control custom-checkbox">
-                                                    <p><a href="/categoryFilter?id=<%=category[i].categoryName%>"><%=category[i].categoryName%></a></p>
+                                                    <p><a href="/categoryFilter?id=<%=category[i].categoryName%>"><%=category[i].categoryName.toUpperCase()%></a></p>
                                                 </div><!-- End .custom-checkbox -->
                                             </div><!-- End .filter-item -->
                                         <% } %>

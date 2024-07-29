@@ -20,7 +20,7 @@ const productSchema = new mongoose.Schema({
     },
     productStock: {
         type:Number,
-        require:true
+        required:true
     },
 
     productPrices: {
@@ -50,7 +50,7 @@ const productSchema = new mongoose.Schema({
     productReviews:[{
         userId: {
             type: String,
-            require:true
+            required:true
         },
         rating: {
             type: Number,

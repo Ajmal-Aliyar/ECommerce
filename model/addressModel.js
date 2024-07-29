@@ -2,48 +2,48 @@ const mongoose = require('mongoose')
 const addressSchema = new mongoose.Schema({
     user_id:{
         type:String,
-        require:true
+        required:true
     },
     firstName:{
         type: String,
-        require:true
+        required:true
     },
     lastName:{
         type: String,
-        require:true
+        required:true
     },
     
     country:{
         type:String,
-        require:true
+        required:true
     },
     pinCode:{
         type:Number,
-        require:true
+        required:true
     },
     place:{
         type:String,
-        require:true
+        required:true
     },
     district:{
         type:String,
-        require:true
+        required:true
     },
     state:{
         type:String,
-        require:true
+        required:true
     },
     address:{
         type:String,
-        requie:true
+        requied:true
     },
     city:{
         type:String,
-        require:true
+        required:true
     },
     mobile:{
         type:Number,
-        require:true
+        required:true
     },
     mobile2:{
         type:Number

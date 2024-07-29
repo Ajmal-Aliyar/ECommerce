@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 const categorySchema = new mongoose.Schema({
     categoryName: {
         type: String,
-        require: true
+        required: true
     },
     categoryImage: {
         type: Array,
-        require: true
+        required: true
     },
     isBlocked: {
         type: Boolean,

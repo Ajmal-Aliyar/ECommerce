@@ -6,7 +6,7 @@ const adminRoute = express()
 
 const adminController = require('../controllers/adminController')
 const adminAuth = require('../middleware/adminAuth')
-const ordersController = require('../controllers/ordersController')
+
 
 const nocache = require('nocache')
 adminRoute.use(nocache())
@@ -63,8 +63,22 @@ adminRoute.patch('/productUnrestrict',productController.productUnrestrict)
 adminRoute.delete('/deleteProduct',productController.deleteProduct)
 adminRoute.get('/productDetails',productController.productDetails)
 
+//orders
+const ordersController = require('../controllers/ordersController')
 adminRoute.get('/orders',adminAuth.isLogin,ordersController.ordersPage)
 adminRoute.get('/orderDetails',adminAuth.isLogin,ordersController.orderDetailsPage)
 adminRoute.post('/updateOrderStatus',ordersController.updateOrderStatus)
+
+//coupons
+const couponController = require('../controllers/couponController')
+adminRoute.get('/coupon',adminAuth.isLogin,couponController.couponPage)
+adminRoute.get('/editCoupon',adminAuth.isLogin,couponController.editCoupon)
+adminRoute.post('/editCoupon',couponController.updateCoupon)
+adminRoute.get('/addCoupon',adminAuth.isLogin,couponController.addCouponPage)
+adminRoute.post('/addCoupon',couponController.addCoupon)
+adminRoute.delete('/deleteCoupon',couponController.deleteCoupon)
+adminRoute.post('/hideCoupon',couponController.hideCoupon)
+
+
 
 module.exports= adminRoute

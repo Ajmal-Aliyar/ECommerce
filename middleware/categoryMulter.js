@@ -23,7 +23,7 @@ const upload = multer({
 }).single('categoryImage'); 
 function checkFileType(file, cb) {
     
-    const filetypes = /jpeg|jpg|webp|png|avif|gif/;
+    const filetypes = /jpeg|jpg|webp|png|avif|gif|tiff/;
     
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   
