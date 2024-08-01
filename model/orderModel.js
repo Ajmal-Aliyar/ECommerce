@@ -58,8 +58,34 @@ const orderSchema = new mongoose.Schema({
         type:Array,
         required:true
     },
+    shippingCharge:{
+        shippingType:{
+            type:String,
+            requied:true
+        },
+        shippingCharge:{
+            type:Number,
+            requied:true
+        }
+    },
+    appliedCoupon:{
+        couponCode:{
+            type:String,
+        },
+        couponDiscount:{
+            type:Number,
+            default:0
+        },
+        minimumAmount:{
+            type:Number,
+        }
+    },
+    totalPrice:{
+        type:Number,
+        required:true
+    },
     grandTotalPrice:{
-        type:String,
+        type:Number,
         required:true
     },
     paymentMethod:{
@@ -68,7 +94,7 @@ const orderSchema = new mongoose.Schema({
     },
     status:{
         type:String, 
-        enum:['order placed','shipped','out for delivery','delivered'],
+        enum:['order placed','shipped','out for delivery','delivered','cancelled'],
         default:'order placed'
     },
     email:{
@@ -78,6 +104,15 @@ const orderSchema = new mongoose.Schema({
     createdAt:{ 
         type: Date,
         default: Date.now 
+    },
+    expectedDelivery:{
+        type:Date,
+        default: function() {
+            const currentDate = new Date();
+            const deliveryDate = new Date(currentDate);
+            deliveryDate.setDate(currentDate.getDate() + 7);
+            return deliveryDate;
+        }
     }
 })
 

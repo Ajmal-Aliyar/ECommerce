@@ -22,7 +22,7 @@ const couponSchema = new mongoose.Schema({
         required: true
     },
     couponLimit:{
-        type:String,
+        type:Number,
         required:true
     },
     couponDescription: {

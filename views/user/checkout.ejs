@@ -18,20 +18,28 @@
         <div class="page-content">
             <div class="checkout">
                 <div class="container">
-                    <div class="checkout-discount">
-                        <form action="#">
-                            <input type="text" class="form-control" required id="checkout-discount-input">
-                            <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here
-                                    to enter your code</span></label>
-                        </form>
-                    </div><!-- End .checkout-discount -->
-                    <tr class="summary-shipping-estimate">
-                        <td>Estimate for Your Country<br> <a href="/address">Change address</a></td>
-                        <td>&nbsp;</td>
-                    </tr><!-- End .summary-shipping-estimate -->
+                    <div style="display: flex;justify-content: space-between;">
+                        <div class="summary-shipping-estimate">
+                            <td>Estimate for Your Country <a href="/address">Change address </a>?</td>
+                            <td>&nbsp;</td>
+                        </div><!-- End .summary-shipping-estimate -->
+                        <div style="width: 50%;">
+
+
+                            <div class="checkout-discount" style="width: 100%; margin-left: 1em;">
+                                <form id="apply-coupon-form">
+                                    <input type="text" class="form-control" required id="checkout-discount-input">
+                                    <label for="checkout-discount-input" class="text-truncate">Have a coupon?
+                                        <span>Click here
+                                            to enter your code</span></label>
+                                </form>
+                            </div><!-- End .checkout-discount -->
+                        </div>
+
+                    </div>
                     <form action="/proceedCheckout" method="post">
                         <div class="row">
-                            <div class="col-lg-9">
+                            <div class="col-lg-6">
                                 <%if(typeof userAddress=='undefined' ){%>
                                     <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
                                     <div class="row">
@@ -256,155 +264,189 @@
                                             value="<%=userAddress.landMark%>">
 
                                         <label>Email</label>
-                                        <input type="text" class="form-control mb-2" name="email"
-                                            value="" required>
+                                        <input type="text" class="form-control mb-2" name="email" value="" required>
                                         <p>( This email is taken as to send order details )</p>
                                         <%}%>
                             </div><!-- End .col-lg-9 -->
-                            <aside class="col-lg-3">
+                            <aside class="col-lg-6">
                                 <div class="summary">
                                     <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+                                    <div class="checkout">
 
-                                    <table class="table table-summary">
-                                        <thead>
-                                            <tr>
-                                                <th>Product</th>
-                                                <th>Total</th>
-                                            </tr>
-                                        </thead>
+                                        
 
-                                        <tbody>
-                                            <% for(let i=0; i< carts.length ;i++){%>
-                                            <tr>
-                                                <td><a href=""><%=carts[i].productDetails.productName%> ( <%=carts[i].quantity%> )</a></td>
-                                                <td>₹ <%=carts[i].productDetails.productPrices.priceAfter*carts[i].quantity%></td>
-                                            </tr>
-                                            <%}%>
-                                            
-                                            <tr class="summary-subtotal">
-                                                <td>Subtotal:</td>
-                                                <td>₹ <%=totalPrice%></td>
-                                            </tr><!-- End .summary-subtotal -->
-                                            <tr>
-                                                <td>Shipping:</td>
-                                                <td>Free shipping</td>
-                                            </tr>
-                                             
-                                            <tr class="summary-total">
-                                                <td>Total:</td>
-                                                <td>₹ <%=totalPrice%></td>
-                                                <input type="hidden" value="<%=totalPrice%>" name="grandTotalPrice">
-                                            </tr><!-- End .summary-total -->
-                                        </tbody>
-                                    </table><!-- End .table table-summary -->
-                                   
-                                    <div class="accordion-summary" id="accordion-payment">
-                                        <div class="card" style="margin-bottom: 1.2em;">
-                                            <div class="card-header" id="heading-1">
-                                                <h2 class="card-title">
-                                                    <input type="radio" role="button" data-toggle="collapse" href="#collapse-1"
-                                                        aria-expanded="false" aria-controls="collapse-1" value="cashOnDelivery" name="paymentMethod" checked>
+                                        <table class="table table-summary">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <% for(let i=0; i< carts.length ;i++){%>
+                                                    <tr>
+                                                        <td><a href="">
+                                                                <%=carts[i].productDetails.productName%> (
+                                                                    <%=carts[i].quantity%> )
+                                                            </a></td>
+                                                        <td>₹
+                                                            <%=carts[i].productDetails.productPrices.priceAfter*carts[i].quantity%>
+                                                        </td>
+                                                    </tr>
+                                                    <%}%>
+
+                                                        <tr class="summary-subtotal">
+                                                            <td>Subtotal:</td>
+                                                            <td id="sub-total">₹ <%=totalPrice%></td>
+                                                            <input id="totalPrice" type="hidden" value="<%=totalPrice%>"
+                                                                name="totalPrice">
+                                                        </tr><!-- End .summary-subtotal -->
+                                                        <tr class="summary-total">
+
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Shipping:</td>
+                                                            <td>Free shipping</td>
+                                                        </tr>
+                                                         <input type="hidden" name="shippingCharge" value="0" >
+                                                        <tr id="couponTR">
+                                                            <td id="couponTDcoupon"><label for="checkout-discount-input" class="text-truncate">Have a coupon?
+                                                                <span style="color: #c96;">Click here
+                                                                    to enter your code</span></label></td>
+                                                            <td id="couponTDprice"></td>
+                                                        </tr>
+                                                    <input type="hidden" name="couponCode" id="couponCode">
+                                                        <tr class="summary-total">
+                                                            <td>Total:</td>
+                                                            <td id="grandTotalPrice">₹ <%=totalPrice%> </td>
+                                                        </tr><!-- End .summary-total -->
+                                                        <input id="grandTotalPriceInput" type="hidden" value="<%=totalPrice%>"
+                                                                name="grandTotalPrice">
+                                            </tbody>
+                                        </table><!-- End .table table-summary -->
+
+                                        <div class="accordion-summary" id="accordion-payment">
+                                            <div class="card" style="margin-bottom: 1.2em;">
+                                                <div class="card-header" id="heading-1">
+                                                    <h2 class="card-title">
+                                                        <input type="radio" role="button" data-toggle="collapse"
+                                                            href="#collapse-1" aria-expanded="false"
+                                                            aria-controls="collapse-1" value="cashOnDelivery"
+                                                            name="paymentMethod" checked>
                                                         Cash on delivery
-                                                        
-                                                </input>
-                                                </h2>
-                                            </div><!-- End .card-header -->
-                                            <div id="collapse-1" class="collapse show" aria-labelledby="heading-1"
-                                                data-parent="#accordion-payment">
-                                                <div class="card-body">
-                                                    Make your payment directly into our bank account. Please use your
-                                                    Order ID as the payment reference. Your order will not be shipped
-                                                    until the funds have cleared in our account.
-                                                </div><!-- End .card-body -->
-                                            </div><!-- End .collapse -->
-                                        </div><!-- End .card -->
 
-                                        <div class="card" style="margin-bottom: 1.2em;">
-                                            <div class="card-header" id="heading-2">
-                                                <h2 class="card-title">
-                                                    <input type="radio" class="collapsed" role="button" data-toggle="collapse"
-                                                        href="#collapse-2" aria-expanded="false"
-                                                        aria-controls="collapse-2" value="checkPayment" name="paymentMethod">
+                                                        </input>
+                                                    </h2>
+                                                </div><!-- End .card-header -->
+                                                <div id="collapse-1" class="collapse show" aria-labelledby="heading-1"
+                                                    data-parent="#accordion-payment">
+                                                    <div class="card-body">
+                                                        Make your payment directly into our bank account. Please use
+                                                        your
+                                                        Order ID as the payment reference. Your order will not be
+                                                        shipped
+                                                        until the funds have cleared in our account.
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .collapse -->
+                                            </div><!-- End .card -->
+
+                                            <div class="card" style="margin-bottom: 1.2em;">
+                                                <div class="card-header" id="heading-2">
+                                                    <h2 class="card-title">
+                                                        <input type="radio" class="collapsed" role="button"
+                                                            data-toggle="collapse" href="#collapse-2"
+                                                            aria-expanded="false" aria-controls="collapse-2"
+                                                            value="checkPayment" name="paymentMethod">
                                                         Check payments
-                                                </input>
-                                                </h2>
-                                            </div><!-- End .card-header -->
-                                            <div id="collapse-2" class="collapse" aria-labelledby="heading-2"
-                                                data-parent="#accordion-payment">
-                                                <div class="card-body">
-                                                    Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio.
-                                                    Quisque volutpat mattis eros. Nullam malesuada erat ut turpis.
-                                                </div><!-- End .card-body -->
-                                            </div><!-- End .collapse -->
-                                        </div><!-- End .card -->
+                                                        </input>
+                                                    </h2>
+                                                </div><!-- End .card-header -->
+                                                <div id="collapse-2" class="collapse" aria-labelledby="heading-2"
+                                                    data-parent="#accordion-payment">
+                                                    <div class="card-body">
+                                                        Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio.
+                                                        Quisque volutpat mattis eros. Nullam malesuada erat ut turpis.
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .collapse -->
+                                            </div><!-- End .card -->
 
-                                        <div class="card" style="margin-bottom: 1.2em;">
-                                            <div class="card-header" id="heading-3">
-                                                <h2 class="card-title">
-                                                    <input type="radio" class="collapsed" role="button" data-toggle="collapse"
-                                                        href="#collapse-3" aria-expanded="false"
-                                                        aria-controls="collapse-3" value="directBankTransfer" name="paymentMethod" >
+                                            <div class="card" style="margin-bottom: 1.2em;">
+                                                <div class="card-header" id="heading-3">
+                                                    <h2 class="card-title">
+                                                        <input type="radio" class="collapsed" role="button"
+                                                            data-toggle="collapse" href="#collapse-3"
+                                                            aria-expanded="false" aria-controls="collapse-3"
+                                                            value="directBankTransfer" name="paymentMethod">
                                                         Direct bank transfer
-                                                </input>
-                                                </h2>
-                                            </div><!-- End .card-header -->
-                                            <div id="collapse-3" class="collapse" aria-labelledby="heading-3"
-                                                data-parent="#accordion-payment">
-                                                <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor
-                                                    sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat
-                                                    mattis eros.
-                                                </div><!-- End .card-body -->
-                                            </div><!-- End .collapse -->
-                                        </div><!-- End .card -->
+                                                        </input>
+                                                    </h2>
+                                                </div><!-- End .card-header -->
+                                                <div id="collapse-3" class="collapse" aria-labelledby="heading-3"
+                                                    data-parent="#accordion-payment">
+                                                    <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum
+                                                        dolor
+                                                        sit amet, consectetuer adipiscing elit. Donec odio. Quisque
+                                                        volutpat
+                                                        mattis eros.
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .collapse -->
+                                            </div><!-- End .card -->
 
-                                        <div class="card" style="margin-bottom: 1.2em;">
-                                            <div class="card-header" id="heading-4">
-                                                <h2 class="card-title">
-                                                    <input type="radio" class="collapsed" role="button" data-toggle="collapse"
-                                                        href="#collapse-4" aria-expanded="false"
-                                                        aria-controls="collapse-4" name="paymentMethod">
+                                            <div class="card" style="margin-bottom: 1.2em;">
+                                                <div class="card-header" id="heading-4">
+                                                    <h2 class="card-title">
+                                                        <input type="radio" class="collapsed" role="button"
+                                                            data-toggle="collapse" href="#collapse-4"
+                                                            aria-expanded="false" aria-controls="collapse-4"
+                                                            name="paymentMethod">
                                                         PayPal <small class="float-right paypal-link">What is
                                                             PayPal?</small>
                                                         </input>
-                                                </h2>
-                                            </div><!-- End .card-header -->
-                                            <div id="collapse-4" class="collapse" aria-labelledby="heading-4"
-                                                data-parent="#accordion-payment">
-                                                <div class="card-body">
-                                                    Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non,
-                                                    semper suscipit, posuere a, pede. Donec nec justo eget felis
-                                                    facilisis fermentum.
-                                                </div><!-- End .card-body -->
-                                            </div><!-- End .collapse -->
-                                        </div><!-- End .card -->
+                                                    </h2>
+                                                </div><!-- End .card-header -->
+                                                <div id="collapse-4" class="collapse" aria-labelledby="heading-4"
+                                                    data-parent="#accordion-payment">
+                                                    <div class="card-body">
+                                                        Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra
+                                                        non,
+                                                        semper suscipit, posuere a, pede. Donec nec justo eget felis
+                                                        facilisis fermentum.
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .collapse -->
+                                            </div><!-- End .card -->
 
-                                        <div class="card" style="margin-bottom: 1.2em;">
-                                            <div class="card-header" id="heading-5">
-                                                <h2 class="card-title">
-                                                    <input type="radio" class="collapsed" role="button" data-toggle="collapse"
-                                                        href="#collapse-5" aria-expanded="false"
-                                                        aria-controls="collapse-5" name="paymentMethod">
+                                            <div class="card" style="margin-bottom: 1.2em;">
+                                                <div class="card-header" id="heading-5">
+                                                    <h2 class="card-title">
+                                                        <input type="radio" class="collapsed" role="button"
+                                                            data-toggle="collapse" href="#collapse-5"
+                                                            aria-expanded="false" aria-controls="collapse-5"
+                                                            name="paymentMethod">
                                                         Credit Card (Stripe)
                                                         <img src="assets/images/payments-summary.png"
                                                             alt="payments cards">
-                                                </input>
-                                                </h2>
-                                            </div><!-- End .card-header -->
-                                            <div id="collapse-5" class="collapse" aria-labelledby="heading-5"
-                                                data-parent="#accordion-payment">
-                                                <div class="card-body"> Donec nec justo eget felis facilisis
-                                                    fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                                    Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit ame.
-                                                </div><!-- End .card-body -->
-                                            </div><!-- End .collapse -->
-                                        </div><!-- End .card -->
-                                    </div><!-- End .accordion -->
+                                                        </input>
+                                                    </h2>
+                                                </div><!-- End .card-header -->
+                                                <div id="collapse-5" class="collapse" aria-labelledby="heading-5"
+                                                    data-parent="#accordion-payment">
+                                                    <div class="card-body"> Donec nec justo eget felis facilisis
+                                                        fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing
+                                                        elit.
+                                                        Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit
+                                                        ame.
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .collapse -->
+                                            </div><!-- End .card -->
+                                        </div><!-- End .accordion -->
 
-                                    <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-                                        <span class="btn-text">Place Order</span>
-                                        <span class="btn-hover-text">Proceed to Checkout</span>
-                                    </button>
-                                </div><!-- End .summary -->
+                                        <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                            <span class="btn-text">Place Order</span>
+                                            <span class="btn-hover-text">Proceed to Checkout</span>
+                                        </button>
+                                    </div><!-- End .summary -->
                             </aside><!-- End .col-lg-3 -->
                         </div><!-- End .row -->
                     </form>
@@ -809,8 +851,52 @@
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
     </body>
+    <script>
+        function cancelCoupon(totalPrice){
+            document.getElementById('couponTDcoupon').innerHTML =`<label for="checkout-discount-input" class="text-truncate">Have a coupon?
+                            <span style="color: #c96;">Click here
+                                to enter your code</span></label>`
+            document.getElementById('couponTDprice').innerText =""
+            document.getElementById('grandTotalPrice').innerText =`${totalPrice}`
+            document.getElementById('grandTotalPriceInput').value =totalPrice
+        }
+        document.getElementById('apply-coupon-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const couponCode = document.getElementById('checkout-discount-input').value;
+            const subTotalElement = document.getElementById('sub-total');
+            const totalPriceText = subTotalElement.textContent || subTotalElement.innerText;
+            const totalPrice = parseFloat(totalPriceText.replace(/[^\d.-]/g, ''));
+            console.log('tP:' + totalPrice)
+            fetch('/applyCoupon', { 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ coupon: couponCode, totalPrice: totalPrice })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('couponTDcoupon').innerHTML = `Coupon applied: <a href="#" onclick="cancelCoupon(${totalPrice})" style="color:#c96;">Click here to remove coupon</a>`;
+                        document.getElementById('couponTDprice').innerText = "- ₹ " + data.couponDiscount;
+                        document.getElementById('grandTotalPrice').innerText = "₹ " + (totalPrice - data.couponDiscount);
+                        document.getElementById('couponCode').value = data.couponCode
+                        document.getElementById('grandTotalPriceInput').value = totalPrice - data.couponDiscount
+                        document.getElementById('checkout-discount-input').value = '';
+                    } else {
+                        Swal.fire('Failed to apply coupon: ' + data.message);
+                        document.getElementById('checkout-discount-input').value = ''
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('An error occurred while applying the coupon.');
+                });
+        });
 
 
-    <!-- molla/checkout.html  22 Nov 2019 09:55:06 GMT -->
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     </html>

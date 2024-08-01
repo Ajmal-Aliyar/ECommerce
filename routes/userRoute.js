@@ -33,7 +33,6 @@ userRoute.get('/faq',userController.faq)
 // userRoute.get('/category',userController.categoryPage)
 userRoute.get('/signIn',userAuth.isLogout,userController.loginPage)
 userRoute.get('/signUp',userAuth.isLogout,userController.logoutPage)
-userRoute.get('/wishlist',userAuth.isLogin,userController.wishlist)
 userRoute.get('/productDetails',userController.productDetails)
 userRoute.get('/faq',userController.faqPage)
 userRoute.get('/about',userController.aboutPage)
@@ -69,14 +68,24 @@ userRoute.post('/moreProducts',userAuth.isLogin,userController.moreProduct)
 //checkout
 userRoute.post('/checkout',userController.checkout)
 userRoute.post('/proceedCheckout',userAuth.isLogin,userController.proceedCheckout)
+userRoute.post('/applyCoupon',userController.applyCoupon)
+
 
 
 //order
 userRoute.get('/orders',userAuth.isLogin,userController.orderPage)
 userRoute.post('/cancelOrder',userController.cancelOrder)
+userRoute.get('/cartDetails',userAuth.isLogin,userController.cartDetails)
+userRoute.post('/cancelProduct',userController.cancelProduct)
+userRoute.post('/cancelProductandCoupon',userController.cancelProductandCoupon)
 
 //filter
 userRoute.get('/categoryFilter',userController.categoryFilter)
 
+
+//wishlist
+userRoute.get('/wishlist',userAuth.isLogin,userController.wishlist)
+userRoute.post('/addToWishlist',userController.addToWishlist)
+userRoute.post('/removeFromWishlist',userController.removeFromWishlist)
 
 module.exports = userRoute
