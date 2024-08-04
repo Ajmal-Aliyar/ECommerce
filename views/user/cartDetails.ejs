@@ -129,13 +129,14 @@
                                     <%=orders[i].appliedCoupon.couponCode%> )
                                 </td>
                                 <td style="border-bottom: none;" class="price-col">
-                                   <% if(orders[i].appliedCoupon.couponDiscount != 0){%>
-                                    <h6 style="margin: 0;">- <%=orders[i].appliedCoupon.couponDiscount%>
-                                    <%}else{%>
-                                    <h6 style="margin: 0;"><%=orders[i].appliedCoupon.couponDiscount%>
+                                    <% if(orders[i].appliedCoupon.couponDiscount !=0){%>
+                                        <h6 style="margin: 0;">- <%=orders[i].appliedCoupon.couponDiscount%>
+                                                <%}else{%>
+                                                    <h6 style="margin: 0;">
+                                                        <%=orders[i].appliedCoupon.couponDiscount%>
 
-                                   <% }%>
-                                    </h6>
+                                                            <% }%>
+                                                    </h6>
                                 </td>
                                 <td style="border-bottom: none;" class="price-col">
                                     <h6 style="margin: 0;">
@@ -221,6 +222,15 @@
                                         </div>
                                         <div style="width: 26em;">
                                             <%=orders[0].status%>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex;">
+                                        <div style=" color: black;margin-right: 1em;">
+                                            Payment:
+
+                                        </div>
+                                        <div style="width: 26em;">
+                                            <%=orders[0].payment.paymentMethod%>
                                         </div>
                                     </div>
                                     <div style="display: flex;">
@@ -603,14 +613,26 @@
         function cancelOrder(productId, orderId, minAmount, totalPrice, productPrice) {
             console.log(productId, orderId, minAmount, totalPrice, productPrice);
 
-            const showSuccessAlert = () => {
-                Swal.fire({
-                    title: "Cancelled!",
-                    text: "Your orders have been cancelled.",
-                    icon: "success"
-                }).then(() => {
-                    window.location.href = '/cartDetails?id=' + orderId;
-                });
+            const showSuccessAlert = (refund) => {
+                console.log(refund);
+                if (refund > 0) {
+                    Swal.fire({
+                        title: "Cancelled!",
+                        text: `Your order have been cancelled and ${refund} amount refund money will be added to the wallet within 3 business days.`,
+                        icon: "success"
+                    }).then(() => {
+                        window.location.href = '/cartDetails?id=' + orderId;
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Cancelled!",
+                        text: "Your order have been cancelled.",
+                        icon: "success"
+                    }).then(() => {
+                        window.location.href = '/cartDetails?id=' + orderId;
+                    });
+                }
+
             };
 
             const showErrorAlert = (message) => {
@@ -651,7 +673,7 @@
                             .then(handleResponse)
                             .then(data => {
                                 console.log('Order cancelled successfully:', data);
-                                showSuccessAlert();
+                                showSuccessAlert(data.refund);
                             })
                             .catch(error => {
                                 console.error('Error cancelling order:', error.message);
@@ -684,7 +706,7 @@
                             .then(handleResponse)
                             .then(data => {
                                 console.log('Order cancelled successfully:', data);
-                                showSuccessAlert();
+                                showSuccessAlert(data.refund);
                             })
                             .catch(error => {
                                 console.error('Error cancelling order:', error.message);
@@ -720,13 +742,24 @@
                             })
                             .then(data => {
                                 console.log('Order cancelled successfully:', data);
-                                Swal.fire({
-                                    title: "Cancelled!",
-                                    text: "Your orders have been cancelled.",
-                                    icon: "success"
-                                }).then(() => {
-                                    window.location.href = '/orders';
-                                });
+                                console.log(data.refund);
+                                if (data.refund > 0) {
+                                    Swal.fire({
+                                        title: "Cancelled!",
+                                        text: `Your order have been cancelled and ${data.refund} amount refund money will be added to the wallet within 3 business days.`,
+                                        icon: "success"
+                                    }).then(() => {
+                                        window.location.href = '/orders' ;
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: "Cancelled!",
+                                        text: "Your orders have been cancelled.",
+                                        icon: "success"
+                                    }).then(() => {
+                                        window.location.href = '/orders' ;
+                                    });
+                                }
                             })
                             .catch(error => {
                                 console.error('Error cancelling order:', error.message);

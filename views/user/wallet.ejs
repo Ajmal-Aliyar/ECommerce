@@ -1,246 +1,64 @@
 <%- include('../layouts/user/userHeader.ejs')%>
-                        <div class="col-md-8 col-lg-9">
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="tab-account" role="tabpanel"
-                                    aria-labelledby="tab-account-link">
-                                    <form action="#">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label>First Name *</label>
-                                                <input type="text" class="form-control" required>
-                                            </div><!-- End .col-sm-6 -->
+<style>
+    .card-list{
+        border: 1px solid #db9a0c4f;
+    height: 100%;
+    align-content: center;
+    padding: 10px 10px;
+    }
+</style>
+<div class="col-lg-9 g-mb-50">
+    <!-- Balance & Rewards -->
+    <div class="g-brd-around g-brd-gray-light-v4 rounded g-px-30 g-pt-30">
+      <h3 class="h5 mb-3">Balance &amp; Rewards</h3>
 
-                                            <div class="col-sm-6">
-                                                <label>Last Name *</label>
-                                                <input type="text" class="form-control" required>
-                                            </div><!-- End .col-sm-6 -->
-                                        </div><!-- End .row -->
+      <!-- Balance Info -->
+      <div class="row justify-content-between">
+        <div class="col-sm-4 g-mb-30">
+            <div class="g-bg-lightred text-center rounded g-px-20 g-py-30 card-list">
+              <span class="d-block g-color-white g-font-weight-600 g-font-size-25 mb-1"><%=wallet.pendingBalance%></span>
+              <span class="d-block g-color-white-opacity-0_8 g-font-size-18">Pending Balance</span>
+            </div>
+          </div>
+          <div class="col-sm-4 g-mb-30">
+            <div class="g-bg-primary text-center rounded g-px-20 g-py-30 card-list">
+              <span class="d-block g-color-white g-font-weight-600 g-font-size-25 mb-1"><%=wallet.rewardBalance%></span>
+              <span class="d-block g-color-white-opacity-0_8 g-font-size-18">Reward Balance</span>
+            </div>
+          </div>
+        <div class="col-sm-4 g-mb-30">
+          <div class="g-bg-gray-dark-v3 text-center rounded g-px-20 g-py-30 card-list">
+            <span class="d-block g-color-white g-font-weight-600 g-font-size-25 mb-1"><%=wallet.walletBalance%></span>
+            <span><a class="g-font-size-13" href="#">Add Balance</a></span>
+            
+          </div>
+        </div>
 
-                                        <label>Display Name *</label>
-                                        <input type="text" class="form-control" required>
-                                        <small class="form-text">This will be how your name will be displayed in the
-                                            account section and in reviews</small>
+        
 
-                                        <label>Email address *</label>
-                                        <input type="email" class="form-control" required>
-
-                                        <label>Current password (leave blank to leave unchanged)</label>
-                                        <input type="password" class="form-control">
-
-                                        <label>New password (leave blank to leave unchanged)</label>
-                                        <input type="password" class="form-control">
-
-                                        <label>Confirm new password</label>
-                                        <input type="password" class="form-control mb-2">
-
-                                        <button type="submit" class="btn btn-outline-primary-2">
-                                            <span>SAVE CHANGES</span>
-                                            <i class="icon-long-arrow-right"></i>
-                                        </button>
-                                    </form>
-                                </div><!-- .End .tab-pane -->
-                                <!-- dashboard -->
-                                <div class="tab-pane fade" id="tab-dashboard" role="tabpanel"
-                                    aria-labelledby="tab-dashboard-link">
-                                    <a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i
-                                            class="icon-long-arrow-right"></i></a>
-
-                                </div><!-- /dashboard -->
-
-                                <!-- orders -->
-                                <div class="tab-pane fade" id="tab-orders" role="tabpanel"
-                                    aria-labelledby="tab-orders-link">
-                                    <p>No order has been made yet.</p>
-                                    <a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i
-                                            class="icon-long-arrow-right"></i></a>
-                                </div><!-- /orders -->
-
-                                <!-- wallet -->
-                                <div class="tab-pane fade" id="tab-wallet" role="tabpanel"
-                                    aria-labelledby="tab-wallet-link">
-                                    <div class="col-lg-6">
-                                        <div class="card card-dashboard">
-                                            <div class="card-body">
-                                                <h3 class="card-title">$ 465</h3><!-- End .card-title -->
-
-                                                <p>Your current wallet ballance<br>
-                                                    <a href="#">add money <i class="icon-long-arrow-right"></i></a>
-                                                </p>
-                                            </div><!-- End .card-body -->
-                                        </div><!-- End .card-dashboard -->
-                                    </div><!-- End .col-lg-6 -->
-                                    <a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i
-                                            class="icon-long-arrow-right"></i></a>
-                                </div><!-- /wallet -->
-
-                                <div class="tab-pane fade" id="tab-address" role="tabpanel"
-                                    aria-labelledby="tab-address-link">
-                                    <p>The following addresses will be used on the checkout page by default.</p>
-
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="card card-dashboard">
-                                                <div class="card-body">
-                                                    <h3 class="card-title">Shipping Address</h3><!-- End .card-title -->
-
-                                                    <p>You have not set up this type of address yet.<br>
-                                                        <a href="#">Edit <i class="icon-edit"></i></a>
-                                                    </p>
-                                                </div><!-- End .card-body -->
-                                            </div><!-- End .card-dashboard -->
-                                        </div><!-- End .col-lg-6 -->
-                                        <h3 class="card-title" style="margin: 1em;">Manage Adresses</h3>
-                                        <!-- End .card-title -->
-                                        <div class="col-lg-12">
-                                            <div class="card card-dashboard">
+        
+      </div>
+      <!-- End Balance Info -->
 
 
-                                                <a class="card-title" id="tab-address-link" data-toggle="tab"
-                                                    href="#tab-addProduct" role="tab" aria-controls="tab-addProduct"
-                                                    aria-selected="false" style="padding: 1em;    font-size: small;
-                                                    color: #c96; padding-left: 3em;font-weight: 500;">+ ADD NEW
-                                                    ADRESSES</a>
+      <div class="row pt-5 mt-2">
+        <div class="col-sm-4 g-mb-30">
+          <!-- Payment History -->
+          <h3 class="h5 mb-3 text-muted" >Payment History</h3>
+           <%if(wallet.paymentHistory.length==0){%>
+             <p>No recent payments !</p>
+          <% }%>
+          <!-- <p class="mb-0">Last payment: June 07, 2017</p> -->
 
-                                            </div><!-- End .card-dashboard -->
-                                        </div><!-- End .col-lg-6 -->
+          <!-- End Payment History -->
+        </div>
 
-                                        <div class="col-lg-12">
-                                            <div class="card card-dashboard">
-                                                <div class="card-body" style="padding-top: 2em;">
-                                                    <h3 class="card-title">Address 1</h3><!-- End .card-title -->
-
-                                                    <p>User Name<br>
-
-                                                        <a href="#">Edit <i class="icon-edit"></i></a>
-                                                    </p>
-                                                </div><!-- End .card-body -->
-                                            </div><!-- End .card-dashboard -->
-                                        </div><!-- End .col-lg-6 -->
-
-
-
-
-                                    </div><!-- End .row -->
-
-                                </div><!-- .End .tab-pane -->
-                                <div class="tab-pane fade" id="tab-addProduct" role="tabpanel"
-                                    aria-labelledby="tab-address-link">
-                                    <form action="/addNewAddress" method="post">
-                                        <div class="row">
-                                            <input type="hidden" value="<%=userId._id%>" name="id">
-                                            <div class="col-sm-6">
-                                                <label>First Name *</label>
-                                                <input type="text" class="form-control" name="firstName" required>
-                                            </div><!-- End .col-sm-6 -->
-
-                                            <div class="col-sm-6">
-                                                <label>Last Name *</label>
-                                                <input type="text" class="form-control" name="lastName" required>
-                                            </div><!-- End .col-sm-6 -->
-                                        </div><!-- End .row -->
-
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label>Country *</label>
-                                                <select  id="size" class="form-control" name="country">
-                                                    <option selected="selected">India</option>
-                                                </select>
-                                            </div><!-- End .col-sm-6 -->
-                                            <div class="col-sm-6">
-                                                
-                                                <label>State *</label>
-                                                <select  id="size" class="form-control" name="state">
-                                                    <option >Maharashtra</option>
-                                                    <option >Bihar</option>
-                                                    <option >Andhra Pradesh</option>
-                                                    <option >Punjab</option>
-                                                    <option >Assam</option>
-                                                    <option >Chattisgarh</option>
-                                                    <option >Mizoram</option>
-                                                    <option >Karnataka</option>
-                                                    <option >West Bengal</option>
-                                                    <option >Goa</option>
-                                                    <option >Gujarat</option>
-                                                    <option >Arunachal Pradesh</option>
-                                                    <option >Maipur</option>
-                                                    <option >Haryana</option>
-                                                    <option >Himachal Pradesh</option>
-                                                    <option >Rajasthan</option>
-                                                    <option >Telangana</option>
-                                                    <option >Madhya Pradesh</option>
-                                                    <option >Odisha</option>
-                                                    <option >Nagaland</option>
-                                                    <option >Tamil Nadu</option>
-                                                    <option selected="selected">Kerala</option>
-                                                    <option >Uttar Pradesh</option>
-                                                    <option >Meghalaya</option>
-                                                    <option >Jarkhand</option>
-                                                    <option >Tripura</option>
-                                                    <option >Sikkim</option>
-                                                    <option >Delhi</option>
-                                                    <option >Uttarakhand</option>
-                                                    <option >Jammu & Kashmir</option>
-
-                                                </select>
-                                                
-                                            </div><!-- End .col-sm-6 -->
-                                           
-                                            
-                                        </div>
-                                        
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                
-                                                <label>Pin Code *</label>
-                                                <input type="number" class="form-control" name="pinCode" required>
-                                                
-                                            </div><!-- End .col-sm-6 -->
-                                            <div class="col-sm-6">
-                                                
-                                                <label>City *</label>
-                                                <input type="text" class="form-control" name="City" required>
-                                                
-                                            </div><!-- End .col-sm-6 -->
-                                            
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label>District *</label>
-                                                <input type="text" class="form-control" name="district" required>
-                                            </div><!-- End .col-sm-6 -->
-
-                                            <div class="col-sm-6">
-                                                <label>Place *</label>
-                                                <input type="text" class="form-control" name="place" required>
-                                            </div><!-- End .col-sm-6 -->
-                                        </div>
-                                        <label>Adress *</label>
-                                        <textarea  id="" class="form-control" style="min-height: 12em;" name="address"></textarea>
-                                        <!-- <input type="text" class="form-control"> -->
-                                        
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label>Mobile *</label>
-                                                <input type="number" id="mobile" name="mobile" class="form-control" required>
-                                            </div><!-- End .col-sm-6 -->
-
-                                            <div class="col-sm-6">
-                                                <label>Mobile *</label>
-                                                <input type="number" class="form-control" name="mobile2" value="#mobile">
-                                            </div><!-- End .col-sm-6 -->
-                                        </div>
-
-                                        <label>LandMark</label>
-                                        <input type="text" class="form-control mb-2" value="" name="landmark">
-                                        <div class="container">
-                                            <input type="submit" class="btn btn-outline-primary-2" style="margin-right:auto;" value="Submit">
-                                        </div>
-                                        
-                                    </form>
-                                </div><!-- /wallet -->
-
-                            </div>
-                        </div><!-- End .col-lg-9 -->
+        
+      </div>
+    </div>
+    <!-- End Balance & Rewards -->
+  </div>
+                       
                     </div><!-- End .row -->
                 </div><!-- End .container -->
             </div><!-- End .dashboard -->
@@ -643,8 +461,13 @@
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
     </body>
-
-
-    <!-- molla/dashboard.html  22 Nov 2019 10:03:13 GMT -->
+<script>
+    const orders = document.getElementById('wallet');
+        orders.setAttribute('data-toggle', 'tab');
+        orders.setAttribute('role', 'tab');
+        orders.setAttribute('aria-controls', 'tab-account');
+        orders.setAttribute('aria-selected', 'true');
+        orders.click()
+</script>
 
     </html>

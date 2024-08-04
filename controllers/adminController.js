@@ -74,13 +74,7 @@ const blockUser = async(req,res)=>{
         console.log(err);
     }
 }
-const orders = async (req,res)=>{
-    try{
-        
-    }catch(error){
-        console.error(error.message);
-    }
-}
+
 module.exports ={
     adminDashboard,signIn,verifyAdmin,usersPage,unblockUser,blockUser
 }

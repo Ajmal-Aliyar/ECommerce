@@ -48,6 +48,7 @@ const addProduct = async (req, res) => {
                 priceAfter: req.body.priceAfter,
                 offerRate
             },
+            productCost:req.body.productCost,
             productStock: req.body.productStock,
             productTags
         });
@@ -76,7 +77,7 @@ const updateProduct = async (req, res) => {
     try {
         const {
             productName, productCategory, productDescription, productStock, priceBefore,
-            priceAfter, isBlocked
+            priceAfter, isBlocked,productCost
         } = req.body
         const tags = req.body.productTags;
         const productTags = tags.trim().split(',');
@@ -105,6 +106,7 @@ const updateProduct = async (req, res) => {
                             priceAfter: priceAfter,
                             offerRate: offerRate
                         },
+                        productCost:productCost,
                         productTags: productTags,
                         isBlocked: isBlocked
                     }

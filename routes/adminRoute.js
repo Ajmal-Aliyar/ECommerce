@@ -79,6 +79,19 @@ adminRoute.post('/addCoupon',couponController.addCoupon)
 adminRoute.delete('/deleteCoupon',couponController.deleteCoupon)
 adminRoute.post('/hideCoupon',couponController.hideCoupon)
 
+//sales
+const salesController = require('../controllers/salesController')
+adminRoute.get('/sales',adminAuth.isLogin,salesController.salesPage)
 
+
+//offerModule
+const offerController = require('../controllers/offersController')
+adminRoute.get('/offerPage',adminAuth.isLogin,offerController.offerPage)
+adminRoute.get('/addOffer',adminAuth.isLogin,offerController.addOfferPage)
+adminRoute.get('/addProductOffer',adminAuth.isLogin,offerController.addProductOffer)
+adminRoute.post('/addOffer',adminAuth.isLogin,offerController.addOffer)
+adminRoute.get('/editOffer',adminAuth.isLogin,offerController.editOfferPage)
+adminRoute.post('/editOffer',adminAuth.isLogin,offerController.editOffer)
+adminRoute.post('/activateOffer',adminAuth.isLogin,offerController.activateOffer)
 
 module.exports= adminRoute

@@ -78,6 +78,10 @@ userRoute.post('/cancelOrder',userController.cancelOrder)
 userRoute.get('/cartDetails',userAuth.isLogin,userController.cartDetails)
 userRoute.post('/cancelProduct',userController.cancelProduct)
 userRoute.post('/cancelProductandCoupon',userController.cancelProductandCoupon)
+userRoute.get('/orderPlace',userAuth.isLogin,userController.orderPlace)
+userRoute.get('/deliveredOrder',userAuth.isLogin,userController.deliveredOrderPage)
+
+
 
 //filter
 userRoute.get('/categoryFilter',userController.categoryFilter)
@@ -87,5 +91,41 @@ userRoute.get('/categoryFilter',userController.categoryFilter)
 userRoute.get('/wishlist',userAuth.isLogin,userController.wishlist)
 userRoute.post('/addToWishlist',userController.addToWishlist)
 userRoute.post('/removeFromWishlist',userController.removeFromWishlist)
+
+//wallet
+userRoute.get('/wallet',userAuth.isLogin,userController.walletPage)
+
+
+
+
+
+
+
+
+
+
+
+
+const Razorpay = require('razorpay');
+
+const instance = new Razorpay({
+    key_id: 'rzp_test_j329lgmyv1688D',
+    key_secret: 'moO56wKle8KqnECzrvW4Ws0W'
+});
+
+userRoute.post('/create-order', (req, res) => {
+    const {grandTotalPrice} = req.body
+    var options = {
+        amount: grandTotalPrice*100,  
+        currency: "INR",
+        receipt: "order_rcptid_11"
+    };
+    instance.orders.create(options, function(err, order) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(order);
+    });
+});
 
 module.exports = userRoute

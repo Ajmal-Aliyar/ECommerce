@@ -34,6 +34,9 @@ const productSchema = new mongoose.Schema({
         },
         offerRate:{
             type:String
+        },
+        offerName:{
+            type:String
         }
     },
     productTags: {
@@ -66,6 +69,10 @@ const productSchema = new mongoose.Schema({
         default:false
     },
     productSales:{
+        type:Number,
+        default:0
+    },
+    productCost:{
         type:Number,
         default:0
     },
