@@ -3,26 +3,32 @@
         .perc-color {
             background-color: #c96 !important;
         }
-        .rounded-circle{
+
+        .rounded-circle {
             height: 32px !important;
             width: 32px !important;
         }
-        .product-hover{
+
+        .product-hover {
             color: rgb(154, 153, 152);
             text-decoration: none;
         }
-        .product-hover:hover{
+
+        .product-hover:hover {
             color: rgb(154, 153, 152) !important;
             text-decoration: none;
             border-bottom: 1px solid rgb(154, 153, 152);
             transition: 3s;
         }
-        .btn-admin{
+
+        .btn-admin {
             background-color: #c96 !important;
         }
+
         .btn-admin:hover {
             background-color: rgba(226, 192, 158, 0.624) !important;
         }
+
         .form-control-range {
             width: 100%;
             -webkit-appearance: none;
@@ -33,7 +39,10 @@
             opacity: 0.7;
             transition: opacity .15s ease-in-out;
         }
-
+        .form-check{
+            display: flex;
+            align-items: center;
+        }
         .form-control-range:hover {
             opacity: 1;
         }
@@ -67,81 +76,88 @@
             <div class="container">
             </div><!-- End .container -->
         </nav><!-- End .breadcrumb-nav -->
-        
+
         <div class="container">
             <div class="row align-items-center justify-content-center">
-              <div class="col-8">
-               
-                <div class="card">
-                    <form id="formData" >
-                  <div class="card-header justify-content-between" >
-                    <h4 style="color: #c96;">Offer Module</h4>
-                    <div class="row justify-content-between col-6">
-                        <a href="/admin/addOffer" class="product-hover" >Category</a>
-                    <a  style="color: #c96; border-bottom: 1px solid #c96;transition: 2s;">Product</a>
-                    
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="form-group">
-                      <label>Offer Name</label>
-                      <input type="text" class="form-control" name="offerName">
+                <div class="col-8">
 
-                    </div>
-                    <input type="hidden" class="form-control" name="offerType" value="product">
-                    <div class="form-group">
-                        <label>Select Product</label>
-                        <select class="form-control" style="height: 3em;" name="offerItem">
-                            <%productNames.forEach(product =>{%>
-                                <option value="<%=product.productName%>"><%=product.productName%></option>
-                            <%})%>
-                        </select>
-                      </div>
-                      <div class="container mt-5">
-                        <div class="form-group">
-                            <label for="formControlRange">Offer Rate: <span id="rangeValue">50</span></label>
-                            <input type="range" name="offerPercentage" class="form-control-range" id="formControlRange" value="10" min="0" max="100" style="color: #c96;">
-                        </div>
-                    </div>
-                
-                    <script>
-                        var rangeInput = document.getElementById('formControlRange');
-                        var rangeValue = document.getElementById('rangeValue');
-                
-                        rangeValue.textContent = rangeInput.value+"%";
-                
-                        rangeInput.addEventListener('input', function() {
-                            rangeValue.textContent = rangeInput.value+"%";
-                        });
-                    </script>
-                  
-                   
-                    <div class="form-group">
-                        <label class="d-block">Activate</label>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="isActive" value="true" checked="">
-                          <label class="form-check-label pl-2" for="exampleRadios1">
-                            Yes
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="isActive" value="false" >
-                          <label class="form-check-label pl-2" for="exampleRadios2">
-                            No
-                          </label>
-                        </div>
-                      </div>
-                      <div style="text-align: center;"><p class="text-danger" id="message"></p></div>
+                    <div class="card">
+                        <form id="formData">
+                            <div class="card-header justify-content-between">
+                                <h4 style="color: #c96;">Offer Module</h4>
+                                <div class="row justify-content-between col-6">
+                                    <a href="/admin/addOffer" class="product-hover">Category</a>
+                                    <a style="color: #c96; border-bottom: 1px solid #c96;transition: 2s;">Product</a>
 
-                  <div class="card-footer text-right" >
-                    <button class="btn mr-1 btn-admin" type="button" id="submitBtn">Submit</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Offer Name</label>
+                                    <input type="text" class="form-control" name="offerName">
 
-                  </div>
-            </form>
+                                </div>
+                                <input type="hidden" class="form-control" name="offerType" value="product">
+                                <div class="form-group">
+                                    <label>Select Product</label>
+                                    <select class="form-control" style="height: 3em;" name="offerItem">
+                                        <%productNames.forEach(product=>{%>
+                                            <option value="<%=product.productName%>">
+                                                <%=product.productName%>
+                                            </option>
+                                            <%})%>
+                                    </select>
+                                </div>
+                                <div class="container mt-5">
+                                    <div class="form-group">
+                                        <label for="formControlRange">Offer Rate: <span
+                                                id="rangeValue">50</span></label>
+                                        <input type="range" name="offerPercentage" class="form-control-range"
+                                            id="formControlRange" value="1" min="1" max="100" style="color: #c96;">
+                                    </div>
+                                </div>
+
+                                <script>
+                                    var rangeInput = document.getElementById('formControlRange');
+                                    var rangeValue = document.getElementById('rangeValue');
+
+                                    rangeValue.textContent = rangeInput.value + "%";
+
+                                    rangeInput.addEventListener('input', function () {
+                                        rangeValue.textContent = rangeInput.value + "%";
+                                    });
+                                </script>
+
+
+                                <div class="form-group">
+                                    <label class="d-block">Activate</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="isActive" value="true"
+                                            checked="">
+                                        <label class="form-check-label pl-5" for="exampleRadios1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="isActive" value="false">
+                                        <label class="form-check-label pl-5" for="exampleRadios2">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <p class="text-danger" id="message"></p>
+                                </div>
+
+                                <div class="card-footer text-right">
+                                    <button class="btn mr-1 btn-admin" type="button" id="submitBtn">Submit</button>
+
+                                </div>
+                        </form>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
 
     </main><!-- End .main -->
 
@@ -470,7 +486,7 @@
             const form = document.getElementById('formData');
             const formData = new FormData(form);
             const data = Object.fromEntries(formData);
-    
+
             try {
                 const response = await fetch('/admin/addOffer', {
                     method: 'POST',
@@ -479,20 +495,20 @@
                     },
                     body: JSON.stringify(data),
                 })
-    
+
                 if (response.ok) {
                     const result = await response.json();
-                    if(result.status){
-                    console.log('Success:', result);
-                    window.location.href='/admin/offerPage'
+                    if (result.status) {
+                        console.log('Success:', result);
+                        window.location.href = '/admin/offerPage'
                     }
                     console.log('Failed:', result);
-                    document.getElementById('message').innerText= result.message
+                    document.getElementById('message').innerText = result.message
 
-                    
+
                 } else {
                     console.error('Error:', response.statusText);
-                    
+
                 }
             } catch (error) {
                 console.error('Fetch error:', error);

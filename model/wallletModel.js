@@ -20,6 +20,10 @@ const walletSchema = new mongoose.Schema({
         default: 0.00,
         min: 0
     },
+    referralCode:{
+        type:String,
+        required:true
+    },
     paymentHistory: [
         {
             createdAt: {
@@ -29,6 +33,13 @@ const walletSchema = new mongoose.Schema({
             amount: {
                 type: Number,
                 required: true
+            },
+            description:{
+                type:String
+            },
+            status:{
+                enum: ['sent','recieved','pending'],
+                type:String
             }
         }
     ] 

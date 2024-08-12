@@ -6,10 +6,33 @@
             margin: 20px 0;
             margin-bottom: 1em;
         }
+
+        .copy-btn {
+            border: none;
+            background-color: transparent;
+        }
+
+        .referral-container {
+            border: 2px solid #ccc;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            margin: 20px auto;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            display: flex;
+        }
+
+
+        .message {
+            margin-top: 10px;
+            color: green;
+        }
     </style>
     <div class="col-md-8 col-lg-9">
         <div class="tab-content">
-            <div class="tab-pane fade <%= typeof message !='undefined' ? '' : 'show active' %>" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+            <div class="tab-pane fade <%= typeof message !='undefined' ? '' : 'show active' %>" id="tab-account"
+                role="tabpanel" aria-labelledby="tab-account-link">
                 <div class="horizontal-line">User Details</div>
                 <div style="padding-left: 1em; ">
                     <p style="margin-bottom: 1rem;line-height: 15px;">Username : <%=userData.username%>
@@ -20,12 +43,13 @@
                     </p>
                     <a href="#tab-edit" aria-controls="tab-edit" aria-selected="false" role="tab" data-toggle="tab"
                         style="position: absolute;  right: 0;">Edit <i class="icon-edit"></i></a>
-                    <a href="#tab-changePassword" aria-controls="tab-edit" aria-selected="false" role="tab" data-toggle="tab">Change Password <i class="icon-edit"></i></a>
+                    <a href="#tab-changePassword" aria-controls="tab-edit" aria-selected="false" role="tab"
+                        data-toggle="tab">Change Password <i class="icon-edit"></i></a>
 
                 </div>
 
                 <div class="horizontal-line">Reviews & Ratings</div>
-                <div style="padding-left: 1em; ">
+                <div style="padding-left: 1em;margin-bottom: 10em; ">
                     <p>No reviews yet !</p>
                     <!-- <p style="margin-bottom: 1rem;line-height: 15px;">Username : Ajmal</p>
                     <p style="margin-bottom: 1rem;line-height: 15px;">Mobile : 9605119661</p>
@@ -33,9 +57,15 @@
                     <a  href="javascript:void(0);" onclick="editRoute()" style="position: absolute;  right: 0;">Edit <i class="icon-edit"></i></a>
                     <a href="javascript:void(0);" onclick="editRoute()">Change Password <i class="icon-edit"></i></a> -->
                 </div>
+                <div class="horizontal-line">Referrals & Earn</div>
+                <div style="padding-left: 1em; ">
+                    <p>
+                        "Share these code <button class="copy-btn" id="referralCode" onclick="copyCode()">
+                            <%=referralCode[0].referralCode%>
+                        </button> ! Give Your Friend a 5% Discount on Their First Purchase and Earn ₹200 Cashback"</p>
+                </div>
 
             </div><!-- .End .tab-pane -->
-            <!-- dashboard -->
 
 
             <!-- orders -->
@@ -74,37 +104,39 @@
                 </form>
             </div><!-- /orders -->
 
-            <div class="tab-pane fade <%= typeof message ==='undefined' ? '' : 'show active' %>" id="tab-changePassword" role="tabpanel" aria-labelledby="tab-orders-link">
-                <form action="/changePassword" method="POST">
-                    <% if(typeof message != 'undefined'){%>
-                        <p style="color: red;"><%=message%></p>
-                    <%}%>
+            <div class="tab-pane fade " id="tab-changePassword"
+                role="tabpanel" aria-labelledby="tab-orders-link">
+                <form id="changePasswordForm">
                     <input type="hidden" value="<%=userData._id%>" name="id">
+                    <% if(!userData.userPassword){%>
+                        <div class="form-group">
+                            <label for="oldPassword">Google-authorized user does not require a password, you can still add a password here for an additional layer of security or to sign in with a different method.</label>
+                        </div><!-- End .form-group -->
+                        <%}else{%>
+                            <div class="form-group">
+                                <label for="oldPassword">Old password *</label>
+                                <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
+                            </div><!-- End .form-group -->
+                    <%}%>
                     <div class="form-group">
-                        <label for="singin-email-2">Old password *</label>
-                        <input type="password" class="form-control" id="singin-email-2" name="oldPassword" required>
-                    </div><!-- End .form-group -->
-                    <div class="form-group">
-                        <label for="singin-email-2">Current password *</label>
-                        <input type="password" class="form-control" id="singin-email-2" name="currentPassword" required>
+                        <label for="currentPassword">Current password *</label>
+                        <input type="password" class="form-control" id="currentPassword" name="currentPassword"
+                            required>
                     </div><!-- End .form-group -->
 
                     <div class="form-group">
-                        <label for="singin-email-2">Confirm password *</label>
-                        <input type="password" class="form-control" id="singin-email-2" name="confirmPassword" required>
+                        <label for="confirmPassword">Confirm password *</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                            required>
                     </div><!-- End .form-group -->
                     <div class="form-footer" style="display: flex; justify-content: space-between;">
                         <a href="/forgotPassword" class="forgot-link">Forgot Your Password?</a>
-                        <button type="submit" class="btn btn-outline-primary-2">
-                            <span>change password</span>
+                        <button type="button" class="btn btn-outline-primary-2" id="submitBtn">
+                            <span>Change Password</span>
                         </button>
-
-                       
-                       
                     </div><!-- End .form-footer -->
-                   
-
                 </form>
+
             </div>
 
 
@@ -436,9 +468,61 @@
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
     </body>
-
-
     <script>
+        function copyCode() {
+            const code = document.getElementById('referralCode').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                Swal.fire("Refferral code copied to clipboard !");
+            }).catch(err => {
+                Swal.fire('Failed to copy !');
+            });
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function () {
+            const form = document.getElementById('changePasswordForm');
+            const formData = new FormData(form);
+
+            const data = {
+                id: formData.get('id'),
+                oldPassword: formData.get('oldPassword'),
+                currentPassword: formData.get('currentPassword'),
+                confirmPassword: formData.get('confirmPassword')
+            };
+
+            console.log(data);
+
+            fetch('/changePassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                console.log(data);
+                if (data.status) {
+                    Swal.fire({
+                        title: "Changed Succesfully",
+                        text: data.message,
+                        icon: "success"
+                    }).then(()=>{
+                        window.location.href = '/user'
+                    })
+                } else {
+                    Swal.fire({
+                        title: "Can't Change",
+                        text: data.message,
+                        icon: "error"
+                    });
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        });
 
         const user = document.getElementById('user');
         user.setAttribute('data-toggle', 'tab');

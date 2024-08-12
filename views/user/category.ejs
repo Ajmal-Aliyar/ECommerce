@@ -28,7 +28,7 @@
 
                     <div class="toolbox-center">
                         <div class="toolbox-info">
-                            Showing <span>
+                            Showing <span id="pageCount">
                                 <%=data.length%>
                             </span> Products
                         </div><!-- End .toolbox-info -->
@@ -779,8 +779,9 @@
         document.getElementById('sortby').addEventListener('change', sortProducts)
         function sortProducts() {
             const sortValue = document.getElementById('sortby').value;
+            const pageCount = document.getElementById('pageCount').innerText
             console.log(sortValue);
-            window.location.href = '/filter?id=' + sortValue
+            window.location.href = '/filter?id=' + sortValue+'&&page='+pageCount
         }
 
 

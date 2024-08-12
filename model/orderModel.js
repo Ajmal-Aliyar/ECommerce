@@ -103,7 +103,7 @@ const orderSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['order placed', 'shipped', 'out for delivery', 'delivered', 'cancelled'],
+        enum: ['order placed', 'shipped', 'out for delivery', 'delivered', 'cancelled','returned'],
         default: 'order placed'
     },
     email: {

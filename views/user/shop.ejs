@@ -31,7 +31,7 @@
 
                     <div class="toolbox-center">
                         <div class="toolbox-info">
-                            Showing <span>
+                            Showing <span id="pageCount">
                                 <%=data.length%>
                             </span> Products
                         </div><!-- End .toolbox-info -->
@@ -214,14 +214,14 @@
                     </div><!-- End .row -->
 
                     <div class="load-more-container text-center">
+
                         <form action="/moreProducts" method="post">
-                            <input type="hidden" value="<%=count%>" name="count">
+                            <input type="hidden" name="pageCount" value="<%=data.length%>">
                             <input class="btn btn-outline-darker btn-load-more" type="submit" value="More Products">
-                        </form>
-                        <!-- <a href="" class="btn btn-outline-darker btn-load-more">More Products <i
-                                class="icon-refresh"></i></a></form> -->
-                    </div><!-- End .load-more-container -->
-                </div><!-- End .products -->
+                        </form> 
+                       
+                    </div>  
+                </div>
 
                 <div class="sidebar-filter-overlay"></div><!-- End .sidebar-filter-overlay -->
 
@@ -803,8 +803,9 @@
         document.getElementById('sortby').addEventListener('change', sortProducts)
         function sortProducts() {
             const sortValue = document.getElementById('sortby').value;
-            console.log(sortValue);
-            window.location.href = '/filter?id=' + sortValue
+            let pageCount = document.getElementById('pageCount').innerText
+            pageCount= Math.ceil(pageCount/4)*4
+            window.location.href = '/filter?id=' + sortValue +'&&page='+pageCount
         }
 
 
@@ -862,12 +863,15 @@
         function goToCart() {
             window.location.href = '/cart';
         }
-        function more(count) {
+        function more() {
+            let pageCount = document.getElementById('pageCount').innerText
+            pageCount = Math.ceil(pageCount/4)*4
+            console.log('hello');
             fetch('/moreProducts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                }, body: json.stringify({ count })
+                }, body: json.stringify({ pageCount })
             })
         }
 

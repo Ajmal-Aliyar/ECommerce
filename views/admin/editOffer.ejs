@@ -92,40 +92,37 @@
                                 </div>
                                 <input type="hidden" value="<%=offer._id%>" name="offerId">
                                 <% if(offer.offerType=='product' ){%>
-                                <input type="hidden" class="form-control" name="offerType" value="product">
+                                    <input type="hidden" class="form-control" name="offerType" value="product">
                                     <div class="form-group">
                                         <label>Select Product</label>
                                         <select class="form-control" style="height: 3em;" name="offerItem">
                                             <%productNames.forEach(product=>{
                                                 if(product.productName === offer.offerItem){%>
-                                                    <option value="<%=product.productName%>" selected="">
-                                                        <%=product.productName%>
-                                                    </option>
+                                                <option value="<%=product.productName%>" selected="">
+                                                    <%=product.productName%>
+                                                </option>
                                                 <%}else{%>
-                                                    <option value="<%=product.productName%>" >
+                                                    <option value="<%=product.productName%>">
                                                         <%=product.productName%>
                                                     </option>
-                                               <% }
-                                               
-                                                })%>
+                                                    <% } })%>
                                         </select>
                                     </div>
                                     <%}else{%>
-                                <input type="hidden" class="form-control" name="offerType" value="category">
+                                        <input type="hidden" class="form-control" name="offerType" value="category">
                                         <div class="form-group">
                                             <label>Select Category</label>
                                             <select class="form-control" style="height: 3em;" name="offerItem">
                                                 <%categoryNames.forEach(category=>{
                                                     if(category.categoryName === offer.offerItem){%>
-                                                        <option value="<%=category.categoryName%>" selected="">
-                                                            <%=category.categoryName%>
-                                                        </option>
+                                                    <option value="<%=category.categoryName%>" selected="">
+                                                        <%=category.categoryName%>
+                                                    </option>
                                                     <%}else{%>
-                                                        <option value="<%=category.categoryName%>" >
+                                                        <option value="<%=category.categoryName%>">
                                                             <%=category.categoryName%>
                                                         </option>
-                                                   <% }
-                                                    })%>
+                                                        <% } })%>
                                             </select>
                                         </div>
                                         <%}%>
@@ -136,7 +133,8 @@
                                                             id="rangeValue">50</span></label>
                                                     <input type="range" name="offerPercentage"
                                                         class="form-control-range" id="formControlRange"
-                                                        value="<%=offer.offerPercentage%>" min="0" max="100" style="color: #c96;">
+                                                        value="<%=offer.offerPercentage%>" min="0" max="100"
+                                                        style="color: #c96;">
                                                 </div>
                                             </div>
 
@@ -183,10 +181,24 @@
                                                     
                                                 </div>
                                             </div> -->
-                      <div style="text-align: center;"><p class="text-danger" id="message"></p></div>
+                                            <div style="text-align: center;">
+                                                <p class="text-danger" id="message"></p>
+                                            </div>
 
-                                            <div class="card-footer text-right">
-                                                <button class="btn mr-1 btn-admin" type="button" id="submitBtn">Submit</button>
+                                            <div class="card-footer text-right d-flex justify-content-end align-items-center">
+                                               <% if(offer.isActive){%>
+                                                <p style="color: rgba(104, 95, 95, 0.698); margin: 0 2em; font-size: 13px;">( deactivate offer to delete )</p>
+                                               <% }else{%>
+                                                <a href="#" onclick="deleteOffer('<%=offer._id%>')"
+                                                    style="text-decoration: none;color: rgba(184, 34, 34, 0.698); margin-right: 2em; ">Delete</a>
+                                                <%}%>
+                                                
+
+
+
+
+                                                <button class="btn mr-1 btn-admin" type="button"
+                                                    id="submitBtn">Submit</button>
                                             </div>
                         </form>
                     </div>
@@ -517,11 +529,30 @@
     </body>
 
     <script>
+        function deleteOffer(id) {
+            console.log('lsjdfk');
+            fetch('/admin/delOffer', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id
+                })
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                console.log(data);
+                window.location.href='/admin/offerPage'
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
         document.getElementById('submitBtn').addEventListener('click', async function () {
             const form = document.getElementById('formData');
             const formData = new FormData(form);
             const data = Object.fromEntries(formData);
-    
+
             try {
                 const response = await fetch('/admin/editOffer', {
                     method: 'POST',
@@ -530,21 +561,21 @@
                     },
                     body: JSON.stringify(data),
                 })
-    
+
                 if (response.ok) {
                     const result = await response.json();
-                    if(result.status){
+                    if (result.status) {
                         console.log('Success:', result);
-                        window.location.href='/admin/offerPage'
-                    }else{
+                        window.location.href = '/admin/offerPage'
+                    } else {
                         console.log('Success:', result);
-                    document.getElementById('message').innerText= result.message
+                        document.getElementById('message').innerText = result.message
                     }
-                    
-                    
+
+
                 } else {
                     console.error('Error:', response.statusText);
-                    
+
                 }
             } catch (error) {
                 console.error('Fetch error:', error);

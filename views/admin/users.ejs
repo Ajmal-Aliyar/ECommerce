@@ -32,9 +32,22 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-12">
-                            <div class=""
-                                style="display: flex;justify-content: space-between; margin: 20px 0 0 0; height: 4em;">
-                                <div></div>
+                            <div class="" style="display: flex;justify-content: space-between; margin: 20px 0 0 0; height: 4em;">
+                                <div>
+                                   
+                                        <a href="#" onclick="dashboard()">
+                                           
+                                                <div class="card card-statistic-1">
+                                                    <div class="my-card-icon " style="margin: 0;">
+                                                        <i
+                                                        class="icon-long-arrow-left"
+                                                        style="color: rgb(204, 113, 28);"> dashboard</i>
+                                                    </div>
+                                                </div>
+                                            
+                                        </a>
+                                    
+                                </div>
                                 <div class="header-search header-right">
                                     <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
                                     <form action="#" method="get">
@@ -45,7 +58,6 @@
                                         </div><!-- End .header-search-wrapper -->
                                     </form>
                                 </div><!-- End .header-search -->
-
                             </div><!-- End .cart-bottom -->
                             <table class="table  table-mobile">
                                 <thead>
@@ -430,6 +442,9 @@
             }
             console.log(cells)
         }
+        function dashboard() {
+                window.location.href = '/admin/dashboard'
+            }
     </script>
     <!-- molla/cart.html  22 Nov 2019 09:55:06 GMT -->
 

@@ -63,13 +63,19 @@
                                         </div><!-- End .ratings -->
                                         <a class="ratings-text" href="#product-accordion" id="review-link">( <%=product.productReviews.length%> Reviews )</a>
                                     </div><!-- End .rating-container -->
+                                    <%if(product.productPrices.offerRate==0){%>
+                                        <div class="product-price">
 
+
+                                            <span class="new-price" style="color: black;font-weight: 500;font-size: 30px;">  ₹<%=product.productPrices.priceAfter%></span>
+                                        </div><!-- End .product-price -->
+                                   <% }else{%>
                                     <div class="product-price">
                                         <span class="new-price" style="color: green; font-size: 20px;"><%=product.productPrices.offerRate%>% off</span>
                                         <span class="old-price" style="text-decoration: line-through;margin: 0 0.41em 0  0;"> ₹<%=product.productPrices.priceBefore%> </span>
                                         <span class="new-price" style="color: black;font-weight: 500;font-size: 30px;">  ₹<%=product.productPrices.priceAfter%></span>
-                                        
                                     </div><!-- End .product-price -->
+                                   <% }%>
 
                                     <div class="product-content">
                                         <p><%=product.productDescription%>.</p>

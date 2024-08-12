@@ -4,27 +4,31 @@ const userController = require("../controllers/userController")
 
 
 //session
-const session = require('express-session')
-const config=require('../config/config')
-userRoute.use(session({
-    secret:config,
-    resave:false,
-    saveUninitialized:false,
-    cookie:{maxAge:24*60*60*1000}
-}))
+// const session = require('express-session')
+// const config=require('../config/config')
+// userRoute.use(session({
+//     secret:config,
+//     resave:false,
+//     saveUninitialized:false,
+//     cookie:{maxAge:24*60*60*1000}
+// }))
+// const nocache = require('nocache')
+// userRoute.use(nocache())
+// const bodyParser = require('body-parser')
+// userRoute.use(express.urlencoded({ extended: true }));
+// userRoute.set("view engine", "ejs")
+// userRoute.use(bodyParser.json())
 
-//nocache
-const nocache = require('nocache')
-userRoute.use(nocache())
+userRoute.use(express.static('public'));
+userRoute.use(express.json()); 
+
+
 
 const userAuth = require('../middleware/userAuth')
-const bodyParser = require('body-parser')
-userRoute.use(bodyParser.json())
 
-userRoute.use(express.urlencoded({ extended: true }));
+
 userRoute.set('views','./views/user')  
-userRoute.set("view engine", "ejs")
-userRoute.use(express.static('public'));
+
 
 
 userRoute.get('/',userController.homePage)
@@ -41,6 +45,7 @@ userRoute.get('/error',userController.errorPage)
 userRoute.get('/user',userAuth.isLogin,userController.loginedUser)
 userRoute.get('/forgotPassword',userController.forgotPassword)
 userRoute.get('/otpVerification',userController.otpVerification)
+userRoute.get('/blockedUser',userController.blockedLogin)
 // userRoute.get('/changePassword',userAuth.isLogout,userController.changePassword)
 userRoute.post("/otpSubmit",userController.verifyOtp)
 userRoute.post('/userSignup',userAuth.isLogout,userController.insertUser)
@@ -64,14 +69,13 @@ userRoute.get('/cart',userAuth.isLogin,userController.cart)
 userRoute.post('/addToCart',userAuth.isLogin,userController.addToCart)
 userRoute.post('/cartProductQuantity',userAuth.isLogin,userController.cartProductQuantity)
 userRoute.post('/removeFromCart',userAuth.isLogin,userController.removeFromCart)
-userRoute.post('/moreProducts',userAuth.isLogin,userController.moreProduct)
+userRoute.post('/moreProducts',userController.moreProduct)
 //checkout
 userRoute.post('/checkout',userController.checkout)
 userRoute.post('/proceedCheckout',userAuth.isLogin,userController.proceedCheckout)
 userRoute.post('/applyCoupon',userController.applyCoupon)
-
-
-
+userRoute.get('/getCoupon',userAuth.isLogin,userController.getCoupon)
+userRoute.post('/generate-pdf', userController.generatePdf);
 //order
 userRoute.get('/orders',userAuth.isLogin,userController.orderPage)
 userRoute.post('/cancelOrder',userController.cancelOrder)
@@ -80,7 +84,8 @@ userRoute.post('/cancelProduct',userController.cancelProduct)
 userRoute.post('/cancelProductandCoupon',userController.cancelProductandCoupon)
 userRoute.get('/orderPlace',userAuth.isLogin,userController.orderPlace)
 userRoute.get('/deliveredOrder',userAuth.isLogin,userController.deliveredOrderPage)
-
+userRoute.post('/returnOrder',userAuth.isLogin,userController.returnOrder)
+// userRoute.post('/orderPlace',userAuth.isLogin,userController.orderPlace)
 
 
 //filter
@@ -97,12 +102,25 @@ userRoute.get('/wallet',userAuth.isLogin,userController.walletPage)
 
 
 
+const Coupon = require('../model/couponModel')
+userRoute.get('/api/coupons', async (req, res) => {
+    try {
+        const coupons = await Coupon.find({});
+        res.json(coupons);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching coupons', error });
+    }
+});
 
 
-
-
-
-
+const Order = require('../model/orderModel')
+let orderData ;
+userRoute.get('/invoice',async (req,res)=>{
+    const userId = "669eb3f634aecf56a2b6e95f"
+    const orderId = "66af7b1e11a7c1a59a5a644f"
+    orderData = await Order.findOne({_id:orderId})
+    res.render('invoice',{orderData})
+})
 
 
 
@@ -127,5 +145,7 @@ userRoute.post('/create-order', (req, res) => {
         res.json(order);
     });
 });
+
+
 
 module.exports = userRoute

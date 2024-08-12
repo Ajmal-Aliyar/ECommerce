@@ -10,7 +10,7 @@ const isLogin = async (req, res, next) => {
                 return next()
             }else{
                 req.session.destroy()
-                res.redirect('/signIn')
+                res.render('signIn',{message:'user is blocked !'})
             }
         }else{
             res.redirect('/signIn')

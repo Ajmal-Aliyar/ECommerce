@@ -25,15 +25,45 @@
                         </div><!-- End .summary-shipping-estimate -->
                         <div style="width: 50%;">
 
+                            <style>
+                                .coupon-list {
+                                    list-style: none;
+                                    padding: 0;
+                                    max-width: 400px;
+                                }
 
+                                .coupon-item {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    padding: 10px;
+                                    border: 1px solid #ddd;
+                                    margin-bottom: 5px;
+                                }
+
+                                .copy-btn {
+                                    background-color: #ffb700cb;
+                                    color: white;
+                                    border: none;
+                                    padding: 5px 10px;
+                                    cursor: pointer;
+                                    border-radius: 10px;
+                                }
+
+                                .copy-btn:hover {
+                                    background-color: #0057b3d3;
+                                }
+                            </style>
                             <div class="checkout-discount" style="width: 100%; margin-left: 1em;">
                                 <form id="apply-coupon-form">
                                     <input type="text" class="form-control" required id="checkout-discount-input">
-                                    <label for="checkout-discount-input" class="text-truncate">Have a coupon?
+                                    <label for="checkout-discount-input" class="text-truncate">Have a coupon or
+                                        refferral code?
                                         <span>Click here
                                             to enter your code</span></label>
                                 </form>
                             </div><!-- End .checkout-discount -->
+
                         </div>
 
                     </div>
@@ -42,74 +72,157 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <%if(typeof userAddress=='undefined' ){%>
-                                    <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
                                     <div class="row">
+                                        <input type="hidden" name="id">
                                         <div class="col-sm-6">
-
                                             <label>First Name *</label>
-                                            <input type="text" class="form-control" required>
-                                        </div><!-- End .col-sm-6 -->
+                                            <input type="text" class="form-control" name="firstName"
+                                                 required>
+                                        </div>
 
                                         <div class="col-sm-6">
                                             <label>Last Name *</label>
-                                            <input type="text" class="form-control" required>
-                                        </div><!-- End .col-sm-6 -->
-                                    </div><!-- End .row -->
-
-                                    <label>Company Name (Optional)</label>
-                                    <input type="text" class="form-control">
-
-                                    <label>Country *</label>
-                                    <input type="text" class="form-control" required>
-
-                                    <label>Street address *</label>
-                                    <input type="text" class="form-control" placeholder="House number and Street name"
-                                        required>
-                                    <input type="text" class="form-control"
-                                        placeholder="Appartments, suite, unit etc ..." required>
+                                            <input type="text" class="form-control" name="lastName"
+                                                required>
+                                        </div>
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label>Town / City *</label>
-                                            <input type="text" class="form-control" required>
-                                        </div><!-- End .col-sm-6 -->
-
+                                            <label>Country *</label>
+                                            <select id="size" class="form-control" name="country">
+                                                <option selected="selected">India</option>
+                                            </select>
+                                        </div>
                                         <div class="col-sm-6">
-                                            <label>State / County *</label>
-                                            <input type="text" class="form-control" required>
-                                        </div><!-- End .col-sm-6 -->
-                                    </div><!-- End .row -->
+
+                                            <label>State *</label>
+                                            <select id="size" class="form-control" name="state">
+
+                                                <option 
+                                                    >Maharashtra</option>
+                                                <option >Bihar
+                                                </option>
+                                                <option 
+                                                    >Andhra Pradesh
+                                                </option>
+                                                <option 
+                                                    >Punjab</option>
+                                                <option >Assam
+                                                </option>
+                                                <option 
+                                                    >Chattisgarh</option>
+                                                <option 
+                                                    >Mizoram</option>
+                                                <option 
+                                                    >Karnataka</option>
+                                                <option 
+                                                    >West Bengal</option>
+                                                <option >Goa
+                                                </option>
+                                                <option 
+                                                    >Gujarat</option>
+                                                <option >Arunachal
+                                                    Pradesh</option>
+                                                <option 
+                                                    >Maipur</option>
+                                                <option 
+                                                    >Haryana</option>
+                                                <option >Himachal
+                                                    Pradesh</option>
+                                                <option 
+                                                    >Rajasthan</option>
+                                                <option 
+                                                    >Telangana</option>
+                                                <option 
+                                                    >Madhya Pradesh
+                                                </option>
+                                                <option 
+                                                    >Odisha</option>
+                                                <option 
+                                                    >Nagaland</option>
+                                                <option 
+                                                    >Tamil Nadu</option>
+                                                <option selected
+                                                    >Kerala</option>
+                                                <option 
+                                                    >Uttar Pradesh
+                                                </option>
+                                                <option 
+                                                    >Meghalaya</option>
+                                                <option 
+                                                    >Jarkhand</option>
+                                                <option 
+                                                    >Tripura</option>
+                                                <option 
+                                                    >Sikkim</option>
+                                                <option >Delhi
+                                                </option>
+                                                <option 
+                                                    >Uttarakhand</option>
+                                                <option >Jammu & Kashmir
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label>Postcode / ZIP *</label>
-                                            <input type="text" class="form-control" required>
-                                        </div><!-- End .col-sm-6 -->
+
+                                            <label>Pin Code *</label>
+                                            <input type="number" class="form-control" name="pinCode"
+                                             required>
+
+                                        </div>
+                                        <div class="col-sm-6">
+
+                                            <label>City *</label>
+                                            <input type="text" class="form-control" name="city"
+                                                required>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>District *</label>
+                                            <input type="text" class="form-control" name="district"
+                                                required>
+                                        </div>
 
                                         <div class="col-sm-6">
-                                            <label>Phone *</label>
-                                            <input type="tel" class="form-control" required>
-                                        </div><!-- End .col-sm-6 -->
-                                    </div><!-- End .row -->
+                                            <label>Place *</label>
+                                            <input type="text" class="form-control" name="place"
+                                                 required>
+                                        </div>
+                                    </div>
+                                    <label>Adress *</label>
+                                    <textarea id="address" class="form-control" style="min-height: 12em;"
+                                        name="address">
+                                    </textarea>
 
-                                    <label>Email address *</label>
-                                    <input type="email" class="form-control" required>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>Mobile *</label>
+                                            <input type="number" id="mobile" name="mobile" class="form-control"
+                                                required>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Mobile *</label>
+                                            <input type="number" class="form-control" name="mobile2" value="#mobile">
+                                        </div>
+                                    </div>
 
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
-                                        <label class="custom-control-label" for="checkout-create-acc">Create an
-                                            account?</label>
-                                    </div><!-- End .custom-checkbox -->
+                                    <label>LandMark</label>
+                                    <input type="text" class="form-control mb-2" name="landMark" >
 
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
-                                        <label class="custom-control-label" for="checkout-diff-address">Ship to a
-                                            different address?</label>
-                                    </div><!-- End .custom-checkbox -->
-
-                                    <label>Order notes (optional)</label>
-                                    <textarea class="form-control" cols="30" rows="4"
-                                        placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                                    <label>Email</label>
+                                    <input type="text" class="form-control mb-2" name="email" value="" required>
+                                    <p>( This email is taken as to send order details )</p>
                                     <%}else{%>
                                         <div class="row">
                                             <input type="hidden" value="<%=userAddress._id%>" name="id">
@@ -274,6 +387,7 @@
                                     <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
                                     <div class="checkout">
 
+                                        <input type="hidden" value="<%=userId%>" name="Id" id="Id">
 
 
                                         <table class="table table-summary">
@@ -310,12 +424,13 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Shipping:</td>
-                                                            <td>Free shipping</td>
+                                                            <td><%=shippingCharge%></td>
                                                         </tr>
-                                                        <input type="hidden" name="shippingCharge" value="0">
+                                                        <input type="hidden" name="shippingCharge" value="<%=shippingCharge%>" id="shippingCharge">
                                                         <tr id="couponTR">
                                                             <td id="couponTDcoupon"><label for="checkout-discount-input"
-                                                                    class="text-truncate">Have a coupon?
+                                                                    class="text-truncate">Have a coupon or refferral
+                                                                    code?
                                                                     <span style="color: #c96;">Click here
                                                                         to enter your code</span></label></td>
                                                             <td id="couponTDprice"></td>
@@ -323,7 +438,7 @@
                                                         <input type="hidden" name="couponCode" id="couponCode">
                                                         <tr class="summary-total">
                                                             <td>Total:</td>
-                                                            <td id="grandTotalPrice">₹ <%=totalPrice%>
+                                                            <td id="grandTotalPrice">₹ <%=totalPrice+shippingCharge%>
                                                             </td>
                                                         </tr><!-- End .summary-total -->
                                                         <input id="grandTotalPriceInput" type="hidden"
@@ -357,7 +472,7 @@
                                             </div><!-- End .card -->
 
                                             <div class="card" style="margin-bottom: 1.2em;">
-                                                <div class="card-header" >
+                                                <div class="card-header">
                                                     <h2 class="card-title">
                                                         <input type="radio" class="collapsed" role="button"
                                                             data-toggle="collapse" href="#collapse-2"
@@ -454,6 +569,10 @@
                             </aside><!-- End .col-lg-3 -->
                         </div><!-- End .row -->
                     </form>
+                    <h5>Available Coupons</h5>
+                    <ul id="couponList" class="coupon-list">
+
+                    </ul>
                 </div><!-- End .container -->
             </div><!-- End .checkout -->
         </div><!-- End .page-content -->
@@ -461,7 +580,41 @@
 
 
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const couponList = document.getElementById('couponList');
 
+            // Fetch the coupon data from the server
+            fetch('/getCoupon')
+                .then(response => response.json())
+                .then(coupons => {
+                    coupons.forEach(coupon => {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'coupon-item';
+
+                        const text = document.createElement('span');
+                        text.textContent = `${coupon.couponDescription} - ${coupon.couponCode}`;
+
+                        const copyButton = document.createElement('button');
+                        copyButton.className = 'copy-btn';
+                        copyButton.textContent = 'Copy';
+                        copyButton.onclick = () => {
+                            navigator.clipboard.writeText(coupon.couponCode).then(() => {
+
+                                console.log('copied');
+                            }).catch(err => {
+                                console.error('Failed to copy coupon code:', err);
+                            });
+                        };
+
+                        listItem.appendChild(text);
+                        listItem.appendChild(copyButton);
+                        couponList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error fetching coupons:', error));
+        });
+    </script>
 
     <!-- Plugins JS File -->
     <script src="assets/js/jquery.min.js"></script>
@@ -474,111 +627,122 @@
     <script src="assets/js/main.js"></script>
     </body>
     <script>
-       document.getElementById("checkoutForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-    const grandTotalPrice = document.getElementById('grandTotalPriceInput').value
-    console.log(grandTotalPrice);
-    if (document.getElementById('razorpay').checked) {
-        fetch('/create-order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify({
-                grandTotalPrice
-            })
-        })
-        .then(response => response.json())
-        .then(order => {
-            var options = {
-                "key": "rzp_test_j329lgmyv1688D", 
-                "amount": grandTotalPrice,
-                "currency": "INR",
-                "name": "Hash Cart",
-                "description": "Your payment was successful. Thank you for your purchase!",
-                "image": "/assets/images/hashcart.jpeg", 
-                "order_id": order.id,
-                "handler": function (response) {
-                    
+        document.getElementById("checkoutForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            let grandTotalPrice = parseFloat(document.getElementById('grandTotalPriceInput').value)
+            const shippingCharge = parseInt(document.getElementById('shippingCharge').value)
 
-
-                    const formData = new FormData(document.getElementById("checkoutForm"));
-                    const jsonObject = {};
-                    formData.forEach((value, key) => {
-                        jsonObject[key] = value;
-                    });
-
-                    // Add payment details to the JSON object
-                    jsonObject.paymentId = response.razorpay_payment_id;
-                    jsonObject.paymentSignature = response.razorpay_signature;
-                    jsonObject.paymentOrderId = response.razorpay_order_id;
-
-                    // Send the data to the backend
-                    fetch('/proceedCheckout', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(jsonObject) // Send JSON data
+            console.log(grandTotalPrice,shippingCharge);
+            if (document.getElementById('razorpay').checked) {
+                fetch('/create-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        grandTotalPrice,shippingCharge
                     })
+                })
+                    .then(response => response.json())
+                    .then(order => {
+                        var options = {
+                            "key": "rzp_test_j329lgmyv1688D",
+                            "amount": grandTotalPrice,
+                            "currency": "INR",
+                            "name": "Hash Cart",
+                            "description": "Your payment was successful. Thank you for your purchase!",
+                            "image": "/assets/images/hashcart.jpeg",
+                            "order_id": order.id,
+                            "handler": function (response) {
+
+
+
+                                const formData = new FormData(document.getElementById("checkoutForm"));
+                                const jsonObject = {};
+                                formData.forEach((value, key) => {
+                                    jsonObject[key] = value;
+                                });
+
+                                // Add payment details to the JSON object
+                                jsonObject.paymentId = response.razorpay_payment_id;
+                                jsonObject.paymentSignature = response.razorpay_signature;
+                                jsonObject.paymentOrderId = response.razorpay_order_id;
+
+                                // Send the data to the backend
+                                fetch('/proceedCheckout', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(jsonObject) // Send JSON data
+                                })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        
+                                        window.location.href = '/orderPlace?orderId=' + data.orderId
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                            },
+                            "prefill": {
+                                "name": "Ajmal",
+                                "email": "ajmal@example.com",
+                                "contact": "9090909090"
+                            },
+                            "theme": {
+                                "color": "#c96"
+                            }
+                        };
+                        var rzp1 = new Razorpay(options);
+                        rzp1.open();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to create order');
+                    });
+            } else {
+                const formData = new FormData(document.getElementById("checkoutForm"));
+                const jsonObject = {};
+                formData.forEach((value, key) => {
+                    jsonObject[key] = value;
+                });
+
+                fetch('/proceedCheckout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(jsonObject) // Send JSON data
+                })
                     .then(response => response.json())
                     .then(data => {
-                        window.location.href='/orderPlace?orderId='+data.orderId
+                        console.log(data, data.orderId);
+                        if (data.status) {
+                            window.location.href = '/orderPlace?orderId=' + data.orderId
+                        } else {
+                            Swal.fire({
+                                title: "Do Payment !",
+                                text: "Prices greater than 1000 cannot be paid as cash on delivery.",
+                                icon: "warning"
+                            });
+                        }
                     })
                     .catch(error => {
                         console.error('Error:', error);
                     });
-                },
-                "prefill": {
-                    "name": "Ajmal",
-                    "email": "ajmal@example.com",
-                    "contact": "9090909090"
-                },
-                "theme": {
-                    "color": "#c96"
-                }
-            };
-            var rzp1 = new Razorpay(options);
-            rzp1.open();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Failed to create order');
+            }
         });
-    }else{
-        const formData = new FormData(document.getElementById("checkoutForm"));
-                    const jsonObject = {};
-                    formData.forEach((value, key) => {
-                        jsonObject[key] = value;
-                    });
-
-        fetch('/proceedCheckout', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(jsonObject) // Send JSON data
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data,data.orderId);
-                        window.location.href='/orderPlace?orderId='+data.orderId
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-    }
-});
 
     </script>
 
     <script>
-        function cancelCoupon(totalPrice) {
+        function cancelCoupon(totalPrice,shippingCharge) {
             document.getElementById('couponTDcoupon').innerHTML = `<label for="checkout-discount-input" class="text-truncate">Have a coupon?
                             <span style="color: #c96;">Click here
                                 to enter your code</span></label>`
             document.getElementById('couponTDprice').innerText = ""
-            document.getElementById('grandTotalPrice').innerText = `${totalPrice}`
+            document.getElementById('grandTotalPrice').innerText = `${totalPrice+shippingCharge}`
             document.getElementById('grandTotalPriceInput').value = totalPrice
         }
         document.getElementById('apply-coupon-form').addEventListener('submit', function (event) {
@@ -588,22 +752,26 @@
             const subTotalElement = document.getElementById('sub-total');
             const totalPriceText = subTotalElement.textContent || subTotalElement.innerText;
             const totalPrice = parseFloat(totalPriceText.replace(/[^\d.-]/g, ''));
+            const id = document.getElementById('Id').value
+            console.log(id);
             console.log('tP:' + totalPrice)
             fetch('/applyCoupon', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ coupon: couponCode, totalPrice: totalPrice })
+                body: JSON.stringify({ coupon: couponCode, totalPrice: totalPrice, id })
             })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        document.getElementById('couponTDcoupon').innerHTML = `Coupon applied: <a href="#" onclick="cancelCoupon(${totalPrice})" style="color:#c96;">Click here to remove coupon</a>`;
+                        const shippingCharge = parseInt(document.getElementById('shippingCharge').value)
+
+                        document.getElementById('couponTDcoupon').innerHTML = `Coupon applied: <a href="#" onclick="cancelCoupon(${totalPrice},${shippingCharge})" style="color:#c96;">Click here to remove coupon</a>`;
                         document.getElementById('couponTDprice').innerText = "- ₹ " + data.couponDiscount;
-                        document.getElementById('grandTotalPrice').innerText = "₹ " + (totalPrice - data.couponDiscount);
+                        document.getElementById('grandTotalPrice').innerText = "₹ " + (totalPrice - data.couponDiscount + shippingCharge);
                         document.getElementById('couponCode').value = data.couponCode
-                        document.getElementById('grandTotalPriceInput').value = totalPrice - data.couponDiscount
+                        document.getElementById('grandTotalPriceInput').value = parseInt(totalPrice - data.couponDiscount)+shippingCharge
                         document.getElementById('checkout-discount-input').value = '';
                     } else {
                         Swal.fire('Failed to apply coupon: ' + data.message);

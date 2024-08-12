@@ -7,7 +7,7 @@
     padding: 10px 10px;
     }
 </style>
-<div class="col-lg-9 g-mb-50">
+<div class="col-lg-10 g-mb-50">
     <!-- Balance & Rewards -->
     <div class="g-brd-around g-brd-gray-light-v4 rounded g-px-30 g-pt-30">
       <h3 class="h5 mb-3">Balance &amp; Rewards</h3>
@@ -40,14 +40,47 @@
       </div>
       <!-- End Balance Info -->
 
-
+<style>
+    .table-my td{
+        border-top: none;
+        border-bottom: .1rem solid #ebebeb;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        vertical-align: middle;
+    }
+</style>
       <div class="row pt-5 mt-2">
-        <div class="col-sm-4 g-mb-30">
+        <div class="col-12">
           <!-- Payment History -->
           <h3 class="h5 mb-3 text-muted" >Payment History</h3>
-           <%if(wallet.paymentHistory.length==0){%>
+          <p>Last 3 months</p>
+           <%if(wallet.paymentHistory.length == 0){%>
              <p>No recent payments !</p>
-          <% }%>
+          <% }else{%>
+            <table class="table-my col-12  table-md">
+                <tbody>
+                    <% for (let i = wallet.paymentHistory.length - 1; i >= 0; i--) { %>
+                        <tr>
+                            <td></td>
+                            <td style="width: 14em;">
+                                <%= new Date(wallet.paymentHistory[i].createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) %>
+                                &nbsp;
+                                <%= new Date(wallet.paymentHistory[i].createdAt).toLocaleDateString('en-GB') %>
+                            </td>
+                            <td><%=wallet.paymentHistory[i].description%></td>
+                           
+                            <td></td> 
+                            <td>
+                                <div><%=wallet.paymentHistory[i].amount%></div>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+                
+                
+                
+                </table>
+            <%}%>
           <!-- <p class="mb-0">Last payment: June 07, 2017</p> -->
 
           <!-- End Payment History -->

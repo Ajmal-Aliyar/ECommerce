@@ -10,7 +10,9 @@
             color: red;
         }
 
-      
+        body{
+            background: radial-gradient(#000000a3, transparent);
+        }
  
     </style>
 
@@ -22,7 +24,9 @@
                 
                 <div style="width: 100%; height: 20em; padding: 1em;">
                     <form action="/admin/editCategory" method="post" enctype="multipart/form-data">
-                        <% if(data.isBlocked){%>
+                        <%if(typeof message != 'undefined'){%>
+                            <p style="color: red;"> <%=message%></p>
+                       <% }else if(data.isBlocked){%>
                             <p style="color: red;"id=:check;>(restricted)</p>
                         <%}%>
                         <label for="register-email">Category name *</label>

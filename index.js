@@ -1,10 +1,37 @@
 const mongoose = require('mongoose')
-mongoose.connect("mongodb://localhost:27017/e_commerse")
+require('dotenv').config()
+console.log(process.env.MONGODB_URL);
+mongoose.connect(process.env.MONGODB_URL)
 const express = require("express")
 const app = express()
 const path = require('path')
-app.use(express.static(path.join(__dirname, 'public')));
-app.set('view engine', "ejs")
+
+// Middleware configuration
+const session = require('express-session')
+const nocache = require('nocache')
+const bodyParser = require('body-parser')
+
+const config = require('./config/config')
+
+// Middleware setup
+app.use(session({
+    secret: config,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 }
+}))
+
+app.use(nocache())
+app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: true }))
+// app.set('views', './views')
+app.set('view engine', 'ejs')
+app.use(express.static(path.join(__dirname, 'public')))
+
+
+
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.set('view engine', "ejs")
 
 const userRoute = require("./routes/userRoute")
 const adminRoute = require('./routes/adminRoute')

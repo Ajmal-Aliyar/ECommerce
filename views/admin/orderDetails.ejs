@@ -1,6 +1,6 @@
-<%- include('../layouts/admin/header.ejs')%>
+<%- include('../layouts/admin/dashboard.ejs')%>
     <style>
-        th {
+        /* th {
             text-align: center;
             padding: 10px;
             background-color: #c96;
@@ -39,147 +39,131 @@
         }
         .add p{
             margin-right: 1em;
-        }
+        } */
     </style>
     <main class="main">
+       
         
-        <div class="page-content" >
+       
+        <div class="page-content" style="margin-top: 2em;">
             <div class="cart">
-                <div class="container">
+                <div class="">
                     <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <h4 style="margin-top: 2em;color: #c96;">User Details</h4>
-                            <table class="table  table-mobile">
-                                <thead>
-                                    <tr>
-                                        <th>User ID</th>
-                                        <th>Username</th>
-                                        <th>Email</th>
-                                        <th>Address</th>
-                                    </tr>
-                                </thead>
-                                <!-- padding-right: 2em; -->
-
-
-
-
-                                <tbody>
-
-
-
-                                    <tr style="background-color: #eeeaea;">
-                                        <td class="price-col">
-                                          
-                                            <%=orderData.userId%>
-                                            
-                                        </td>
-                                        <td class="price-col ">
-                                            <%=orderData.shippingAddress.firstName%> <%=orderData.shippingAddress.lastName%>
-                                        </td>
-                                        <td class="price-col">
-                                            <%=orderData.email%>
-                                        </td>
-                                        
-                                            
+                        
+                            <div class="card col-2">
+                                <div class="card-header" style="display: flex;flex-wrap: wrap;padding: 0;margin-top: 1em;">
+                                  <h4><%=orderData.shippingAddress.firstName%> <%=orderData.shippingAddress.lastName%></h4> <br>
+                                  <h5><%=orderData.email%></h5>
+                                </div>
+                                <div class="card-body">
+                                  <div class="media">
+                                    <div class="media-body">
+                                      <h5 class="mt-0 mb-1"><%=orderData.userId%></h5>
+                                      <tr style="background-color: #eeeaea;">
+                
                                        
                                         <td class="product-col "><div style="text-align: left;">
-                                            <div style="display: flex;flex-wrap: wrap;" class="add">
+                                            
                                                 <p>firstname: <%=orderData.shippingAddress.firstName%> </p>
                                                 <p>lastname: <%=orderData.shippingAddress.lastName%></p>
-                                            </div>
-                                            <div style="display: flex;flex-wrap: wrap;" class="add">
+                                            
+                                            
                                                 <p>country: <%=orderData.shippingAddress.country%></p>
                                             <p>pincode: <%=orderData.shippingAddress.pinCode%></p>
                                             <p>place: <%=orderData.shippingAddress.place%></p>
                                             <p>district: <%=orderData.shippingAddress.district%></p>
                                             <p>state: <%=orderData.shippingAddress.state%></p>
                                             <p>city: <%=orderData.shippingAddress.city%></p>
-                                            </div>
+                                            
                                             <p>address : <%=orderData.shippingAddress.address%></p>
-                                            <div style="display: flex;flex-wrap: wrap;" class="add">
+                                           
                                                 <p>mobile: <%=orderData.shippingAddress.mobile%></p>
                                                 <p>phone: <%=orderData.shippingAddress.mobile2%></p>
-                                            </div>
+                                            
                                             
                                             
                                             <p>landmark : <%=orderData.shippingAddress.landmark%></p>
-
+                
                                         </div>
                                         </td>
                                     </tr>
+                
+                                    </div>
+                
+                                  </div>
+                                </div>
+                              </div>
+                        
+                        <div class="col-lg-9">
+                            <div class="card">
+                                <div class="card-header">
+                                  <h4>Product Details</h4>
+                                </div>
+                                <div class="card-body">
+                                  <div class="media">
 
-
-
-                                </tbody>
-
-
-                            </table><!-- End .table table-wishlist -->
-
-
-                        </div><!-- End .col-lg-9 -->
-
-                    </div><!-- End .row -->
-                </div><!-- End .container -->
-            </div><!-- End .cart -->
-        </div><!-- End .page-content -->
-        <div class="page-content" style="margin-top: 2em;">
-            <div class="cart">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <h4 style="margin-top: 0.5em;color: #c96;">Product Details</h4>
-                            <table class="table  table-mobile">
-                                <thead>
-                                    <tr>
-                                        <th>product ID</th>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>status</th>
-                                    </tr>
-                                </thead>
-                                <!-- padding-right: 2em; -->
-
-
-
-
-                                <tbody>
-
-
-<%for(let i=0; i < orderData.product.length ; i++){%>
-
-
-                                    <tr style="background-color: #eeeaea;">
-                                        <td class="product-col">
-                                        <%=orderData.product[i].productDetails._id%>
-                                        </td>
-                                        <td class="price-col ">
-                                           <%=orderData.product[i].productDetails.productName%>
-                                        </td>
-                                        <td class="price-col">
-                                           Rs. <%=orderData.product[i].productDetails.productPrices.priceAfter%>
-                                        </td>
-                                        <td class="price-col ">
-                                            <%=orderData.product[i].quantity%>
-                                        </td>
-                                        <% if(orderData.product[i].productDetails.status=='delivered' ){%>
-                                            <td class="stock-col"><span style="color: #008000b0">delivered</span></td>
-                                            <%}else if(orderData.product[i].productDetails.status=='out for delivery' ){%>
-                                                <td class="stock-col"><span style="color: #ffa500bd;">out for delivery</span></td>
-                                                <%}else if(orderData.product[i].productDetails.status=='shipped' ){%>
-                                                    <td class="stock-col"><span style="color: #ff6700d1;">shipped</span></td>
-                                                    <%}else if(orderData.product[i].productDetails.status=='order placed' ){%>
-                                                        <td class="stock-col"><span style="color: #00ff1a60;">order placed</span></td>
-                                                            <%}%>
-                                        
-                                    </tr>
-
-
-                                    <%}%>
-                                </tbody>
-
-
-                            </table><!-- End .table table-wishlist -->
+                                    <div class="media-body">
+                                        <table class="table  table-mobile">
+                                            <thead>
+                                                <tr>
+                                                    <th>product ID</th>
+                                                    <th>Product</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>status</th>
+                                                </tr>
+                                            </thead>
+                                            <!-- padding-right: 2em; -->
+            
+            
+            
+            
+                                            <tbody>
+            
+            
+            <%for(let i=0; i < orderData.product.length ; i++){%>
+            
+            
+                                                <tr >
+                                                    <td class="product-col">
+                                                    <%=orderData.product[i].productDetails._id%>
+                                                    </td>
+                                                    <td class="price-col ">
+                                                       <%=orderData.product[i].productDetails.productName%>
+                                                    </td>
+                                                    <td class="price-col">
+                                                       Rs. <%=orderData.product[i].productDetails.productPrices.priceAfter%>
+                                                    </td>
+                                                    <td class="price-col ">
+                                                        <%=orderData.product[i].quantity%>
+                                                    </td>
+                                                    <% if(orderData.product[i].productDetails.status=='delivered' ){%>
+                                                        <td class="stock-col"><div class="badge " style="background-color:#008000b0 ;color: white;">delivered</div></td>
+                                                        <%}else if(orderData.product[i].productDetails.status=='out for delivery' ){%>
+                                                            <td class="stock-col"><div class="badge " style="background-color:#ffa500bd ;color: white;">out for delivery</div></td>
+                                                            <%}else if(orderData.product[i].productDetails.status=='shipped' ){%>
+                                                                <td class="stock-col"><div class="badge " style="background-color:#ff6700d1 ;color: white;">shipped</div></td>
+                                                                <%}else if(orderData.product[i].productDetails.status=='order placed' ){%>
+                                                                <td class="stock-col"><div class="badge " style="background-color:#08c81b9c ;color: white;">order placed</div></td>
+                                                                <%}else if(orderData.product[i].productDetails.status=='cancelled' ){%>
+                                                                    <td class="stock-col"><div class="badge " style="background-color:rgb(170, 167, 167) ;color: white;">cancelled</div></td>
+                                                                    <%}else if(orderData.product[i].productDetails.status=='returned' ){%>
+                                                                        <td class="stock-col"><div class="badge " style="background-color:rgb(204, 85, 85) ;color: white;">returned</div></td>
+                                                                                <%}%>
+                                                    
+                                                </tr>
+            
+            
+                                                <%}%>
+                                            </tbody>
+            
+            
+                                        </table><!-- End .table table-wishlist -->
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            
 
 
                         </div><!-- End .col-lg-9 -->

@@ -292,6 +292,8 @@
 
 
 <script>
+    timer(30);
+
     function timer(n) {
         document.getElementById('resend').disabled = true;
 
@@ -306,9 +308,8 @@
             }
         }, 1000);
     }
-    timer(5);
     document.getElementById('resend').onclick = function() {
-        timer(15);
+        timer(30);
         fetch('/OTPreSend',{
             method:'POSt',
             headers:{

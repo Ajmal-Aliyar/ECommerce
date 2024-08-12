@@ -1,4 +1,5 @@
 const Category = require('../model/categoryModel')
+const { ObjectId } = require('mongodb')
 
 const categories = async (req, res) => {
     try {
@@ -27,7 +28,7 @@ const addCategory = async (req, res) => {
         });
         console.log(alreadyExist);
         if (alreadyExist.length>0) {
-            res.render('addCategory', { message: "category already exists" })
+            res.render('addCategory', { message: "category already exists !" })
         } else {
             const categoryImage = '/assets/images/categoryImage/' + req.file.filename;
             const category = new Category({
@@ -73,8 +74,20 @@ const updateCategory = async (req, res) => {
                 }
             );
         } else {
-
-            const data = await Category.updateOne({ _id: id }, { $set: { categoryName: categoryName } })
+            const data = await Category.findById(id)
+            const categoryExist = await Category.find({
+                $and: [
+                  { categoryName: { $regex: new RegExp(`^${categoryName}$`, 'i') } },
+                  { _id: { $ne: new ObjectId(id) } }
+                ]
+            });
+            console.log(categoryExist);
+              if(categoryExist.length >0){
+                data.categoryName = null
+                res.render('editCategory',{data,message:'category already exists !'})
+              }else{
+                const data = await Category.updateOne({ _id: id }, { $set: { categoryName: categoryName } })
+              }
         }
         res.redirect('/admin/categories')
     } catch (error) {

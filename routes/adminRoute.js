@@ -8,26 +8,24 @@ const adminController = require('../controllers/adminController')
 const adminAuth = require('../middleware/adminAuth')
 
 
-const nocache = require('nocache')
-adminRoute.use(nocache())
+// const nocache = require('nocache')
+// adminRoute.use(nocache())
+// const parser = require('body-parser')
+// adminRoute.use(parser.json())
+// const session = require('express-session')
+// const config=require('../config/config')
+// adminRoute.use(session({
+//     secret:config,
+//     resave:false,
+//     saveUninitialized:false,
+//     cookie:{maxAge:24*60*60*1000}
+// }))
+// adminRoute.use(express.urlencoded({ extended: true }));
+// adminRoute.set("view engine",'ejs')
 
-const parser = require('body-parser')
-adminRoute.use(parser.json())
-
-const session = require('express-session')
-const config=require('../config/config')
-
-adminRoute.use(session({
-    secret:config,
-    resave:false,
-    saveUninitialized:false,
-    cookie:{maxAge:24*60*60*1000}
-}))
-adminRoute.use(express.urlencoded({ extended: true }));
-adminRoute.set('views','./views/admin')
-adminRoute.set("view engine",'ejs')
 adminRoute.use(express.static('public'));
 
+adminRoute.set('views','./views/admin')
 
 //admin + user management
 adminRoute.get('/dashboard',adminAuth.isLogin,adminController.adminDashboard)
@@ -68,6 +66,8 @@ const ordersController = require('../controllers/ordersController')
 adminRoute.get('/orders',adminAuth.isLogin,ordersController.ordersPage)
 adminRoute.get('/orderDetails',adminAuth.isLogin,ordersController.orderDetailsPage)
 adminRoute.post('/updateOrderStatus',ordersController.updateOrderStatus)
+adminRoute.post('/returnOrder',adminAuth.isLogin,ordersController.returnRequests)
+
 
 //coupons
 const couponController = require('../controllers/couponController')
@@ -82,7 +82,8 @@ adminRoute.post('/hideCoupon',couponController.hideCoupon)
 //sales
 const salesController = require('../controllers/salesController')
 adminRoute.get('/sales',adminAuth.isLogin,salesController.salesPage)
-
+adminRoute.get('/download-excel',adminAuth.isLogin,salesController.excelDownload)
+adminRoute.get('/download-pdf',adminAuth.isLogin,salesController.pdfDownload)
 
 //offerModule
 const offerController = require('../controllers/offersController')
@@ -93,5 +94,28 @@ adminRoute.post('/addOffer',adminAuth.isLogin,offerController.addOffer)
 adminRoute.get('/editOffer',adminAuth.isLogin,offerController.editOfferPage)
 adminRoute.post('/editOffer',adminAuth.isLogin,offerController.editOffer)
 adminRoute.post('/activateOffer',adminAuth.isLogin,offerController.activateOffer)
+adminRoute.post('/delOffer',adminAuth.isLogin,offerController.delOffer)
+
+// chart 
+adminRoute.post('/sellingChart',adminAuth.isLogin,adminController.lineChartData)
+adminRoute.post('/topCategory',adminAuth.isLogin,adminController.topCategory)
+adminRoute.post('/topProducts',adminAuth.isLogin,adminController.topProducts)
+
+
+//check
+adminRoute.get('/check',(req,res)=>{
+    res.render('check')
+})
+
+
+
+
+
+
 
 module.exports= adminRoute
+
+
+
+
+

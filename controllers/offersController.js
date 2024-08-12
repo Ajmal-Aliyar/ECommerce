@@ -32,8 +32,17 @@ const addOffer = async (req, res) => {
         const { offerName, offerType, offerItem, offerPercentage, isActive } = req.body;
 
         const offers = await Offer.find({});
-        const exist = offers.some(offer => offer.offerItem === offerItem && offer.offerType === offerType);
-
+        console.log(offers);
+        console.log('offerItem:', offerItem);
+        console.log('offerType:', offerType);
+        
+        const exist = offers.some(offer => {
+          console.log('Checking offer:', offer);
+          return offer.offerItem === offerItem && offer.offerType === offerType;
+        });
+        
+        console.log('Exist:', exist);
+        console.log(exist,'wfa');
         if (!exist) {
             const offerInput = new Offer({
                 offerName,
@@ -44,7 +53,7 @@ const addOffer = async (req, res) => {
             });
             const offer = await offerInput.save();
             console.log(`${offer} - offer`);
-
+            console.log('sdfas',offer.isActive && offer.offerType);
             if (offer.isActive && offer.offerType === 'product') {
                 console.log('Applying offer to product');
                 const product = await Product.findOne({ productName: offer.offerItem });
@@ -53,7 +62,7 @@ const addOffer = async (req, res) => {
                         { productName: offer.offerItem },
                         {
                             $set: {
-                                'productPrices.priceAfter': product.productPrices.priceBefore * (1 - (offerPercentage / 100)),
+                                'productPrices.priceAfter': Math.round(product.productPrices.priceBefore * (1 - (offerPercentage / 100))),
                                 'productPrices.offerRate': offerPercentage,
                                 'productPrices.offerName': offerName
                             }
@@ -68,7 +77,11 @@ const addOffer = async (req, res) => {
                 const categoryProducts = await Product.find({ productCategory: offer.offerItem });
                 if (categoryProducts.length) {
                     for (const product of categoryProducts) {
-                        product.productPrices.priceAfter = product.productPrices.priceBefore * (1 - (offerPercentage / 100));
+                        if(product.productPrices.offerRate >0){
+                            const deactivateProductOffer = await Offer.updateOne({offerItem:product.productName},{$set:{isActive:false}})
+                            console.log(deactivateProductOffer);
+                        }
+                        product.productPrices.priceAfter = Math.round(product.productPrices.priceBefore * (1 - (offerPercentage / 100)));
                         product.productPrices.offerName = offerName;
                         product.productPrices.offerRate = offerPercentage;
                         await product.save();
@@ -81,7 +94,7 @@ const addOffer = async (req, res) => {
 
             res.status(200).json({ status: true });
         } else {
-            res.status(400).json({ message: 'Offer already exists' });
+            res.status(200).json({ message: 'Offer already exists' });
         }
     } catch (error) {
         console.error(error.message);
@@ -111,7 +124,7 @@ const editOffer = async (req, res) => {
         if (!exist) {
 
             const offer = await Offer.findOne(new ObjectId(offerId))
-            console.log(offer+":offer")
+            console.log(offer + ":offer")
             if (offer.isActive) {
                 console.log('its active');
                 if (offer.offerType == 'product') {
@@ -129,7 +142,7 @@ const editOffer = async (req, res) => {
                         { productName: offerItem },
                         {
                             $set: {
-                                'productPrices.priceAfter': product.productPrices.priceBefore * (1 - (offerPercentage / 100)),
+                                'productPrices.priceAfter': Math.round(product.productPrices.priceBefore * (1 - (offerPercentage / 100))),
                                 'productPrices.offerRate': offerPercentage,
                                 'productPrices.offerName': offerName
                             }
@@ -139,37 +152,37 @@ const editOffer = async (req, res) => {
 
                 } else if (offer.offerType == 'category') {
                     const categoryProducts = await Product.find({ productCategory: offer.offerItem });
-                    console.log('products in old category : ',categoryProducts);
+                    console.log('products in old category : ', categoryProducts);
                     if (categoryProducts.length) {
                         for (const product of categoryProducts) {
                             product.productPrices.priceAfter = product.productPrices.priceBefore;
                             product.productPrices.offerName = null;
                             product.productPrices.offerRate = 0;
-                            console.log('updated product before saving : ',product);
+                            console.log('updated product before saving : ', product);
                             try {
                                 let check = await product.save();
-                                console.log('updated product after saving : ',check);
+                                console.log('updated product after saving : ', check);
                             } catch (error) {
                                 console.error('Error saving product:', error);
                             }
                         }
-                    }else {
+                    } else {
                         console.log('No products found for this category');
                     }
                     const offerUpdate = await Offer.updateOne({ _id: new ObjectId(offerId) }, {
                         $set: { offerName, offerType, offerItem, offerPercentage }
                     })
                     const categoryProduct = await Product.find({ productCategory: offerItem });
-                    console.log('products in new category : ',categoryProduct);
+                    console.log('products in new category : ', categoryProduct);
                     if (categoryProduct.length) {
                         for (const product of categoryProduct) {
-                            product.productPrices.priceAfter = product.productPrices.priceBefore * (1 - (offerPercentage / 100));
+                            product.productPrices.priceAfter = Math.round(product.productPrices.priceBefore * (1 - (offerPercentage / 100)));
                             product.productPrices.offerName = offerName;
                             product.productPrices.offerRate = offerPercentage;
-                            console.log('updated product before saving : ',product);
+                            console.log('updated product before saving : ', product);
                             try {
                                 let check = await product.save();
-                                console.log('updated product after saving : ',check);
+                                console.log('updated product after saving : ', check);
                             } catch (error) {
                                 console.error('Error saving product:', error);
                             }
@@ -180,6 +193,16 @@ const editOffer = async (req, res) => {
                     }
                 }
 
+            }else{
+                if(offer.offerType == 'product'){
+                    const offerUpdate = await Offer.updateOne({ _id: new ObjectId(offerId) }, {
+                        $set: { offerName, offerType, offerItem, offerPercentage }
+                    })
+                }else if(offer.offerType == 'category'){
+                    const offerUpdate = await Offer.updateOne({ _id: new ObjectId(offerId) }, {
+                        $set: { offerName, offerType, offerItem, offerPercentage }
+                    })
+                }
             }
 
             res.status(200).json({ status: true })
@@ -215,10 +238,12 @@ const activateOffer = async (req, res) => {
             } else if (offerType == 'category') {
                 const category = await Product.find({ productCategory: offerItem })
                 for (const product of category) {
+                    if(product.productPrices.offerRate == offerPercentage && product.productPrices.offerName == offerName){
                     product.productPrices.priceAfter = product.productPrices.priceBefore;
                     product.productPrices.offerName = null;
                     product.productPrices.offerRate = 0;
                     await product.save();
+                    }
                 }
             }
             const offer = await Offer.updateOne({ _id: id }, { isActive: false })
@@ -230,7 +255,7 @@ const activateOffer = async (req, res) => {
                 const productUpdate = await Product.updateOne({ productName: offerItem },
                     {
                         $set: {
-                            'productPrices.priceAfter': product.productPrices.priceBefore * (1 - (offerPercentage / 100)),
+                            'productPrices.priceAfter': Math.round( product.productPrices.priceBefore * (1 - (offerPercentage / 100))),
                             'productPrices.offerRate': offerPercentage, 'productPrices.offerName': offerName
                         }
                     })
@@ -241,7 +266,11 @@ const activateOffer = async (req, res) => {
                 const category = await Product.find({ productCategory: offerItem })
                 console.log(category + ",catetgory")
                 for (const product of category) {
-                    product.productPrices.priceAfter = product.productPrices.priceBefore * (1 - (offerPercentage / 100));
+                    if (product.productPrices.offerRate > 0 && product.productPrices.offerName) {
+                        const offerSchema = await Offer.updateOne({offerName:product.productPrices.offerName,offerType:'product'},{$set:{isActive:false}})
+                        console.log('oh my god');
+                    }
+                    product.productPrices.priceAfter = Math.round(product.productPrices.priceBefore * (1 - (offerPercentage / 100)));
                     product.productPrices.offerName = offerName;
                     product.productPrices.offerRate = offerPercentage;
                     console.log(product + ",product")
@@ -259,6 +288,17 @@ const activateOffer = async (req, res) => {
         console.error(error.message);
     }
 }
+const delOffer = async(req,res)=>{
+    try{
+        console.log(req.body);
+        const id = new ObjectId(req.body)
+        const delOffer = await Offer.deleteOne({_id:id})
+        console.log(delOffer);
+        res.status(200).json({status:true})
+    }catch(error){
+        res.status(500).json({error:' issue while handling del offer '})
+    }
+}
 module.exports = {
-    offerPage, addOfferPage, addProductOffer, addOffer, editOffer, editOfferPage, activateOffer
+    offerPage, addOfferPage, addProductOffer, addOffer, editOffer, editOfferPage, activateOffer,delOffer
 }
