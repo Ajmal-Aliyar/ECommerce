@@ -139,7 +139,7 @@
                                     <a href="/admin/offerPage" class="">Offer</a>
                                 </li>
                                 <li>
-                                    <a href="/admin/login" class="">Logout</a>
+                                    <a href="#" onclick="logout()" class="">Logout</a>
 
                                     <!-- <ul>
                                         <li><a href="/dashboard">dashboard</a></li>
@@ -181,3 +181,23 @@
                 </div><!-- End .container -->
             </div><!-- End .header-middle -->
         </header><!-- End .header -->
+        <script>
+            function logout() {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "Do you want to logout from hashcart ?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#C96",
+                    cancelButtonColor: "#c0001",
+                    confirmButtonText: "logout"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/admin/logout'
+
+                    }
+                })
+            }
+
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

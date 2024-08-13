@@ -34,6 +34,7 @@ userRoute.set('views','./views/user')
 userRoute.get('/',userController.homePage)
 userRoute.get('/shop',userController.shopPage)
 userRoute.get('/faq',userController.faq)
+userRoute.get('/logout',userController.logout)
 // userRoute.get('/category',userController.categoryPage)
 userRoute.get('/signIn',userAuth.isLogout,userController.loginPage)
 userRoute.get('/signUp',userAuth.isLogout,userController.logoutPage)
@@ -113,14 +114,14 @@ userRoute.get('/api/coupons', async (req, res) => {
 });
 
 
-const Order = require('../model/orderModel')
-let orderData ;
-userRoute.get('/invoice',async (req,res)=>{
-    const userId = "669eb3f634aecf56a2b6e95f"
-    const orderId = "66af7b1e11a7c1a59a5a644f"
-    orderData = await Order.findOne({_id:orderId})
-    res.render('invoice',{orderData})
-})
+// const Order = require('../model/orderModel')
+// let orderData ;
+// userRoute.get('/invoice',async (req,res)=>{
+//     const userId = "669eb3f634aecf56a2b6e95f"
+//     const orderId = "66af7b1e11a7c1a59a5a644f"
+//     orderData = await Order.findOne({_id:orderId})
+//     res.render('invoice',{orderData})
+// })
 
 
 

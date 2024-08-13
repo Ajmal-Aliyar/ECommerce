@@ -385,6 +385,14 @@ const topProducts = async(req,res)=>{
         res.status(500).json({error:'Error occured while fetching topProducts'})
     }
 }
+const logout = async (req, res) => {
+    try {
+        req.session.destroy()
+        res.redirect('/admin/')
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+}
 module.exports = {
-    adminDashboard, signIn, verifyAdmin, usersPage, unblockUser, blockUser, lineChartData,topCategory,topProducts
+    adminDashboard, signIn, verifyAdmin, usersPage, unblockUser, blockUser, lineChartData,topCategory,topProducts,logout
 }

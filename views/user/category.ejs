@@ -6,7 +6,7 @@
             <!-- Transparent overlay -->
             <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.3);"></div>
             <div class="container" style="position: relative; z-index: 1;">
-                <h1 class="page-title" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);"><%=thisCategory.categoryName.toUpperCase()%><span style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Shop</span></h1>
+                <h1 class="page-title" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);" id="catName"><%=thisCategory.categoryName.toUpperCase()%></h1><h1 class="page-title" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);" ><span style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Shop</span></h1>
             </div><!-- End .container -->
         </div>
         
@@ -203,9 +203,9 @@
 
                     <div class="load-more-container text-center">
                         <form action="/moreProducts" method="post">
-                            <input type="hidden" value="<%=count%>" name="count">
+                            <input type="hidden" name="pageCount" value="<%=data.length%>">
                             <input class="btn btn-outline-darker btn-load-more" type="submit" value="More Products">
-                        </form>
+                        </form> 
                         <!-- <a href="" class="btn btn-outline-darker btn-load-more">More Products <i
                                 class="icon-refresh"></i></a></form> -->
                     </div><!-- End .load-more-container -->
@@ -243,80 +243,89 @@
                             </div><!-- End .collapse -->
                         </div><!-- End .widget -->
                 
-                        <div class="widget widget-collapsible">
+                        <!-- <div class="widget widget-collapsible">
                             <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">Sub Category</a>
-                            </h3><!-- End .widget-title -->
+                                <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true"
+                                    aria-controls="widget-1">Sub Category</a>
+                            </h3>
                             <div class="collapse show" id="widget-1">
                                 <div class="widget-body">
                                     <div class="filter-items filter-items-count">
                                         <div class="filter-item">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input filter-checkbox" name="subCategory" id="cat-1" value="chair">
+                                                <input type="checkbox" class="custom-control-input filter-checkbox"
+                                                    name="subCategory" id="cat-1" value="chair">
                                                 <label class="custom-control-label" for="cat-1">Chair</label>
-                                            </div><!-- End .custom-checkbox -->
+                                            </div>
                                             <span class="item-count">3</span>
-                                        </div><!-- End .filter-item -->
-                
+                                        </div>
+
                                         <div class="filter-item">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input filter-checkbox" id="cat-2" name="subCategory" value="sofa">
+                                                <input type="checkbox" class="custom-control-input filter-checkbox"
+                                                    id="cat-2" name="subCategory" value="sofa">
                                                 <label class="custom-control-label" for="cat-2">Sofa</label>
-                                            </div><!-- End .custom-checkbox -->
+                                            </div>
                                             <span class="item-count">0</span>
-                                        </div><!-- End .filter-item -->
-                
+                                        </div>
+
                                         <div class="filter-item">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input filter-checkbox" id="cat-3" name="subCategory" value="cupboard">
+                                                <input type="checkbox" class="custom-control-input filter-checkbox"
+                                                    id="cat-3" name="subCategory" value="cupboard">
                                                 <label class="custom-control-label" for="cat-3">Cupboard</label>
-                                            </div><!-- End .custom-checkbox -->
+                                            </div>
                                             <span class="item-count">4</span>
-                                        </div><!-- End .filter-item -->
-                
+                                        </div>
+
                                         <div class="filter-item">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input filter-checkbox" id="cat-4" name="subCategory" value="table">
+                                                <input type="checkbox" class="custom-control-input filter-checkbox"
+                                                    id="cat-4" name="subCategory" value="table">
                                                 <label class="custom-control-label" for="cat-4">Table</label>
-                                            </div><!-- End .custom-checkbox -->
+                                            </div>
                                             <span class="item-count">2</span>
-                                        </div><!-- End .filter-item -->
-                
+                                        </div>
+
                                         <div class="filter-item">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input filter-checkbox" id="cat-5" name="subCategory" value="bed">
+                                                <input type="checkbox" class="custom-control-input filter-checkbox"
+                                                    id="cat-5" name="subCategory" value="bed">
                                                 <label class="custom-control-label" for="cat-5">Bed</label>
-                                            </div><!-- End .custom-checkbox -->
+                                            </div>
                                             <span class="item-count">2</span>
-                                        </div><!-- End .filter-item -->
-                
+                                        </div>
+
                                         <div class="filter-item">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input filter-checkbox" id="cat-6" name="subCategory" value="light">
+                                                <input type="checkbox" class="custom-control-input filter-checkbox"
+                                                    id="cat-6" name="subCategory" value="light">
                                                 <label class="custom-control-label" for="cat-6">Light</label>
-                                            </div><!-- End .custom-checkbox -->
+                                            </div>
                                             <span class="item-count">1</span>
-                                        </div><!-- End .filter-item -->
-                
+                                        </div>
+
                                         <div class="filter-item">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input filter-checkbox" id="cat-7" name="subCategory" value="decoration">
+                                                <input type="checkbox" class="custom-control-input filter-checkbox"
+                                                    id="cat-7" name="subCategory" value="decoration">
                                                 <label class="custom-control-label" for="cat-7">Decorations</label>
-                                            </div><!-- End .custom-checkbox -->
+                                            </div>
                                             <span class="item-count">1</span>
-                                        </div><!-- End .filter-item -->
-                
+                                        </div>
+
                                         <div class="filter-item">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input filter-checkbox" id="cat-8" name="subCategory" value="hanging">
+                                                <input type="checkbox" class="custom-control-input filter-checkbox"
+                                                    id="cat-8" name="subCategory" value="hanging">
                                                 <label class="custom-control-label" for="cat-8">Hanging</label>
-                                            </div><!-- End .custom-checkbox -->
+                                            </div>
                                             <span class="item-count">0</span>
-                                        </div><!-- End .filter-item -->
-                                    </div><!-- End .filter-items -->
-                                </div><!-- End .widget-body -->
-                            </div><!-- End .collapse -->
-                        </div><!-- End .widget -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
                     </div><!-- End .sidebar-filter-wrapper -->
                     
                 </aside><!-- End .sidebar-filter -->
@@ -779,9 +788,10 @@
         document.getElementById('sortby').addEventListener('change', sortProducts)
         function sortProducts() {
             const sortValue = document.getElementById('sortby').value;
-            const pageCount = document.getElementById('pageCount').innerText
-            console.log(sortValue);
-            window.location.href = '/filter?id=' + sortValue+'&&page='+pageCount
+            let pageCount = document.getElementById('pageCount').innerText
+            pageCount= Math.ceil(pageCount/4)*4
+            const catName = document .getElementById('catName').innerText.toLowerCase()
+            window.location.href = '/filter?id=' + sortValue+'&&page='+pageCount+'&&cat='+catName
         }
 
 
@@ -839,14 +849,7 @@
         function goToCart() {
             window.location.href = '/cart';
         }
-        function more(count) {
-            fetch('/moreProducts', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }, body: json.stringify({ count })
-            })
-        }
+        
     </script>
     
     <script src="sweetalert2.all.min.js"></script>

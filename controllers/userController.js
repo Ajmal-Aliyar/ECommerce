@@ -41,12 +41,12 @@ const shopPage = async (req, res) => {
             ]);
             console.log(wishlist);
 
-            res.render('shop', { userId, data, carts,  category, wishlist });
+            res.render('shop', { userId, data, carts, category, wishlist });
         } else {
 
             const category = await Category.find({})
             const data = await Product.find({}).limit(4)
-            res.render('shop', { data,  category });
+            res.render('shop', { data, category });
         }
     } catch (err) {
         console.log(err);
@@ -154,10 +154,10 @@ const otpVerification = async (req, res) => {
     }
 }
 
-const blockedLogin = async(req,res) => {
-    try{
-        res.render('signIn',{message:'user is blocked !'})
-    }catch(error){
+const blockedLogin = async (req, res) => {
+    try {
+        res.render('signIn', { message: 'user is blocked !' })
+    } catch (error) {
         console.error('Error checking username:', error);
     }
 }
@@ -216,15 +216,15 @@ const insertUser = async (req, res) => {
         const { username, userEmail, userMobile, userPassword } = req.body
         email = userEmail
         const usernameExists = await checkUsernameExists(userEmail);
-        if(username.length < 3){
-            return res.render('signUp',{message:'Username should contain a minimum of three characters'})
-        }else if(userEmail.split('@')[1] !== 'gmail.com'){
-            return res.render('signUp',{message:'Enter a valid email'})
-        }else if(userMobile.toString().length != 10){
-            return res.render('signUp',{message:'Mobile number is not valid'})
-        }else if(userPassword.length < 8){
-            return res.render('signUp',{message:'User password is not strong !'})
-        }else if (usernameExists) {
+        if (username.length < 3) {
+            return res.render('signUp', { message: 'Username should contain a minimum of three characters' })
+        } else if (userEmail.split('@')[1] !== 'gmail.com') {
+            return res.render('signUp', { message: 'Enter a valid email' })
+        } else if (userMobile.toString().length != 10) {
+            return res.render('signUp', { message: 'Mobile number is not valid' })
+        } else if (userPassword.length < 8) {
+            return res.render('signUp', { message: 'User password is not strong !' })
+        } else if (usernameExists) {
             return res.render('signUp', { message: 'User already exists. Please choose another.' });
         } else {
             otp = generateOTP()
@@ -307,10 +307,10 @@ const changePasswordVerify = async (req, res) => {
         const { newPassword, confirmPassword } = req.body
         console.log(userdata)
         const userEmail = userdata.email
-        if(newPassword.toString().length < 8){
+        if (newPassword.toString().length < 8) {
             res.render('changePassword', { message: 'Password is not strong !' })
 
-        }else if (newPassword === confirmPassword) {
+        } else if (newPassword === confirmPassword) {
             const hashedPassword = await hashPassword(confirmPassword)
             const user = await userModel.updateOne({ userEmail: userEmail }, { userPassword: hashedPassword })
             if (req.session.user_id) {
@@ -563,23 +563,23 @@ const changePassword = async (req, res) => {
         const { id, oldPassword, currentPassword, confirmPassword } = req.body
         const userdata = await userModel.findById(id)
         let password = false;
-        if(oldPassword){
+        if (oldPassword) {
             password = await bcrypt.compare(oldPassword, userdata.userPassword)
-        }else{
+        } else {
             password = true
         }
         if (password) {
-            if(currentPassword.toString().length < 8){
-                res.status(200).json({status:false, message: 'password is not strong !'})
-            }else if (currentPassword === confirmPassword) {
+            if (currentPassword.toString().length < 8) {
+                res.status(200).json({ status: false, message: 'password is not strong !' })
+            } else if (currentPassword === confirmPassword) {
                 const pass = await bcrypt.hash(confirmPassword, 10)
                 const data = await userModel.updateOne({ _id: id }, { userPassword: pass })
-                res.status(200).json({status:true, message: 'password changed successfully'})
+                res.status(200).json({ status: true, message: 'password changed successfully' })
             } else {
-                res.status(200).json({status:false, message: 'confirm password does not match !'})
+                res.status(200).json({ status: false, message: 'confirm password does not match !' })
             }
         } else {
-            res.status(200).json({status:false, message: 'old password is incorrect !'})
+            res.status(200).json({ status: false, message: 'old password is incorrect !' })
         }
 
     } catch (error) {
@@ -618,7 +618,12 @@ const sortFilter = async (req, res) => {
         const pageCount = req.query.page
         let products = await Product.find({})
         const category = await Category.find({})
-
+        const cat = req.query.cat
+        console.log(cat);
+        let query = {};
+        if (cat) {
+            query.productCategory = cat;
+        }
         console.log(sortFilter);
 
         if (req.session.user_id) {
@@ -634,23 +639,23 @@ const sortFilter = async (req, res) => {
                 res.redirect('/shop')
             } else if (sortValue == 'high_low') {
                 const userId = req.session.user_id
-                const data = await Product.find({}).sort({ "productPrices.priceAfter": -1 }).limit(pageCount)
+                const data = await Product.find(query).sort({ "productPrices.priceAfter": -1 }).limit(pageCount)
                 const sort = "high_low"
                 res.render('shop', { userId, data, sort, carts, category, wishlist });
             } else if (sortValue == 'low_high') {
                 const userId = req.session.user_id
-                const data = await Product.find({}).sort({ "productPrices.priceAfter": 1 }).limit(pageCount)
+                const data = await Product.find(query).sort({ "productPrices.priceAfter": 1 }).limit(pageCount)
                 const sort = "low_high"
                 res.render('shop', { userId, data, sort, carts, category, wishlist });
             } else if (sortValue == 'ascending') {
                 const userId = req.session.user_id
-                const data = await Product.find().sort({ productName: 1 }).collation({ locale: 'en', strength: 2 }).limit(pageCount)
+                const data = await Product.find(query).sort({ productName: 1 }).collation({ locale: 'en', strength: 2 }).limit(pageCount)
                 const sort = 'ascending'
                 console.log(data);
                 res.render('shop', { data, sort, userId, carts, category, wishlist })
             } else if (sortValue == 'descending') {
                 const userId = req.session.user_id
-                const data = await Product.find().sort({ productName: -1 }).collation({ locale: 'en', strength: 2 }).limit(pageCount)
+                const data = await Product.find(query).sort({ productName: -1 }).collation({ locale: 'en', strength: 2 }).limit(pageCount)
                 const sort = 'descending'
                 console.log(data);
                 res.render('shop', { data, sort, userId, carts, category, wishlist })
@@ -662,21 +667,21 @@ const sortFilter = async (req, res) => {
                 // res.render('shop', { data, sort,count })
                 res.redirect('/shop')
             } else if (sortValue == 'high_low') {
-                console.log('hightolow',pageCount);
-                const data = await Product.find({}).sort({ "productPrices.priceAfter": -1 }).limit(pageCount)
+                console.log('hightolow', pageCount);
+                const data = await Product.find(query).sort({ "productPrices.priceAfter": -1 }).limit(pageCount)
                 const sort = "high_low"
                 res.render('shop', { data, sort, category });
             } else if (sortValue == 'low_high') {
-                const data = await Product.find({}).sort({ "productPrices.priceAfter": 1 }).limit(pageCount)
+                const data = await Product.find(query).sort({ "productPrices.priceAfter": 1 }).limit(pageCount)
                 const sort = "low_high"
                 res.render('shop', { data, sort, category });
             } else if (sortValue == 'ascending') {
-                const data = await Product.find().sort({ productName: 1 }).collation({ locale: 'en', strength: 2 }).limit(pageCount)
+                const data = await Product.find(query).sort({ productName: 1 }).collation({ locale: 'en', strength: 2 }).limit(pageCount)
                 const sort = 'ascending'
                 console.log(data);
                 res.render('shop', { data, sort, category })
             } else if (sortValue == 'descending') {
-                const data = await Product.find().sort({ productName: -1 }).collation({ locale: 'en', strength: 2 }).limit(pageCount)
+                const data = await Product.find(query).sort({ productName: -1 }).collation({ locale: 'en', strength: 2 }).limit(pageCount)
                 const sort = 'descending'
                 console.log(data);
                 res.render('shop', { data, sort, category })
@@ -691,7 +696,7 @@ const sortFilter = async (req, res) => {
                 const sort = "rating"
                 res.render('shop', { sort });
             } else if (sortValue == 'new_arrivals') {
-                const data = await Product.find({}).sort({ createdAt: -1 }).limit(pageCount)
+                const data = await Product.find(query).sort({ createdAt: -1 }).limit(pageCount)
                 const sort = 'new_arrivals'
                 res.render('shop', { data, sort, category })
             }
@@ -1035,7 +1040,7 @@ const orderPage = async (req, res) => {
                 }
             ]);
             const totalPrice = TotalPrice.length > 0 ? TotalPrice[0].total : 0;
-            
+
             res.render('orders', { orders, userId, cancelledOrders, totalPrice })
         }
     } catch (error) {
@@ -1097,21 +1102,21 @@ const moreProduct = async (req, res) => {
         pageCount = ((pageCount / 4) + 1) * 4
         const data = await Product.find({}).limit(pageCount)
         const category = await Category.find({})
-        console.log(data,category);
+        console.log(data, category);
         if (req.session.user_id) {
             const userId = req.session.user_id
             console.log(userId);
             const carts = await Cart.find({ userId: userId })
-            console.log(carts,'caerts');
+            console.log(carts, 'caerts');
             const wishlist = await Wishlist.aggregate([
                 { $match: { userId: userId } },
                 { $project: { _id: 0, wishlistProducts: 1 } },
                 { $unwind: "$wishlistProducts" }
             ]);
-            console.log('wishlist',wishlist)
-            res.render('shop', { userId, data, carts ,wishlist,category});
+            console.log('wishlist', wishlist)
+            res.render('shop', { userId, data, carts, wishlist, category });
         } else {
-            res.render('shop', { data ,category});
+            res.render('shop', { data, category });
         }
     } catch (error) {
         console.error(error.mesesage);
@@ -1522,13 +1527,25 @@ const returnOrder = async (req, res) => {
             }
         }
 
-        if (orderFound) {
+        if (!orderFound) {
             res.status(200).json({ status: false });
         }
         const order = await Order.aggregate([{ $match: { _id: new ObjectId(orderId) } }, { $unwind: "$product" }, { $match: { 'product.productDetails._id': new ObjectId(productId) } }])
+        const orderData = await Order.findById(new ObjectId(orderId))
+        let totalAmount = 0
+        let totalProduct = 0
+        const products = orderData.product
+        for (const product of products){
+            if(product.productDetails.status !== 'cancelled'){
+                totalAmount += product.productDetails.productPrices.priceAfter
+                totalProduct++
+            }
+        }
         const productActualPrice = order[0].product.productDetails.productPrices.priceBefore
         const productOfferredPrice = order[0].product.productDetails.productPrices.priceAfter
         const refundAmount = productOfferredPrice * quantity
+        let lesCoupon = (productOfferredPrice/totalAmount*100).toFixed(1)
+        lesCoupon = (orderData.appliedCoupon.couponDiscount/100)*lesCoupon
         const returnData = new Return({
             orderId: new ObjectId(orderId),
             productId: new ObjectId(productId),
@@ -1538,7 +1555,7 @@ const returnOrder = async (req, res) => {
             productActualPrice,
             productOfferredPrice,
             quantity,
-            refundAmount,
+            refundAmount:refundAmount-lesCoupon,
         })
         const wallet = await Wallet.updateOne(
             { userId: userId },
@@ -1546,7 +1563,7 @@ const returnOrder = async (req, res) => {
                 $inc: { pendingBalance: refundAmount },
                 $push: {
                     paymentHistory: {
-                        amount: refundAmount,
+                        amount: refundAmount-lesCoupon,
                         createdAt: new Date(),
                         status: 'pending',
                         description: 'Your returned order payment is pending and will be added to your wallet balance shortly.'
@@ -1587,7 +1604,7 @@ const orderPlace = async (req, res) => {
 
 const generatePdf = async (req, res) => {
     try {
-       
+
         const doc = new PDFDocument();
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename=invoice.pdf');
@@ -1655,7 +1672,7 @@ const generatePdf = async (req, res) => {
         doc.moveTo(390, 545 + orderData.product.length * 20).lineTo(550, 545 + orderData.product.length * 20).stroke();
         doc.moveDown();
         doc.text('Total:', 400, 565 + orderData.product.length * 20);
-        doc.fontSize(14).text(`${orderData.grandTotalPrice+orderData.shippingCharge.shippingCharge}`, 500, 565 + orderData.product.length * 20);
+        doc.fontSize(14).text(`${orderData.grandTotalPrice + orderData.shippingCharge.shippingCharge}`, 500, 565 + orderData.product.length * 20);
         doc.moveTo(390, 585 + orderData.product.length * 20).lineTo(550, 585 + orderData.product.length * 20).stroke();
 
 
@@ -1664,10 +1681,18 @@ const generatePdf = async (req, res) => {
         res.status(500).json({ error: `Error occured while generating pdf : '${error}` })
     }
 }
+const logout = async (req, res) => {
+    try {
+        req.session.destroy()
+        res.redirect('/signIn')
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+}
 module.exports = {
     homePage, faq, shopPage, categoryPage, wishlist, cart, contact, aboutPage, loginPage, logoutPage, productDetails, faqPage, loginedUser, errorPage, checkout, errorPage,
     forgotPassword, otpVerification, changePassword, insertUser, verifyOtp, otpResend, verifyUser, addNewAddress, address, editAddressPage, editedAddress,
     removeAddress, defaultAddress, editUser, forgotPasswordOtp, forgotOTPresend, sortFilter, addToCart, cartProductQuantity, removeFromCart, proceedCheckout,
     orderPage, forgotOtpSubmit, changePasswordVerify, cancelOrder, moreProduct, categoryFilter, addToWishlist, removeFromWishlist, applyCoupon, cartDetails, cancelProduct, cancelProductandCoupon,
-    orderPlace, walletPage, deliveredOrderPage, returnOrder, getCoupon, generatePdf,blockedLogin
+    orderPlace, walletPage, deliveredOrderPage, returnOrder, getCoupon, generatePdf, blockedLogin, logout
 }

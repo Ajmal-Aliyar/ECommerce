@@ -18,7 +18,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/icons/favicon-16x16.png">
     <link rel="manifest" href="assets/images/icons/site.html">
     <link rel="mask-icon" href="assets/images/icons/safari-pinned-tab.svg" color="#666666">
-    <link rel="shortcut icon" href="assets/images/icons/favicon.ico">
+    <link rel="shortcut icon" href="/assets/images/hashcart.jpeg">
     <meta name="apple-mobile-web-app-title" content="Molla">
     <meta name="application-name" content="Molla">
     <meta name="msapplication-TileColor" content="#cc9966">
@@ -52,114 +52,115 @@
                     </div><!-- End .header-left -->
                     <!-- headerMiddle -->
                     <div class="header-right">
-                        <nav class="main-nav" <% if(typeof userId == 'undefined' ){%>
+                        <nav class="main-nav" <% if(typeof userId=='undefined' ){%>
                             style="margin-right: 41rem;"
-                        <%}else{%>
-                            style="margin-right: 20rem;"
-                        <%}%>>
+                            <%}else{%>
+                                style="margin-right: 20rem;"
+                                <%}%>>
 
-                            <ul class="menu sf-arrows">
-                                <!-- megamenu-container active ..put down for underline -->
-                                <li class="">
-                                    <a href="/" class="sf-with-ul">Home</a>
-                                </li>
-                                <li>
-                                    <a href="/shop" class="sf-with-ul">SHOP</a>
+                                    <ul class="menu sf-arrows">
+                                        <!-- megamenu-container active ..put down for underline -->
+                                        <li class="">
+                                            <a href="/" class="sf-with-ul">Home</a>
+                                        </li>
+                                        <li>
+                                            <a href="/shop" class="sf-with-ul">SHOP</a>
 
-                                    <ul>
-                                        <li>
-                                            <a href="#">Outdoor</a>
                                             <ul>
-                                                <li><a href="">patio furniture</a></li>
-                                                <li><a href="">garden furniture</a></li>
-                                                <li><a href="">outer decor</a></li>
-                                                <li><a href="">backyard item</a></li>
+                                                <li>
+                                                    <a href="#">Outdoor</a>
+                                                    <ul>
+                                                        <li><a href="">patio furniture</a></li>
+                                                        <li><a href="">garden furniture</a></li>
+                                                        <li><a href="">outer decor</a></li>
+                                                        <li><a href="">backyard item</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Furniture</a>
+                                                    <ul>
+                                                        <li><a href="">tables</a></li>
+                                                        <li><a href="">chairs</a></li>
+                                                        <li><a href="">beds</a></li>
+                                                        <li><a href="">cupboard</a></li>
+                                                        <li><a href="">desks</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Kitchen</a>
+                                                    <ul>
+                                                        <li><a href="">kitchen cabinets</a></li>
+                                                        <li><a href="">kitchen islands</a></li>
+                                                        <li><a href="">bar stools and chairs</a></li>
+                                                        <li><a href="">kitchen carts</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Decoration</a>
+                                                    <ul>
+                                                        <li><a href="">light items</a></li>
+                                                        <li><a href="">creative</a></li>
+                                                        <li><a href="">colourful</a></li>
+                                                        <li><a href="">standard</a></li>
+                                                    </ul>
+                                                </li>
                                             </ul>
                                         </li>
-                                        <li>
-                                            <a href="#">Furniture</a>
-                                            <ul>
-                                                <li><a href="">tables</a></li>
-                                                <li><a href="">chairs</a></li>
-                                                <li><a href="">beds</a></li>
-                                                <li><a href="">cupboard</a></li>
-                                                <li><a href="">desks</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">Kitchen</a>
-                                            <ul>
-                                                <li><a href="">kitchen cabinets</a></li>
-                                                <li><a href="">kitchen islands</a></li>
-                                                <li><a href="">bar stools and chairs</a></li>
-                                                <li><a href="">kitchen carts</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">Decoration</a>
-                                            <ul>
-                                                <li><a href="">light items</a></li>
-                                                <li><a href="">creative</a></li>
-                                                <li><a href="">colourful</a></li>
-                                                <li><a href="">standard</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <!-- <li>
+                                        <!-- <li>
                                     <a href="/shop" class="sf-with-ul">Shop</a>
                                 </li> -->
-                                <li>
-                                    <a href="/about" class="sf-with-ul">About us</a>
-
-                                    <ul>
                                         <li>
-                                            <a href="/about">About</a>
+                                            <a href="/about" class="sf-with-ul">About us</a>
 
-                                        </li>
-                                        <li>
-                                            <a href="/contact">Contact</a>
-                                        </li>
-                                        <li><a href="coming-soon.html">Coming Soon</a></li>
-                                    </ul>
-                                </li>
-                           
-                                <%if(typeof userId !='undefined' ){%>
-                                    <li>
-                                        <a href="/user" class="sf-with-ul">account</a>
+                                            <ul>
+                                                <li>
+                                                    <a href="/about">About</a>
 
-                                        <ul>
-                                            <li><a href="/user">dashboard</a></li>
-                                            <li><a href="blog-listing.html">orders</a></li>
+                                                </li>
+                                                <li>
+                                                    <a href="/contact">Contact</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/faq">F.A.Q</a>
+                                                </li>
+                                                <li><a href="coming-soon.html">Coming Soon</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <%if(typeof userId !='undefined' ){%>
                                             <li>
-                                                <a href="#">wallet</address></a>
+                                                <a href="/user" class="sf-with-ul">account</a>
+
                                                 <ul>
+                                                    <li><a href="/user">user</a></li>
                                                     <li>
-                                                        <h6 style="padding-left: 30px;">$ 687</h6>
+                                                        <a href="/address">address</a>
+                                                        <ul>
+                                                            <li>
+                                                                <p style="padding-left: 30px;">sm street,new
+                                                                    york,<br>pincode:
+                                                                    843980</p>
+                                                            </li>
+                                                            <li><a href="/address">change address</a></li>
+                                                        </ul>
                                                     </li>
-                                                    <li><a href="blog-grid-2cols.html">add money</a></li>
+                                                    <li><a href="/orders">orders</a></li>
+                                                    <li>
+                                                        <a href="/wallet">wallet</a>
+                                                        <ul>
+                                                            <li>
+                                                                <h6 style="padding-left: 30px;">$ 687</h6>
+                                                            </li>
+                                                            <li><a href="blog-grid-2cols.html">add money</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" onclick="logout()">log out</a>
+                                                    </li>
                                                 </ul>
                                             </li>
-                                            <li>
-                                                <a href="#">address</a>
-                                                <ul>
-                                                    <li>
-                                                        <p style="padding-left: 30px;">sm street,new york,<br>pincode:
-                                                            843980</p>
-                                                    </li>
-                                                    <li><a href="blog-masonry-3cols.html">change address</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#">change password</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">log out</a>
-                                            </li>
-                                        </ul>
-                                    </li>
 
-                            </ul><!-- End .menu -->
+                                    </ul><!-- End .menu -->
                         </nav><!-- End .main-nav -->
 
                         <div class="header-search">
@@ -175,19 +176,20 @@
 
                         <a href="/wishlist" class="wishlist-link">
                             <i class="icon-heart-o"></i>
-                            <span class="wishlist-count">3</span>
+                            <!-- <span class="wishlist-count">3</span> -->
                         </a>
 
                         <div class="dropdown cart-dropdown">
-                            <a href="/cart" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" data-display="static">
+                            <a href="/cart" class="dropdown-toggle">
+                                <!-- //role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" data-display="static" -->
                                 <i class="icon-shopping-cart"></i>
-                                <span class="cart-count" id="cartcount">7</span>
-                                <span class="cart-txt">$ 164,00</span>
+                                <!-- <span class="cart-count" id="cartcount">7</span>
+                                <span class="cart-txt">$ 164,00</span> -->
                             </a>
 
 
-                            <div class="dropdown-menu dropdown-menu-right">
+                            <!-- <div class="dropdown-menu dropdown-menu-right">
                                 <div class="dropdown-cart-products">
                                     <div class="product">
                                         <div class="product-cart-details">
@@ -199,7 +201,7 @@
                                                 <span class="cart-product-qty">1</span>
                                                 x $8
                                             </span>
-                                        </div><!-- End .product-cart-details -->
+                                        </div>
 
                                         <figure class="product-image-container">
                                             <a href="product.html" class="product-image">
@@ -208,7 +210,7 @@
                                         </figure>
                                         <a href="#" class="btn-remove" title="Remove Product"><i
                                                 class="icon-close"></i></a>
-                                    </div><!-- End .product -->
+                                    </div>
 
                                     <div class="product">
                                         <div class="product-cart-details">
@@ -220,7 +222,7 @@
                                                 <span class="cart-product-qty">1</span>
                                                 x $76.00
                                             </span>
-                                        </div><!-- End .product-cart-details -->
+                                        </div>
 
                                         <figure class="product-image-container">
                                             <a href="product.html" class="product-image">
@@ -229,8 +231,8 @@
                                         </figure>
                                         <a href="#" class="btn-remove" title="Remove Product"><i
                                                 class="icon-close"></i></a>
-                                    </div><!-- End .product -->
-                                </div><!-- End .cart-product -->
+                                    </div>
+                                </div>
 
                                 <div class="dropdown-cart-total">
                                     <span>Total</span>
@@ -238,26 +240,26 @@
 
 
                                     <span class="cart-total-price">$160.00</span>
-                                </div><!-- End .dropdown-cart-total -->
+                                </div>
 
                                 <div class="dropdown-cart-action">
                                     <a href="/cart" class="btn btn-primary">View Cart</a>
                                     <a href="/checkout" class="btn btn-outline-primary-2"><span>Checkout</span><i
                                             class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .dropdown-cart-total -->
-                            </div><!-- End .dropdown-menu -->
+                                </div>
+                            </div> -->
                             <%}else{%>
                                 <li>
                                     <a href="#" class="sf-with-ul">Login</a>
 
                                     <ul>
-                                        
+
                                         <li>
                                             <a href="/signIn">SIGN IN</a>
                                         </li>
                                         <li>
                                             <a href="/signUp">SIGN UP</a>
-                                          
+
                                         </li>
                                     </ul>
                                 </li>
@@ -383,7 +385,7 @@
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
-    
+
             <div class="page-content">
                 <div class="dashboard">
                     <div class="container">
@@ -403,9 +405,28 @@
                                         <a class="nav-link" href="/wallet" id="wallet">Wallet</a>
                                     </li>
                                     <li class="nav-link">
-                                        <a class="" href="">Sign out</a>
+                                        <a onclick="logout()" href="#">Sign out</a>
                                     </li>
-                            
+
                                 </ul>
                             </aside><!-- End .col-lg-3 -->
-    
+                            <script>
+                                function logout() {
+                                    Swal.fire({
+                                        title: "Are you sure?",
+                                        text: "Do you want to logout from hashcart ?",
+                                        icon: "question",
+                                        showCancelButton: true,
+                                        confirmButtonColor: "#C96",
+                                        cancelButtonColor: "#c0001",
+                                        confirmButtonText: "logout"
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = '/logout'
+
+                                        }
+                                    })
+                                }
+
+                            </script>
+                            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
