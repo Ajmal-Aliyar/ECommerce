@@ -1,5 +1,3 @@
-
-
 const multer = require('multer');
 const path = require('path');
 
@@ -13,15 +11,13 @@ const storage = multer.diskStorage({
     }
 });
 
-
 const uploadProduct = multer({
     storage: storage,
     limits: { fileSize: 1024 * 1024 * 5 }, 
     fileFilter: function(req, file, cb) {
         checkFileType(file, cb);
     }
-}).array('productImage[]', 5); 
-
+}).array('productImage[]', 5); // Expect multiple files under the same field name as an array
 
 function checkFileType(file, cb) {
     const filetypes = /jpeg|jpg|webp|png|avif|gif/;

@@ -55,7 +55,7 @@ const addProduct = async (req, res) => {
 
 
         await product.save();
-        res.redirect('products');
+        res.status(200).json({status:true})
     } catch (error) {
 
         console.error(error.message);
