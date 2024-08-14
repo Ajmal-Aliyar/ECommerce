@@ -16,19 +16,19 @@
       <div class="row justify-content-between">
         <div class="col-sm-4 g-mb-30">
             <div class="g-bg-lightred text-center rounded g-px-20 g-py-30 card-list">
-              <span class="d-block g-color-white g-font-weight-600 g-font-size-25 mb-1"><%=wallet.pendingBalance%></span>
+              <span class="d-block g-color-white g-font-weight-600 g-font-size-25 mb-1"><%=wallet.pendingBalance.toFixed(2)%></span>
               <span class="d-block g-color-white-opacity-0_8 g-font-size-18">Pending Balance</span>
             </div>
           </div>
           <div class="col-sm-4 g-mb-30">
             <div class="g-bg-primary text-center rounded g-px-20 g-py-30 card-list">
-              <span class="d-block g-color-white g-font-weight-600 g-font-size-25 mb-1"><%=wallet.rewardBalance%></span>
+              <span class="d-block g-color-white g-font-weight-600 g-font-size-25 mb-1"><%=wallet.rewardBalance.toFixed(2)%></span>
               <span class="d-block g-color-white-opacity-0_8 g-font-size-18">Reward Balance</span>
             </div>
           </div>
         <div class="col-sm-4 g-mb-30">
           <div class="g-bg-gray-dark-v3 text-center rounded g-px-20 g-py-30 card-list">
-            <span class="d-block g-color-white g-font-weight-600 g-font-size-25 mb-1"><%=wallet.walletBalance%></span>
+            <span class="d-block g-color-white g-font-weight-600 g-font-size-25 mb-1"><%=wallet.walletBalance.toFixed(2)%></span>
             <span><a class="g-font-size-13" href="#">Add Balance</a></span>
             
           </div>
@@ -71,7 +71,7 @@
                            
                             <td></td> 
                             <td>
-                                <div><%=wallet.paymentHistory[i].amount%></div>
+                                <div><%=wallet.paymentHistory[i].amount.toFixed(2)%></div>
                             </td>
                         </tr>
                     <% } %>

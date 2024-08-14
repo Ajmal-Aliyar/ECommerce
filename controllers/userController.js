@@ -888,7 +888,8 @@ const checkout = async (req, res) => {
             if (totalPrice > 5000) {
                 shippingCharge = 0
             }
-            res.render('checkout', { carts, userAddress, totalPrice, shippingCharge, userId })
+            const wallet = await Wallet.findOne({userId:userId})
+            res.render('checkout', { carts, userAddress, totalPrice, shippingCharge, userId, wallet })
         }
     } catch (err) {
         console.log(err);
@@ -896,7 +897,7 @@ const checkout = async (req, res) => {
 }
 const proceedCheckout = async (req, res) => {
     try {
-        console.log(req.body);
+        console.log(req.body,'body logged');
         const { id, firstName, lastName, email, country, state, pinCode, district, city, place, address, mobile, mobile2, landMark, paymentMethod, shippingCharge, couponCode, totalPrice, grandTotalPrice, paymentId, paymentSignature, paymentOrderId } = req.body
         console.log(paymentId, paymentSignature, paymentOrderId)
         if (grandTotalPrice > 1000 && !paymentSignature) {
@@ -1067,7 +1068,13 @@ const cancelOrder = async (req, res) => {
         if (order.payment.paymentMethod != 'cashOnDelivery') {
             refund = order.payment.paymentAmount
             console.log(refund + "kyf5");
-            const wallet = await Wallet.updateOne({ userId: userId }, { $inc: { pendingBalance: refund } })
+            const wallet = await Wallet.updateOne({ userId: userId }, { $inc: { walletBalance: refund },$push:{  
+                paymentHistory: {
+                amount: refund,
+                createdAt: new Date(),
+                status: 'recieved',
+                description: 'Your canceled order payment has been added to the wallet balance.'
+            }} })
             console.log(wallet + 'sf;bn');
             order.payment.paymentAmount = 0
             await order.save();
@@ -1689,10 +1696,36 @@ const logout = async (req, res) => {
         res.status(500).json({ error: error })
     }
 }
+const walletPayment = async(req,res)=>{
+    try{
+
+        const {walletBalance,totalAmount} = req.body
+        const userId = req.session.user_id
+
+        const result = await Wallet.updateOne(
+            { userId: new ObjectId(userId) },
+            {
+                $inc: { walletBalance: -totalAmount },
+                $push: {
+                    paymentHistory: {
+                        amount: totalAmount,
+                        createdAt: new Date(),
+                        status: 'sent',
+                        description: 'Order placed using wallet balance.'
+                    }
+                }
+            }
+        );
+        res.status(200).json({status:true})
+
+    }catch(error){
+        res.status(500).json({error})
+    }
+}
 module.exports = {
     homePage, faq, shopPage, categoryPage, wishlist, cart, contact, aboutPage, loginPage, logoutPage, productDetails, faqPage, loginedUser, errorPage, checkout, errorPage,
     forgotPassword, otpVerification, changePassword, insertUser, verifyOtp, otpResend, verifyUser, addNewAddress, address, editAddressPage, editedAddress,
     removeAddress, defaultAddress, editUser, forgotPasswordOtp, forgotOTPresend, sortFilter, addToCart, cartProductQuantity, removeFromCart, proceedCheckout,
     orderPage, forgotOtpSubmit, changePasswordVerify, cancelOrder, moreProduct, categoryFilter, addToWishlist, removeFromWishlist, applyCoupon, cartDetails, cancelProduct, cancelProductandCoupon,
-    orderPlace, walletPage, deliveredOrderPage, returnOrder, getCoupon, generatePdf, blockedLogin, logout
+    orderPlace, walletPage, deliveredOrderPage, returnOrder, getCoupon, generatePdf, blockedLogin, logout,walletPayment
 }

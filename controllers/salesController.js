@@ -11,39 +11,43 @@ const salesPage = async (req, res) => {
         const sales = await Order.aggregate([
             { $unwind: '$product' },
             { $match: { "product.productDetails.status": 'delivered' } }])
-        const orders = await Order.find({ status: 'delivered' }).sort({ createdAt: -1 })
+        let orders;
+        let val;
+        if (req.query.id) {
+            val = req.query.id
+            const today = new Date()
+            let startDate
+            if (val == 'day') {
+                startDate = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+            } else if (val == 'week') {
+                startDate = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000)
+            } else if (val == 'month') {
+                startDate = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+            }
+            orders = await Order.aggregate([
+                { $match: { status: 'delivered', createdAt: { $gte: startDate } } },
+                { $sort: { createdAt: -1 } }
+            ])
+        } else if (req.query.start) {
+            const startDate = new Date(`${req.query.start}T23:59:59.999Z`);
+            const endDate = new Date(`${req.query.end}T23:59:59.999Z`);
+            orders = await Order.aggregate([
+                {
+                    $match: { $and: [{ createdAt: { $gte: startDate } }, { createdAt: { $lte: endDate } }],status:'delivered' }
+                }
+            ])
+            console.log(orders);
+        } else {
+            val = 'all'
+            orders = await Order.find({ status: 'delivered' }).sort({ createdAt: -1 })
+        }
         const today = new Date();
         const startOfDay = new Date(today.setHours(0, 0, 0, 0));
         const endOfDay = new Date(today.setHours(23, 59, 59, 999));
 
-        const ordersDaily = await Order.find({
-            status: 'delivered',
-            createdAt: { $gte: startOfDay, $lt: endOfDay }
-        }).sort({ createdAt: -1 });
-        const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
-        startOfWeek.setHours(0, 0, 0, 0);
-
-        const endOfWeek = new Date(startOfWeek);
-        endOfWeek.setDate(endOfWeek.getDate() + 6);
-        endOfWeek.setHours(23, 59, 59, 999);
-
-        const ordersWeekly = await Order.find({
-            status: 'delivered',
-            createdAt: { $gte: startOfWeek, $lte: endOfWeek }
-        }).sort({ createdAt: -1 });
-        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-        startOfMonth.setHours(0, 0, 0, 0);
 
 
-        const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-        endOfMonth.setHours(23, 59, 59, 999);
-
-        const monthlyOrders = await Order.find({
-            status: 'delivered',
-            createdAt: { $gte: startOfMonth, $lt: endOfMonth }
-        }).sort({ createdAt: -1 });
-
-        res.render('sales', { sales, orders, ordersDaily, ordersWeekly, monthlyOrders })
+        res.render('sales', { sales, orders, val })
     } catch (error) {
         console.error(error.message);
     }

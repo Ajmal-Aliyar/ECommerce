@@ -76,14 +76,12 @@
                                         <input type="hidden" name="id">
                                         <div class="col-sm-6">
                                             <label>First Name *</label>
-                                            <input type="text" class="form-control" name="firstName"
-                                                 required>
+                                            <input type="text" class="form-control" name="firstName" required>
                                         </div>
 
                                         <div class="col-sm-6">
                                             <label>Last Name *</label>
-                                            <input type="text" class="form-control" name="lastName"
-                                                required>
+                                            <input type="text" class="form-control" name="lastName" required>
                                         </div>
                                     </div>
 
@@ -99,68 +97,45 @@
                                             <label>State *</label>
                                             <select id="size" class="form-control" name="state">
 
-                                                <option 
-                                                    >Maharashtra</option>
-                                                <option >Bihar
+                                                <option>Maharashtra</option>
+                                                <option>Bihar
                                                 </option>
-                                                <option 
-                                                    >Andhra Pradesh
+                                                <option>Andhra Pradesh
                                                 </option>
-                                                <option 
-                                                    >Punjab</option>
-                                                <option >Assam
+                                                <option>Punjab</option>
+                                                <option>Assam
                                                 </option>
-                                                <option 
-                                                    >Chattisgarh</option>
-                                                <option 
-                                                    >Mizoram</option>
-                                                <option 
-                                                    >Karnataka</option>
-                                                <option 
-                                                    >West Bengal</option>
-                                                <option >Goa
+                                                <option>Chattisgarh</option>
+                                                <option>Mizoram</option>
+                                                <option>Karnataka</option>
+                                                <option>West Bengal</option>
+                                                <option>Goa
                                                 </option>
-                                                <option 
-                                                    >Gujarat</option>
-                                                <option >Arunachal
+                                                <option>Gujarat</option>
+                                                <option>Arunachal
                                                     Pradesh</option>
-                                                <option 
-                                                    >Maipur</option>
-                                                <option 
-                                                    >Haryana</option>
-                                                <option >Himachal
+                                                <option>Maipur</option>
+                                                <option>Haryana</option>
+                                                <option>Himachal
                                                     Pradesh</option>
-                                                <option 
-                                                    >Rajasthan</option>
-                                                <option 
-                                                    >Telangana</option>
-                                                <option 
-                                                    >Madhya Pradesh
+                                                <option>Rajasthan</option>
+                                                <option>Telangana</option>
+                                                <option>Madhya Pradesh
                                                 </option>
-                                                <option 
-                                                    >Odisha</option>
-                                                <option 
-                                                    >Nagaland</option>
-                                                <option 
-                                                    >Tamil Nadu</option>
-                                                <option selected
-                                                    >Kerala</option>
-                                                <option 
-                                                    >Uttar Pradesh
+                                                <option>Odisha</option>
+                                                <option>Nagaland</option>
+                                                <option>Tamil Nadu</option>
+                                                <option selected>Kerala</option>
+                                                <option>Uttar Pradesh
                                                 </option>
-                                                <option 
-                                                    >Meghalaya</option>
-                                                <option 
-                                                    >Jarkhand</option>
-                                                <option 
-                                                    >Tripura</option>
-                                                <option 
-                                                    >Sikkim</option>
-                                                <option >Delhi
+                                                <option>Meghalaya</option>
+                                                <option>Jarkhand</option>
+                                                <option>Tripura</option>
+                                                <option>Sikkim</option>
+                                                <option>Delhi
                                                 </option>
-                                                <option 
-                                                    >Uttarakhand</option>
-                                                <option >Jammu & Kashmir
+                                                <option>Uttarakhand</option>
+                                                <option>Jammu & Kashmir
                                                 </option>
 
                                             </select>
@@ -174,15 +149,13 @@
                                         <div class="col-sm-6">
 
                                             <label>Pin Code *</label>
-                                            <input type="number" class="form-control" name="pinCode"
-                                             required>
+                                            <input type="number" class="form-control" name="pinCode" required>
 
                                         </div>
                                         <div class="col-sm-6">
 
                                             <label>City *</label>
-                                            <input type="text" class="form-control" name="city"
-                                                required>
+                                            <input type="text" class="form-control" name="city" required>
 
                                         </div>
 
@@ -190,14 +163,12 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label>District *</label>
-                                            <input type="text" class="form-control" name="district"
-                                                required>
+                                            <input type="text" class="form-control" name="district" required>
                                         </div>
 
                                         <div class="col-sm-6">
                                             <label>Place *</label>
-                                            <input type="text" class="form-control" name="place"
-                                                 required>
+                                            <input type="text" class="form-control" name="place" required>
                                         </div>
                                     </div>
                                     <label>Adress *</label>
@@ -218,7 +189,7 @@
                                     </div>
 
                                     <label>LandMark</label>
-                                    <input type="text" class="form-control mb-2" name="landMark" >
+                                    <input type="text" class="form-control mb-2" name="landMark">
 
                                     <label>Email</label>
                                     <input type="text" class="form-control mb-2" name="email" value="" required>
@@ -268,7 +239,7 @@
                                                         >Mizoram</option>
                                                     <option <%=userAddress.state==='Karnataka' ? 'selected' : '' %>
                                                         >Karnataka</option>
-                                                    <option <%=userAddress.state==='West Bengal' ? 'selected' : '' %>
+                                                    <option <%=userAddress.state==='WestBengal' ? 'selected' : '' %>
                                                         >West Bengal</option>
                                                     <option <%=userAddress.state==='Goa' ? 'selected' : '' %>>Goa
                                                     </option>
@@ -293,7 +264,7 @@
                                                     </option>
                                                     <option <%=userAddress.state==='Odisha' ? 'selected' : '' %>
                                                         >Odisha</option>
-                                                    <option <% userAddress.state==='Nagaland' ? 'selected' : '' %>
+                                                    <option <%=userAddress.state==='Nagaland' ? 'selected' : '' %>
                                                         >Nagaland</option>
                                                     <option <%=userAddress.state==='Tamil Nadu' ? 'selected' : '' %>
                                                         >Tamil Nadu</option>
@@ -424,9 +395,12 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Shipping:</td>
-                                                            <td><%=shippingCharge%></td>
+                                                            <td>
+                                                                <%=shippingCharge%>
+                                                            </td>
                                                         </tr>
-                                                        <input type="hidden" name="shippingCharge" value="<%=shippingCharge%>" id="shippingCharge">
+                                                        <input type="hidden" name="shippingCharge"
+                                                            value="<%=shippingCharge%>" id="shippingCharge">
                                                         <tr id="couponTR">
                                                             <td id="couponTDcoupon"><label for="checkout-discount-input"
                                                                     class="text-truncate">Have a coupon or refferral
@@ -497,68 +471,25 @@
                                                         <input type="radio" class="collapsed" role="button"
                                                             data-toggle="collapse" href="#collapse-3"
                                                             aria-expanded="false" aria-controls="collapse-3"
-                                                            value="directBankTransfer" name="paymentMethod">
-                                                        Direct bank transfer
+                                                            value="walletPayment" name="paymentMethod" id="wallet">
+                                                        Wallet
                                                         </input>
                                                     </h2>
                                                 </div><!-- End .card-header -->
                                                 <div id="collapse-3" class="collapse" aria-labelledby="heading-3"
                                                     data-parent="#accordion-payment">
-                                                    <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum
-                                                        dolor
-                                                        sit amet, consectetuer adipiscing elit. Donec odio. Quisque
-                                                        volutpat
-                                                        mattis eros.
-                                                    </div><!-- End .card-body -->
-                                                </div><!-- End .collapse -->
-                                            </div><!-- End .card -->
-
-                                            <div class="card" style="margin-bottom: 1.2em;">
-                                                <div class="card-header" id="heading-4">
-                                                    <h2 class="card-title">
-                                                        <input type="radio" class="collapsed" role="button"
-                                                            data-toggle="collapse" href="#collapse-4"
-                                                            aria-expanded="false" aria-controls="collapse-4"
-                                                            name="paymentMethod">
-                                                        PayPal <small class="float-right paypal-link">What is
-                                                            PayPal?</small>
-                                                        </input>
-                                                    </h2>
-                                                </div><!-- End .card-header -->
-                                                <div id="collapse-4" class="collapse" aria-labelledby="heading-4"
-                                                    data-parent="#accordion-payment">
                                                     <div class="card-body">
-                                                        Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra
-                                                        non,
-                                                        semper suscipit, posuere a, pede. Donec nec justo eget felis
-                                                        facilisis fermentum.
+                                                        Wallet Balance
+                                                        <p id="walletBalance">
+                                                            <%=wallet.walletBalance.toFixed(2)%>
+                                                        </p>
+                                                        <p id="walletAlert"></p>
+
                                                     </div><!-- End .card-body -->
                                                 </div><!-- End .collapse -->
                                             </div><!-- End .card -->
 
-                                            <div class="card" style="margin-bottom: 1.2em;">
-                                                <div class="card-header" id="heading-5">
-                                                    <h2 class="card-title">
-                                                        <input type="radio" class="collapsed" role="button"
-                                                            data-toggle="collapse" href="#collapse-5"
-                                                            aria-expanded="false" aria-controls="collapse-5"
-                                                            name="paymentMethod">
-                                                        Credit Card (Stripe)
-                                                        <img src="assets/images/payments-summary.png"
-                                                            alt="payments cards">
-                                                        </input>
-                                                    </h2>
-                                                </div><!-- End .card-header -->
-                                                <div id="collapse-5" class="collapse" aria-labelledby="heading-5"
-                                                    data-parent="#accordion-payment">
-                                                    <div class="card-body"> Donec nec justo eget felis facilisis
-                                                        fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing
-                                                        elit.
-                                                        Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit
-                                                        ame.
-                                                    </div><!-- End .card-body -->
-                                                </div><!-- End .collapse -->
-                                            </div><!-- End .card -->
+
                                         </div><!-- End .accordion -->
 
                                         <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
@@ -584,7 +515,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const couponList = document.getElementById('couponList');
 
-            // Fetch the coupon data from the server
+
             fetch('/getCoupon')
                 .then(response => response.json())
                 .then(coupons => {
@@ -616,23 +547,40 @@
         });
     </script>
 
-    <!-- Plugins JS File -->
+
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery.hoverIntent.min.js"></script>
     <script src="assets/js/jquery.waypoints.min.js"></script>
     <script src="assets/js/superfish.min.js"></script>
     <script src="assets/js/owl.carousel.min.js"></script>
-    <!-- Main JS File -->
+
     <script src="assets/js/main.js"></script>
     </body>
     <script>
+        document.querySelector('input[name="paymentMethod"][value="walletPayment"]').addEventListener('change', function () {
+            const walletBalance = parseInt(document.getElementById('walletBalance').innerText)
+            let totalAmount = document.getElementById('grandTotalPrice').innerText
+            totalAmount = parseInt(totalAmount.split(' ')[1])
+            console.log(walletBalance, totalAmount);
+            if (this.checked) {
+                if (walletBalance < totalAmount) {
+                    const walletAlert = document.getElementById('walletAlert')
+                    walletAlert.innerText = "You don't have much sufficient wallet balance.";
+                    walletAlert.style = 'color:#c30e0eb0;'
+                } else {
+                    document.getElementById('walletAlert').innerText = "You have selected Wallet as your payment method.";
+
+                }
+            }
+        });
+
         document.getElementById("checkoutForm").addEventListener("submit", function (event) {
             event.preventDefault();
             let grandTotalPrice = parseFloat(document.getElementById('grandTotalPriceInput').value)
             const shippingCharge = parseInt(document.getElementById('shippingCharge').value)
 
-            console.log(grandTotalPrice,shippingCharge);
+            console.log(grandTotalPrice, shippingCharge);
             if (document.getElementById('razorpay').checked) {
                 fetch('/create-order', {
                     method: 'POST',
@@ -640,7 +588,7 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        grandTotalPrice,shippingCharge
+                        grandTotalPrice, shippingCharge
                     })
                 })
                     .then(response => response.json())
@@ -663,22 +611,21 @@
                                     jsonObject[key] = value;
                                 });
 
-                                // Add payment details to the JSON object
                                 jsonObject.paymentId = response.razorpay_payment_id;
                                 jsonObject.paymentSignature = response.razorpay_signature;
                                 jsonObject.paymentOrderId = response.razorpay_order_id;
 
-                                // Send the data to the backend
+
                                 fetch('/proceedCheckout', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
                                     },
-                                    body: JSON.stringify(jsonObject) // Send JSON data
+                                    body: JSON.stringify(jsonObject)
                                 })
                                     .then(response => response.json())
                                     .then(data => {
-                                        
+
                                         window.location.href = '/orderPlace?orderId=' + data.orderId
                                     })
                                     .catch(error => {
@@ -701,6 +648,63 @@
                         console.error('Error:', error);
                         alert('Failed to create order');
                     });
+            } else if (document.getElementById('wallet').checked) {
+                const walletBalance = parseInt(document.getElementById('walletBalance').innerText)
+                let totalAmount = document.getElementById('grandTotalPrice').innerText
+                totalAmount = parseInt(totalAmount.split(' ')[1])
+                if (totalAmount > walletBalance) {
+                    Swal.fire({
+                        title: "Can't do payment !",
+                        text: "Your wallet does not have sufficient balance !",
+                        icon: "error"
+                    });
+                } else {
+                    console.log('worked');
+                    fetch('/walletPayed', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            totalAmount, walletBalance
+                        })
+                    }).then(response => response.json())
+                    .then( data => {
+                            if (data.status) {
+                                const formData = new FormData(document.getElementById("checkoutForm"));
+                                const jsonObject = {};
+                                formData.forEach((value, key) => {
+                                    jsonObject[key] = value;
+                                });
+                                jsonObject.paymentId = 'wallet'
+                                jsonObject.paymentSignature = 'wallet';
+                                jsonObject.paymentOrderId = 'wallet';
+                                fetch('/proceedCheckout', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(jsonObject)
+                                })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        console.log(data, data.orderId);
+                                        if (data.status) {
+                                            window.location.href = '/orderPlace?orderId=' + data.orderId
+                                        } else {
+                                            Swal.fire({
+                                                title: "Do Payment !",
+                                                text: "Prices greater than 1000 cannot be paid as cash on delivery.",
+                                                icon: "warning"
+                                            });
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                            }
+                        })
+                }
             } else {
                 const formData = new FormData(document.getElementById("checkoutForm"));
                 const jsonObject = {};
@@ -713,7 +717,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(jsonObject) // Send JSON data
+                    body: JSON.stringify(jsonObject)
                 })
                     .then(response => response.json())
                     .then(data => {
@@ -737,12 +741,12 @@
     </script>
 
     <script>
-        function cancelCoupon(totalPrice,shippingCharge) {
+        function cancelCoupon(totalPrice, shippingCharge) {
             document.getElementById('couponTDcoupon').innerHTML = `<label for="checkout-discount-input" class="text-truncate">Have a coupon?
                             <span style="color: #c96;">Click here
                                 to enter your code</span></label>`
             document.getElementById('couponTDprice').innerText = ""
-            document.getElementById('grandTotalPrice').innerText = `${totalPrice+shippingCharge}`
+            document.getElementById('grandTotalPrice').innerText = `${totalPrice + shippingCharge}`
             document.getElementById('grandTotalPriceInput').value = totalPrice
         }
         document.getElementById('apply-coupon-form').addEventListener('submit', function (event) {
@@ -771,7 +775,7 @@
                         document.getElementById('couponTDprice').innerText = "- ₹ " + data.couponDiscount;
                         document.getElementById('grandTotalPrice').innerText = "₹ " + (totalPrice - data.couponDiscount + shippingCharge);
                         document.getElementById('couponCode').value = data.couponCode
-                        document.getElementById('grandTotalPriceInput').value = parseInt(totalPrice - data.couponDiscount)+shippingCharge
+                        document.getElementById('grandTotalPriceInput').value = parseInt(totalPrice - data.couponDiscount) + shippingCharge
                         document.getElementById('checkout-discount-input').value = '';
                     } else {
                         Swal.fire('Failed to apply coupon: ' + data.message);

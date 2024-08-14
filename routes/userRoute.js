@@ -77,6 +77,7 @@ userRoute.post('/proceedCheckout',userAuth.isLogin,userController.proceedCheckou
 userRoute.post('/applyCoupon',userController.applyCoupon)
 userRoute.get('/getCoupon',userAuth.isLogin,userController.getCoupon)
 userRoute.post('/generate-pdf', userController.generatePdf);
+userRoute.post('/walletPayed',userAuth.isLogin,userController.walletPayment)
 //order
 userRoute.get('/orders',userAuth.isLogin,userController.orderPage)
 userRoute.post('/cancelOrder',userController.cancelOrder)
