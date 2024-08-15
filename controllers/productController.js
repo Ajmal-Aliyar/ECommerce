@@ -68,7 +68,7 @@ const editProduct = async (req, res) => {
         const id = req.query.id
         const product = await Product.findById(id)
         const data = await Category.find({})
-        res.render('editProduct', { product, data })
+        res.render('edit-Product', { product, data })
     } catch (error) {
         console.error(error.message);
     }

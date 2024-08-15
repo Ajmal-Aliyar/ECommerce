@@ -8,21 +8,6 @@ const adminController = require('../controllers/adminController')
 const adminAuth = require('../middleware/adminAuth')
 
 
-// const nocache = require('nocache')
-// adminRoute.use(nocache())
-// const parser = require('body-parser')
-// adminRoute.use(parser.json())
-// const session = require('express-session')
-// const config=require('../config/config')
-// adminRoute.use(session({
-//     secret:config,
-//     resave:false,
-//     saveUninitialized:false,
-//     cookie:{maxAge:24*60*60*1000}
-// }))
-// adminRoute.use(express.urlencoded({ extended: true }));
-// adminRoute.set("view engine",'ejs')
-
 adminRoute.use(express.static('public'));
 
 adminRoute.set('views','./views/admin')
@@ -105,9 +90,6 @@ adminRoute.post('/topProducts',adminAuth.isLogin,adminController.topProducts)
 adminRoute.get('/check',(req,res)=>{
     res.render('check')
 })
-
-
-
 
 
 

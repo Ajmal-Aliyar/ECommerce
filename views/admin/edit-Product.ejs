@@ -1,26 +1,53 @@
 <%- include('../layouts/admin/header.ejs')%>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+<link  href="https://unpkg.com/cropperjs@1.5.13/dist/cropper.min.css" rel="stylesheet">
+<script src="https://unpkg.com/cropperjs@1.5.13/dist/cropper.min.js"></script>
+<style>
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+    
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+        max-width: 600px; /* Limit max width */
+        text-align: center;
+    }
+    
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    </style>
     <style>
-        body{
-            background: radial-gradient(#000000a3, transparent);
-        }
-        #imageContainer {
-            margin-top: 20px;
-        }
-        .file-input-container {
-            margin-bottom: 10px;
-        }
-        .preview {
-            display: block;
-            margin-top: 10px;
-            max-width: 100%;
-            height: auto;
-        }
         .file-input-container {
             margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+        body{
+            background: radial-gradient(#000000a3, transparent);
         }
         .preview {
             display: block;
@@ -28,65 +55,143 @@
             max-height: 100px;
             margin-top: 5px;
         }
+
         .dlButton {
 
-            border-color: red;
+            border: none;
             border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            
             width: 3em;
             height: 3em;
         }
+
+
+        .dlButton :hover {
+            color: red;
+           
+       
+        }
+
+      
+ 
+ 
     </style>
     <div class="row justify-content-center  pt-5">
+
         <main class="col-lg-6  ">
-            <div class="summary" style="overflow: hidden;">
-                <h3 class="summary-title text-center">Add product</h3><!-- End .summary-title -->
+            <div class="summary">
+                <h3 class="summary-title text-center">Edit product</h3><!-- End .summary-title -->
+
                 <div style=" padding: 1em;">
-                    <form>
+                    <form action="/admin/editProduct" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="isBlocked" value="false">
+                        <input type="hidden" name="id" value="<%=product._id%>">
                         <label for="register-email">Product name *</label>
-                        <input type="text" name="productName" required class="form-control">
-                        
+                        <input type="text" name="productName" value="<%=product.productName%>" required
+                            class="form-control">
+
                         <label for="register-email">Category *</label>
                         <select name="productCategory" id="size" class="form-control" required>
-                            <% data.forEach((category) => { 
-                                if (category.isBlocked == false) { %>
-                                    <option value="<%= category.categoryName %>">
-                                        <%= category.categoryName %>
+                            <%data.forEach((category)=>{
+                                if(category.isBlocked==false){%>
+                                <%if(product.productCategory==category.categoryName){%>
+                                    
+                                    <option name="<%=category.categoryName%>" selected>
+                                        <%=category.categoryName%>
                                     </option>
-                            <% }}); %>
+                                    <%}else{%>
+                                        <option name="<%=category.categoryName%>">
+                                            <%=category.categoryName%>
+                                        </option>
+                                <%}}})%>
                         </select>
-                    
-                        <label for="register-email">Image *</label>
-                        <button onclick="addFileInput(event)" class="btn-outline-primary-2"
-                        style="padding: 0%; width: 2em; margin-left: 1em;">+</button>
-                    <div id="imageContainer" class="d-flex justify-content-end"></div>
-                        
-                        <label for="register-email">Price before*</label>
-                        <input type="number" name="priceBefore" required class="form-control col-5">
-                        
-                        <label for="register-email">Price after*</label>
-                        <input type="number" name="priceAfter" required class="form-control col-5">
-                        
-                        <label for="register-email">Stock *</label>
-                        <input type="number" name="productStock" required class="form-control">
-                        
-                        <label for="register-email">Cost *</label>
-                        <input type="text" name="productCost" required class="form-control">
-                        
-                        <label for="register-email">Tags *</label>
-                        <input type="text" name="productTags" required class="form-control">
-                        
-                        <label for="register-email">Description *</label>
-                        <input type="text" name="productDescription" required class="form-control">
-                        
-                        <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block" onclick="uploadImages(event)">
-                            <span class="btn-text">ADD PRODUCT</span>
-                            <span class="btn-hover-text">ADD PRODUCT</span>
-                        </button>
+
+
+                        <div class="card shadow p-3  bg-white rounded"><a onclick="addFileInput()"
+                                class="btn-outline-primary-2"
+                                style="width: 100%; text-align: center; font-weight: 700;">ADD IMAGE</a></div>
+
+
+
+                        <%for(let i=0 ; i<product.productImage.length;i++){%>
+
+
+                            <div id="imageContainer">
+
+                                <div class="file-input-container">
+                                    <div style="width: 21em;">Image already exists for <%=product.productName%>
+                                    </div>
+                                    <input type="hidden" value="<%=product.productImage[i]%>" name="productImage[]" id="existImageInput-<%=i%>">
+                                    <button onclick="removeFileInput(this)" class="dlButton">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path
+                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                            <path
+                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                        </svg>
+                                    </button>
+                                    <img class="preview" id="existPreview-<%=i%>" src="<%=product.productImage[i]%>" alt="Image Preview" onclick="startCropExist('<%=i%>')">
+                                </div>
+                            </div>
+                            <%}%>
+                            <div id="cropModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close" onclick="closeCropModal()">&times;</span>
+                                    <canvas id="cropCanvas"></canvas>
+                                    <button type="button" onclick="submitCroppedImage()">Submit</button>
+                                </div>
+                            </div>
+
+                                <label for="register-email">Price before *</label>
+                                <input type="number" name="priceBefore" value="<%=product.productPrices.priceBefore%>"
+                                    required class="form-control col-5">
+
+                                <label for="register-email">Price after*</label>
+                                <input type="number" name="priceAfter" value="<%=product.productPrices.priceAfter%>"
+                                    required class="form-control col-5">
+
+                                <label for="register-email">Stock *</label>
+                                <input type="number" name="productStock" value="<%=product.productStock%>" required
+                                    class="form-control">
+
+                                    <label for="register-email">Cost *</label>
+                                <input type="number" name="productCost" value="<%=product.productCost%>" required
+                                    class="form-control">
+
+                                <label for="register-email">Tags *</label>
+                                <input type="text" name="productTags" required
+                                    value="<%=product.productTags.join(',')%>" class="form-control">
+
+                                <label for="register-email">Description *</label>
+                                <input type="text" name="productDescription" value="<%=product.productDescription%>"
+                                    required class="form-control">
+
+                                <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                    <span class="btn-text">EDIT PRODUCT</span>
+                                    <span class="btn-hover-text">EDIT PRODUCT</span>
+                                </button>
                     </form>
+                </div>
+                <div style="width: 100%;display: flex;align-items: center;justify-content: space-around; margin-top: 3em;">
+                    <button class="dlButton ptag" id="restrict" onclick="restrict('<%=product._id%>','<%=product.isBlocked%>')" 
+                        <% if(product.isBlocked==true){%>
+                            style="color: red;"
+                        <%}%> >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ban" viewBox="0 0 16 16">
+                            <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0"/>
+                          </svg>
+                    </button><span>or</span>
+                    <button class="dlButton" id="delete" onclick="delCategory('<%=product._id%>')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16" >
+                            <path
+                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                            <path
+                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                        </svg></button>
+
 
                 </div>
-
             </div><!-- End .summary -->
         </main><!-- End .col-lg-3 -->
 
@@ -406,115 +511,241 @@
     <script src="assets/js/owl.carousel.min.js"></script>
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    </body>
+
     <script>
-        let croppedImages = [];
+        let val = 0;
+        let imageVal;
+        let imageExist = false;
+        function addFileInput() {
+            val++
+            const imageContainer = document.getElementById('imageContainer');
+            const fileInputContainer = document.createElement('div');
+            fileInputContainer.classList.add('file-input-container');
+            const newInput = document.createElement('input');
+            newInput.id= 'imageInput-'+val
+            newInput.type = 'file';
+            newInput.name = 'productImage[]';
+            newInput.accept = 'image/*';
 
-function addFileInput(event) {
-    event.preventDefault(); // Prevent the form from submitting
+            newInput.addEventListener('change', function () {
+                previewImage(this);
+            });
+            const removeButton = document.createElement('button');
+            removeButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+        </svg>
+    `;
+            removeButton.classList.add('dlButton');
+            removeButton.addEventListener('click', function () {
+                imageContainer.removeChild(fileInputContainer);
+            });
 
-    const imageContainer = document.getElementById('imageContainer');
-    const fileInputContainer = document.createElement('div');
-    fileInputContainer.classList.add('file-input-container');
+            const imgPreview = document.createElement('img');
+            imgPreview.id = 'preview-'+val
+            imgPreview.classList.add('preview');
+            imgPreview.src = '#';
+            imgPreview.alt = 'Image Preview';
 
-    const newInput = document.createElement('input');
-    newInput.type = 'file';
-    newInput.name = 'productImage[]'; // Allow multiple files as an array
-    newInput.accept = 'image/*';
-    newInput.addEventListener('change', function () {
-        previewAndCropImage(this, croppedImages.length);
-    });
+            fileInputContainer.appendChild(newInput);
+            fileInputContainer.appendChild(removeButton);
+            fileInputContainer.appendChild(imgPreview);
 
-    const removeButton = document.createElement('button');
-    removeButton.innerHTML = `
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                    </svg>
-                                `;
-                                removeButton.classList.add('dlButton');
-    removeButton.addEventListener('click', function () {
-        imageContainer.removeChild(fileInputContainer);
-    });
+            imageContainer.appendChild(fileInputContainer);
+        }
 
-    const imgPreview = document.createElement('img');
-    imgPreview.classList.add('preview');
-    imgPreview.src = '#';
-    imgPreview.alt = 'Image Preview';
+        function removeFileInput(button) {
+            const fileInputContainer = button.parentNode;
+            const imageContainer = fileInputContainer.parentNode;
+            imageContainer.removeChild(fileInputContainer);
+        }
 
-    fileInputContainer.appendChild(newInput);
-    fileInputContainer.appendChild(removeButton);
-    fileInputContainer.appendChild(imgPreview);
-    imageContainer.appendChild(fileInputContainer);
-}
-
-function previewAndCropImage(input, index) {
+        function previewImage(input) {
     const file = input.files[0];
-    const imgPreview = input.nextElementSibling.nextElementSibling; 
+    const imgPreview = input.nextElementSibling.nextElementSibling;
     const reader = new FileReader();
 
     reader.onload = function (e) {
         imgPreview.src = e.target.result;
-        const cropper = new Cropper(imgPreview, {
-            aspectRatio: 1 / 1, 
-            viewMode: 1, 
-        });
-
-        const cropButton = document.createElement('button');
-        cropButton.textContent = 'Crop Image';
-        cropButton.addEventListener('click', function () {
-            const croppedCanvas = cropper.getCroppedCanvas();
-            croppedCanvas.toBlob((blob) => {
-                croppedImages[index] = blob;
-                console.log(croppedImages);
-                imgPreview.src = URL.createObjectURL(blob);
-                cropper.destroy();
-                input.style.display = 'none';
-                cropButton.style.display = 'none';
-            }, 'image/jpeg'); 
-        });
-
-        input.parentNode.appendChild(cropButton);
+        const val = imgPreview.id.split('-')[1];
+        console.log(val);
+        imgPreview.onclick = function() {
+            startCrop(val);
+        };
     };
+
     reader.readAsDataURL(file);
 }
+let cropper; 
 
-function uploadImages(event) {
-    event.preventDefault(); 
+function startCrop(val) {
+    imageExist = false
+    imageVal = val
+    const imagePreview = document.getElementById(`preview-${val}`);
+    const modal = document.getElementById('cropModal');
+    const cropCanvas = document.getElementById('cropCanvas');
+    const ctx = cropCanvas.getContext('2d');
+    modal.style.display = 'block';
+    const img = new Image();
+    img.src = imagePreview.src;
+    img.onload = function () {
+        cropCanvas.width = img.width;
+        cropCanvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        cropCanvas.style.display = 'none'; 
+        const cropImage = document.createElement('img');
+        cropImage.src = img.src;
+        cropImage.id = 'imageForCropper';
+        cropImage.style.maxWidth = '100%';
+        modal.querySelector('.modal-content').insertBefore(cropImage, cropCanvas);
 
-    const formData = new FormData();
-    croppedImages.forEach((blob, index) => {
-        formData.append('productImage[]', blob, `cropped-${index}.jpg`); 
-    });
+        // Initialize Cropper.js
+        cropper = new Cropper(cropImage, {
+            aspectRatio: 1, // Set your desired aspect ratio (1 for square)
+            viewMode: 1,
+            autoCropArea: 0.8,
+            responsive: true,
+        });
+    };
+}
+function submitCroppedImage() {
+    let val = imageVal
+    let imagePreview;
+    let imageInput;
+    if(imageExist){
+        imagePreview = document.getElementById(`existPreview-${val}`);
+        imageInput = document.getElementById(`existImageInput-${val}`);
+    }else{
+        imagePreview = document.getElementById(`preview-${val}`);
+        imageInput = document.getElementById(`imageInput-${val}`);
+    }
+    
+    const modal = document.getElementById('cropModal');
+    if (!imageInput) {
+        console.error('Image input element not found');
+        return;
+    }
+    const croppedCanvas = cropper.getCroppedCanvas();
+    croppedCanvas.toBlob(function(blob) {
+        const croppedFile = new File([blob], `cropped-${val}.jpg`, { type: 'image/jpeg' });
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(croppedFile);
+        imageInput.files = dataTransfer.files;
+        imagePreview.src = URL.createObjectURL(croppedFile);
+        cropper.destroy();
+        modal.querySelector('#imageForCropper').remove();
+        modal.style.display = 'none';
 
-    formData.append('productName', document.querySelector('input[name="productName"]').value);
-    formData.append('productCategory', document.querySelector('select[name="productCategory"]').value);
-    formData.append('priceBefore', document.querySelector('input[name="priceBefore"]').value);
-    formData.append('priceAfter', document.querySelector('input[name="priceAfter"]').value);
-    formData.append('productStock', document.querySelector('input[name="productStock"]').value);
-    formData.append('productTags', document.querySelector('input[name="productTags"]').value);
-    formData.append('productDescription', document.querySelector('input[name="productDescription"]').value);
+    }, 'image/jpeg');
+}
+function startCropExist(val) {
+    imageExist = true
+    imageVal = val
+    const imagePreview = document.getElementById(`existPreview-${val}`);
+    const modal = document.getElementById('cropModal');
+    const cropCanvas = document.getElementById('cropCanvas');
+    const ctx = cropCanvas.getContext('2d');
+    modal.style.display = 'block';
+    const img = new Image();
+    img.src = imagePreview.src;
+    img.onload = function () {
+        cropCanvas.width = img.width;
+        cropCanvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        cropCanvas.style.display = 'none'; 
+        const cropImage = document.createElement('img');
+        cropImage.src = img.src;
+        cropImage.id = 'imageForCropper';
+        cropImage.style.maxWidth = '100%';
+        modal.querySelector('.modal-content').insertBefore(cropImage, cropCanvas);
 
-    fetch('/admin/addProduct', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-        if(data.status){
-            window.location.href='/admin/products'
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        // Initialize Cropper.js
+        cropper = new Cropper(cropImage, {
+            aspectRatio: 1, // Set your desired aspect ratio (1 for square)
+            viewMode: 1,
+            autoCropArea: 0.8,
+            responsive: true,
+        });
+    };
 }
 
-    </script>
-    </body>
 
+function closeCropModal() {
+    const modal = document.getElementById('cropModal');
+    cropper.destroy(); // Destroy the cropper instance
+    modal.querySelector('#imageForCropper').remove(); // Remove the image element used by Cropper.js
+    modal.style.display = 'none';
+}
 
-
+        function delCategory(id){
+           if(confirm('Are you sure you want to delete this product permenantly')){
+               fetch('/admin/deleteProduct',{
+               method:'DELETE',
+               headers:{
+                   'Content-Type':'application/json'
+               },
+               body: JSON.stringify({
+                   id
+               })
+           }).then(data=>{
+               if(data){
+                   window.location.href ='/admin/products'
+               }else{
+                   throw new Error
+               }
+           }).catch(error=>console.error(error.message))
+   
+           }
+           
+        }
+           function restrict(id,isblocked) {
+               
+               console.log(isblocked);
+               const button = document.getElementById('restrict')
+               
+               if (isblocked=="true") {
+                   console.log('unblocked');
+   
+                   fetch('/admin/productUnrestrict', {
+                       method: 'PATCH',
+                       headers: {
+                           'Content-Type': 'application/json'
+                       },
+                       body: JSON.stringify({
+                           id
+                       })
+                   }).then(data => {
+                       if(data){
+                           window.location.href ="/admin/products"
+                       }else{
+                           throw new Error
+                       }
+                   }).catch(error => {
+                       console.error('error', error);
+                   });
+               } else {
+                   console.log('blocked');
+                   fetch('/admin/productRestrict', {
+                       method: 'PATCH',
+                       headers: {
+                           'Content-Type': 'application/json'
+                       },
+                       body: JSON.stringify({
+                           id
+                       })
+                   }).then(data => {
+                       if(data){
+                           window.location.href ="/admin/products"
+                       }else{
+                           throw new Error
+                       }
+                   }).catch(error => {
+                       console.error('error', error);
+                   });
+               }
+           }
+       </script>
 
     </html>
