@@ -514,6 +514,11 @@
     </body>
 
     <script>
+        function dltImage(fileInputContainer){
+            console.log('hello');
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.removeChild(fileInputContainer);
+        }
         let val = 0;
         let imageVal;
         let imageExist = false;
@@ -541,6 +546,7 @@
             removeButton.classList.add('dlButton');
             removeButton.addEventListener('click', function () {
                 imageContainer.removeChild(fileInputContainer);
+               
             });
 
             const imgPreview = document.createElement('img');
@@ -557,9 +563,16 @@
         }
 
         function removeFileInput(button) {
-            const fileInputContainer = button.parentNode;
+            const images = document.getElementsByName('productImage[]')
+            console.log(images.length);
+            if(images.length < 3){
+                const fileInputContainer = button.parentNode;
             const imageContainer = fileInputContainer.parentNode;
             imageContainer.removeChild(fileInputContainer);
+            }else{
+                alert('jbsadlfi')
+            }
+           
         }
 
         function previewImage(input) {
@@ -617,6 +630,7 @@ function submitCroppedImage() {
     if(imageExist){
         imagePreview = document.getElementById(`existPreview-${val}`);
         imageInput = document.getElementById(`existImageInput-${val}`);
+        imageInput.type ='file'
     }else{
         imagePreview = document.getElementById(`preview-${val}`);
         imageInput = document.getElementById(`imageInput-${val}`);

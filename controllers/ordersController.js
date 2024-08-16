@@ -8,7 +8,7 @@ const ordersPage = async (req, res) => {
   try {
     const orders = await Order.find({
       status: { $nin: ['cancelled', 'delivered', 'returned'] }
-    })
+    }).sort({createdAt:-1})
     const recentOrders = await Order.find({
       status: { $in: ['cancelled', 'delivered', 'returned'] }
     }).sort({ createdAt: -1 });
@@ -25,7 +25,7 @@ const ordersPage = async (req, res) => {
       { $sort: { expectedDelivery: -1 } }
     ])
 
-    const returnRequests = await Return.find({ approved: false })
+    const returnRequests = await Return.find({ approved: false }).sort({createdAt:-1})
     const returnedCarts = await Order.find({status:'returned'}).sort({createdAt:-1})
     const returnedOrders = await Order.aggregate([{$unwind:'$product'},{$match:{'product.productDetails.status':'returned'}},{$sort:{createdAt:-1}}])
     res.render('orders', { orders, recentOrders, allOrders, deliveredOrders, cancelledOrders, returnRequests ,returnedOrders,returnedCarts,allProduct})
