@@ -2,7 +2,8 @@ require('dotenv').config()
 const express = require('express')
 const authRoute = express.Router();
 const passport = require('passport')
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+// const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require("../model/userModel")
 
 const app = express()
@@ -30,11 +31,14 @@ passport.use(
   new GoogleStrategy({
     clientID: process.env.GOOGLE_AUTH_ID,
     clientSecret: process.env.GOOGLE_AUTH_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback",
+    callbackURL: "https://ajmalta.site/auth/google/callback",
   },
 
     async (accessToken, refreshToken, profile, done) => {
       try {
+        console.log("Google profile:", profile);
+        console.log("Access Token:", accessToken);
+        console.log("Refresh Token:", refreshToken);
         console.log("Google profile", profile);
         let user = await User.findOne({ userEmail: profile.emails[0].value });
 
