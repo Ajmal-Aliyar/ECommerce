@@ -1,54 +1,86 @@
 <%- include('../layouts/admin/header.ejs')%>
-<link  href="https://unpkg.com/cropperjs@1.5.13/dist/cropper.min.css" rel="stylesheet">
-<script src="https://unpkg.com/cropperjs@1.5.13/dist/cropper.min.js"></script>
-<style>
-    .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1000; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-    
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto; /* 15% from the top and centered */
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%; /* Could be more or less, depending on screen size */
-        max-width: 600px; /* Limit max width */
-        text-align: center;
-    }
-    
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-    
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    </style>
+    <link href="https://unpkg.com/cropperjs@1.5.13/dist/cropper.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/cropperjs@1.5.13/dist/cropper.min.js"></script>
     <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Center the content */
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #cropImage {
+            max-width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        #cropButton {
+            margin-top: 1em;
+            background-color: #c96;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #cropButton:hover {
+            background-color: rgb(135, 102, 68);
+        }
+
         .file-input-container {
             margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        body{
+
+        body {
             background: radial-gradient(#000000a3, transparent);
         }
+
         .preview {
             display: block;
             max-width: 100px;
@@ -60,7 +92,7 @@
 
             border: none;
             border-radius: 50%;
-            
+
             width: 3em;
             height: 3em;
         }
@@ -68,13 +100,9 @@
 
         .dlButton :hover {
             color: red;
-           
-       
-        }
 
-      
- 
- 
+
+        }
     </style>
     <div class="row justify-content-center  pt-5">
 
@@ -92,18 +120,18 @@
 
                         <label for="register-email">Category *</label>
                         <select name="productCategory" id="size" class="form-control" required>
-                            <%data.forEach((category)=>{
-                                if(category.isBlocked==false){%>
-                                <%if(product.productCategory==category.categoryName){%>
-                                    
-                                    <option name="<%=category.categoryName%>" selected>
-                                        <%=category.categoryName%>
-                                    </option>
-                                    <%}else{%>
-                                        <option name="<%=category.categoryName%>">
+                            <%data.forEach((category)=>{%>
+                                <% if(category.isBlocked==false){%>
+                                    <%if(product.productCategory==category.categoryName){%>
+
+                                        <option name="<%=category.categoryName%>" selected>
                                             <%=category.categoryName%>
                                         </option>
-                                <%}}})%>
+                                        <%}else{%>
+                                            <option name="<%=category.categoryName%>">
+                                                <%=category.categoryName%>
+                                            </option>
+                                            <%}}})%>
                         </select>
 
 
@@ -121,7 +149,8 @@
                                 <div class="file-input-container">
                                     <div style="width: 21em;">Image already exists for <%=product.productName%>
                                     </div>
-                                    <input type="hidden" value="<%=product.productImage[i]%>" name="productImage[]" id="existImageInput-<%=i%>">
+                                    <input type="hidden" value="<%=product.productImage[i]%>" name="productImage[]"
+                                        id="existImageInput-<%=i%>">
                                     <button onclick="removeFileInput(this)" class="dlButton">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -131,17 +160,19 @@
                                                 d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
                                         </svg>
                                     </button>
-                                    <img class="preview" id="existPreview-<%=i%>" src="<%=product.productImage[i]%>" alt="Image Preview" onclick="startCropExist('<%=i%>')">
+                                    <img class="preview" id="existPreview-<%=i%>" src="<%=product.productImage[i]%>"
+                                        alt="Image Preview" onclick="startCropExist('<%=i%>')">
                                 </div>
                             </div>
                             <%}%>
-                            <div id="cropModal" class="modal">
-                                <div class="modal-content">
-                                    <span class="close" onclick="closeCropModal()">&times;</span>
-                                    <canvas id="cropCanvas"></canvas>
-                                    <button type="button" onclick="submitCroppedImage()">Submit</button>
+                                <div id="cropModal" class="modal">
+                                    <div class="modal-content">
+                                        <span class="close" onclick="closeCropModal()">&times;</span>
+                                        <canvas id="cropCanvas"></canvas>
+                                        <button id="cropButton" type="button"
+                                            onclick="submitCroppedImage()">Submit</button>
+                                    </div>
                                 </div>
-                            </div>
 
                                 <label for="register-email">Price before *</label>
                                 <input type="number" name="priceBefore" value="<%=product.productPrices.priceBefore%>"
@@ -155,7 +186,7 @@
                                 <input type="number" name="productStock" value="<%=product.productStock%>" required
                                     class="form-control">
 
-                                    <label for="register-email">Cost *</label>
+                                <label for="register-email">Cost *</label>
                                 <input type="number" name="productCost" value="<%=product.productCost%>" required
                                     class="form-control">
 
@@ -173,17 +204,21 @@
                                 </button>
                     </form>
                 </div>
-                <div style="width: 100%;display: flex;align-items: center;justify-content: space-around; margin-top: 3em;">
-                    <button class="dlButton ptag" id="restrict" onclick="restrict('<%=product._id%>','<%=product.isBlocked%>')" 
-                        <% if(product.isBlocked==true){%>
-                            style="color: red;"
+                <div
+                    style="width: 100%;display: flex;align-items: center;justify-content: space-around; margin-top: 3em;">
+                    <button class="dlButton ptag" id="restrict"
+                        onclick="restrict('<%=product._id%>','<%=product.isBlocked%>')" <%if(product.isBlocked==true){%>
+                        style="color: red;"
                         <%}%> >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ban" viewBox="0 0 16 16">
-                            <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0"/>
-                          </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-ban" viewBox="0 0 16 16">
+                                <path
+                                    d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0" />
+                            </svg>
                     </button><span>or</span>
-                    <button class="dlButton" id="delete" onclick="delCategory('<%=product._id%>')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                            fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16" >
+                    <button class="dlButton" id="delete" onclick="delCategory('<%=product._id%>')"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-trash" viewBox="0 0 16 16">
                             <path
                                 d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
                             <path
@@ -514,7 +549,7 @@
     </body>
 
     <script>
-        function dltImage(fileInputContainer){
+        function dltImage(fileInputContainer) {
             console.log('hello');
             const imageContainer = document.getElementById('imageContainer');
             imageContainer.removeChild(fileInputContainer);
@@ -528,7 +563,7 @@
             const fileInputContainer = document.createElement('div');
             fileInputContainer.classList.add('file-input-container');
             const newInput = document.createElement('input');
-            newInput.id= 'imageInput-'+val
+            newInput.id = 'imageInput-' + val
             newInput.type = 'file';
             newInput.name = 'productImage[]';
             newInput.accept = 'image/*';
@@ -546,11 +581,11 @@
             removeButton.classList.add('dlButton');
             removeButton.addEventListener('click', function () {
                 imageContainer.removeChild(fileInputContainer);
-               
+
             });
 
             const imgPreview = document.createElement('img');
-            imgPreview.id = 'preview-'+val
+            imgPreview.id = 'preview-' + val
             imgPreview.classList.add('preview');
             imgPreview.src = '#';
             imgPreview.alt = 'Image Preview';
@@ -563,203 +598,220 @@
         }
 
         function removeFileInput(button) {
-            const images = document.getElementsByName('productImage[]')
-            console.log(images.length);
-            if(images.length < 3){
+            event.preventDefault(); // Prevent form submission if the button is inside a form
+
+            const images = document.getElementsByName('productImage[]');
+            const length = images.length;
+
+            if (length > 3) {
                 const fileInputContainer = button.parentNode;
-            const imageContainer = fileInputContainer.parentNode;
-            imageContainer.removeChild(fileInputContainer);
-            }else{
-                alert('jbsadlfi')
+                const imageContainer = fileInputContainer.parentNode;
+                imageContainer.removeChild(fileInputContainer);
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    text: "Minimum 3 images are required!",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
             }
-           
         }
 
         function previewImage(input) {
-    const file = input.files[0];
-    const imgPreview = input.nextElementSibling.nextElementSibling;
-    const reader = new FileReader();
+            const file = input.files[0];
+            const imgPreview = input.nextElementSibling.nextElementSibling;
+            const reader = new FileReader();
 
-    reader.onload = function (e) {
-        imgPreview.src = e.target.result;
-        const val = imgPreview.id.split('-')[1];
-        console.log(val);
-        imgPreview.onclick = function() {
-            startCrop(val);
-        };
-    };
+            reader.onload = function (e) {
+                imgPreview.src = e.target.result;
+                const val = imgPreview.id.split('-')[1];
+                console.log(val);
+                imgPreview.onclick = function () {
+                    startCrop(val);
+                };
+            };
 
-    reader.readAsDataURL(file);
-}
-let cropper; 
-
-function startCrop(val) {
-    imageExist = false
-    imageVal = val
-    const imagePreview = document.getElementById(`preview-${val}`);
-    const modal = document.getElementById('cropModal');
-    const cropCanvas = document.getElementById('cropCanvas');
-    const ctx = cropCanvas.getContext('2d');
-    modal.style.display = 'block';
-    const img = new Image();
-    img.src = imagePreview.src;
-    img.onload = function () {
-        cropCanvas.width = img.width;
-        cropCanvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        cropCanvas.style.display = 'none'; 
-        const cropImage = document.createElement('img');
-        cropImage.src = img.src;
-        cropImage.id = 'imageForCropper';
-        cropImage.style.maxWidth = '100%';
-        modal.querySelector('.modal-content').insertBefore(cropImage, cropCanvas);
-
-        // Initialize Cropper.js
-        cropper = new Cropper(cropImage, {
-            aspectRatio: 1, // Set your desired aspect ratio (1 for square)
-            viewMode: 1,
-            autoCropArea: 0.8,
-            responsive: true,
-        });
-    };
-}
-function submitCroppedImage() {
-    let val = imageVal
-    let imagePreview;
-    let imageInput;
-    if(imageExist){
-        imagePreview = document.getElementById(`existPreview-${val}`);
-        imageInput = document.getElementById(`existImageInput-${val}`);
-        imageInput.type ='file'
-    }else{
-        imagePreview = document.getElementById(`preview-${val}`);
-        imageInput = document.getElementById(`imageInput-${val}`);
-    }
-    
-    const modal = document.getElementById('cropModal');
-    if (!imageInput) {
-        console.error('Image input element not found');
-        return;
-    }
-    const croppedCanvas = cropper.getCroppedCanvas();
-    croppedCanvas.toBlob(function(blob) {
-        const croppedFile = new File([blob], `cropped-${val}.jpg`, { type: 'image/jpeg' });
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(croppedFile);
-        imageInput.files = dataTransfer.files;
-        imagePreview.src = URL.createObjectURL(croppedFile);
-        cropper.destroy();
-        modal.querySelector('#imageForCropper').remove();
-        modal.style.display = 'none';
-
-    }, 'image/jpeg');
-}
-function startCropExist(val) {
-    imageExist = true
-    imageVal = val
-    const imagePreview = document.getElementById(`existPreview-${val}`);
-    const modal = document.getElementById('cropModal');
-    const cropCanvas = document.getElementById('cropCanvas');
-    const ctx = cropCanvas.getContext('2d');
-    modal.style.display = 'block';
-    const img = new Image();
-    img.src = imagePreview.src;
-    img.onload = function () {
-        cropCanvas.width = img.width;
-        cropCanvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        cropCanvas.style.display = 'none'; 
-        const cropImage = document.createElement('img');
-        cropImage.src = img.src;
-        cropImage.id = 'imageForCropper';
-        cropImage.style.maxWidth = '100%';
-        modal.querySelector('.modal-content').insertBefore(cropImage, cropCanvas);
-
-        // Initialize Cropper.js
-        cropper = new Cropper(cropImage, {
-            aspectRatio: 1, // Set your desired aspect ratio (1 for square)
-            viewMode: 1,
-            autoCropArea: 0.8,
-            responsive: true,
-        });
-    };
-}
-
-
-function closeCropModal() {
-    const modal = document.getElementById('cropModal');
-    cropper.destroy(); // Destroy the cropper instance
-    modal.querySelector('#imageForCropper').remove(); // Remove the image element used by Cropper.js
-    modal.style.display = 'none';
-}
-
-        function delCategory(id){
-           if(confirm('Are you sure you want to delete this product permenantly')){
-               fetch('/admin/deleteProduct',{
-               method:'DELETE',
-               headers:{
-                   'Content-Type':'application/json'
-               },
-               body: JSON.stringify({
-                   id
-               })
-           }).then(data=>{
-               if(data){
-                   window.location.href ='/admin/products'
-               }else{
-                   throw new Error
-               }
-           }).catch(error=>console.error(error.message))
-   
-           }
-           
+            reader.readAsDataURL(file);
         }
-           function restrict(id,isblocked) {
-               
-               console.log(isblocked);
-               const button = document.getElementById('restrict')
-               
-               if (isblocked=="true") {
-                   console.log('unblocked');
-   
-                   fetch('/admin/productUnrestrict', {
-                       method: 'PATCH',
-                       headers: {
-                           'Content-Type': 'application/json'
-                       },
-                       body: JSON.stringify({
-                           id
-                       })
-                   }).then(data => {
-                       if(data){
-                           window.location.href ="/admin/products"
-                       }else{
-                           throw new Error
-                       }
-                   }).catch(error => {
-                       console.error('error', error);
-                   });
-               } else {
-                   console.log('blocked');
-                   fetch('/admin/productRestrict', {
-                       method: 'PATCH',
-                       headers: {
-                           'Content-Type': 'application/json'
-                       },
-                       body: JSON.stringify({
-                           id
-                       })
-                   }).then(data => {
-                       if(data){
-                           window.location.href ="/admin/products"
-                       }else{
-                           throw new Error
-                       }
-                   }).catch(error => {
-                       console.error('error', error);
-                   });
-               }
-           }
-       </script>
+        let cropper;
+
+        function startCrop(val) {
+            imageExist = false
+            imageVal = val
+            const imagePreview = document.getElementById(`preview-${val}`);
+            const modal = document.getElementById('cropModal');
+            const cropCanvas = document.getElementById('cropCanvas');
+            const ctx = cropCanvas.getContext('2d');
+            modal.style.display = 'block';
+            const img = new Image();
+            img.src = imagePreview.src;
+            img.onload = function () {
+                cropCanvas.width = img.width;
+                cropCanvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                cropCanvas.style.display = 'none';
+                const cropImage = document.createElement('img');
+                cropImage.src = img.src;
+                cropImage.id = 'imageForCropper';
+                cropImage.style.maxWidth = '100%';
+                modal.querySelector('.modal-content').insertBefore(cropImage, cropCanvas);
+
+
+                cropper = new Cropper(cropImage, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                    autoCropArea: 0.8,
+                    responsive: true,
+                });
+            };
+        }
+        function submitCroppedImage() {
+            let val = imageVal
+            let imagePreview;
+            let imageInput;
+            if (imageExist) {
+                imagePreview = document.getElementById(`existPreview-${val}`);
+                imageInput = document.getElementById(`existImageInput-${val}`);
+                imageInput.type = 'file'
+            } else {
+                imagePreview = document.getElementById(`preview-${val}`);
+                imageInput = document.getElementById(`imageInput-${val}`);
+            }
+
+            const modal = document.getElementById('cropModal');
+            if (!imageInput) {
+                console.error('Image input element not found');
+                return;
+            }
+            const croppedCanvas = cropper.getCroppedCanvas();
+            croppedCanvas.toBlob(function (blob) {
+                const croppedFile = new File([blob], `cropped-${val}.jpg`, { type: 'image/jpeg' });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(croppedFile);
+                imageInput.files = dataTransfer.files;
+                imagePreview.src = URL.createObjectURL(croppedFile);
+                cropper.destroy();
+                modal.querySelector('#imageForCropper').remove();
+                modal.style.display = 'none';
+
+            }, 'image/jpeg');
+        }
+        function startCropExist(val) {
+            imageExist = true
+            imageVal = val
+            const imagePreview = document.getElementById(`existPreview-${val}`);
+            const modal = document.getElementById('cropModal');
+            const cropCanvas = document.getElementById('cropCanvas');
+            const ctx = cropCanvas.getContext('2d');
+            modal.style.display = 'block';
+            const img = new Image();
+            img.src = imagePreview.src;
+            img.onload = function () {
+                cropCanvas.width = img.width;
+                cropCanvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                cropCanvas.style.display = 'none';
+                const cropImage = document.createElement('img');
+                cropImage.src = img.src;
+                cropImage.id = 'imageForCropper';
+                cropImage.style.maxWidth = '100%';
+                modal.querySelector('.modal-content').insertBefore(cropImage, cropCanvas);
+
+
+                cropper = new Cropper(cropImage, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                    autoCropArea: 0.8,
+                    responsive: true,
+                });
+            };
+        }
+
+
+        function closeCropModal() {
+            const modal = document.getElementById('cropModal');
+            cropper.destroy();
+            modal.querySelector('#imageForCropper').remove();
+            modal.style.display = 'none';
+        }
+
+        function delCategory(id) {
+            Swal.fire({
+                title: "Are you sure you want to delete this product permenantly?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#c96",
+                cancelButtonColor: "#c0001",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('/admin/deleteProduct', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id
+                    })
+                }).then(data => {
+                    if (data) {
+                        window.location.href = '/admin/products'
+                    } else {
+                        throw new Error
+                    }
+                }).catch(error => console.error(error.message))
+                }
+            });
+    
+
+        }
+        function restrict(id, isblocked) {
+
+            console.log(isblocked);
+            const button = document.getElementById('restrict')
+
+            if (isblocked == "true") {
+                console.log('unblocked');
+
+                fetch('/admin/productUnrestrict', {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id
+                    })
+                }).then(data => {
+                    if (data) {
+                        window.location.href = "/admin/products"
+                    } else {
+                        throw new Error
+                    }
+                }).catch(error => {
+                    console.error('error', error);
+                });
+            } else {
+                console.log('blocked');
+                fetch('/admin/productRestrict', {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id
+                    })
+                }).then(data => {
+                    if (data) {
+                        window.location.href = "/admin/products"
+                    } else {
+                        throw new Error
+                    }
+                }).catch(error => {
+                    console.error('error', error);
+                });
+            }
+        }
+    </script>
 
     </html>
