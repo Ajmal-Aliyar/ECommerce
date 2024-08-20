@@ -103,6 +103,7 @@ const productDetails = async (req, res) => {
     try {
         const id = req.query.id;
         const product = await Product.findById(id);
+        const reviews = await Review.find({productId:id})
         console.log(product)
         if (!product) {
 
@@ -114,9 +115,9 @@ const productDetails = async (req, res) => {
         if (req.session.user_id) {
             const userId = req.session.user_id
             const carts = await Cart.find({ userId: userId })
-            res.render('productDetails', { product, data, userId, carts });
+            res.render('productDetails', { product, data, userId, carts , reviews});
         } else {
-            res.render('productDetails', { product, data });
+            res.render('productDetails', { product, data , reviews});
         }
 
     } catch (err) {
@@ -331,12 +332,12 @@ const homePage = async (req, res) => {
 
         if (req.session.user_id) {
             const userId = req.session.user_id
-            const data = await Product.find({})
+            const data = await Product.find({}).limit(8)
             const category = await Category.find({})
             res.render('home', { userId, data, category });
         } else {
 
-            const data = await Product.find({})
+            const data = await Product.find({}).limit(8)
             const category = await Category.find({})
             res.render('home', { data, category });
         }
@@ -1363,7 +1364,7 @@ const cartDetails = async (req, res) => {
                 status: { $in: ['cancelled', 'delivered'] }
             }).sort({ createdAt: -1 });
 
-            res.render('cartDetails', { orders, userId, cancelledOrders, })
+            res.render('cartDetails', { orders, userId, cancelledOrders})
         }
     } catch (error) {
         console.error(error.mesesage);
@@ -1504,17 +1505,44 @@ const walletPage = async (req, res) => {
 const deliveredOrderPage = async (req, res) => {
     try {
         const userId = req.session.user_id
-        console.log(req.query);
         const { orderId, productId } = req.query
+        const reviews = await Review.find({productId:new ObjectId(productId)})
+
         const product = await Product.findById(new ObjectId(productId))
         const order = await Order.aggregate([{ $match: { _id: new ObjectId(orderId) } }, { $unwind: "$product" }, { $match: { 'product.productDetails._id': new ObjectId(productId) } }])
+        const orders = await Order.aggregate([
+            { $match: { _id: new ObjectId(orderId) } },
+            {
+                $project: {
+                    _id: 1,
+                    userId: 1,
+                    shippingAddress: 1,
+                    totalPrice: 1,
+                    grandTotalPrice: 1,
+                    payment: 1,
+                    appliedCoupon: 1,
+                    shippingCharge: 1,
+                    status: 1,
+                    email: 1,
+                    createdAt: 1,
+                    expectedDelivery: 1,
+                    product: {
+                        $filter: {
+                            input: "$product",
+                            as: "productData",
+                            cond: { $ne: ["$$productData.productDetails.status", "cancelled"] }
+                        }
+                    }
+                }
+            }
+        ]);
         console.log(order);
         let deliveredDate = order[0].expectedDelivery
         let today = new Date()
         let expireDate = new Date();
         expireDate.setDate(deliveredDate.getDate() + 7);
         const returnDate = { deliveredDate, today, expireDate }
-        res.render('deliveredOrder', { userId, product, order, returnDate })
+        res.render('deliveredOrder', { userId, product, order, returnDate,reviews ,orders})
     } catch (error) {
         console.error(error.mesesage);
     }
@@ -1722,10 +1750,67 @@ const walletPayment = async(req,res)=>{
         res.status(500).json({error})
     }
 }
+const addReview = async(req,res)=>{
+    try{
+        console.log(req.body);
+        const {reviewTitle,reviewComment,reviewRating,userId,productId} = req.body
+        const user = await userModel.findById(new ObjectId(userId))
+        const productid = new ObjectId(productId)
+        console.log(user);
+        const reviewData = new Review({
+            userId:user._id,
+            userName:user.username,
+            productId:productid,
+            reviewComment,
+            reviewRating:reviewRating+'%',
+            reviewTitle
+        })
+        await reviewData.save()
+        res.status(200).json({status:true})
+    }catch(error){
+        res.status(500).json({error})
+    }
+}
+const search = async(req,res)=>{
+    try {
+        console.log('hbdsf');
+        const searchQuery = req.query.q;
+        const regex = new RegExp(searchQuery, 'i');
+        console.log(regex);
+        const data = await Product.find({
+            $or: [
+                { productName: regex },
+                { productDescription: regex }
+            ]
+        });
+        console.log(data,'gat')
+        if (req.session.user_id) {
+            const userId = req.session.user_id
+            const carts = await Cart.find({ userId: userId })
+            const category = await Category.find({})
+            const user_id = new ObjectId(userId)
+            const wishlist = await Wishlist.aggregate([
+                { $match: { userId: user_id } },
+                { $project: { _id: 0, wishlistProducts: 1 } },
+                { $unwind: "$wishlistProducts" }
+            ]);
+            console.log(wishlist);
+
+            res.render('shop', { userId, data, carts, category, wishlist });
+        } else {
+            console.log('kjsdbfl');
+            const category = await Category.find({})
+            res.render('shop', { data, category });
+        }
+    } catch (error) {
+        console.error('Error during search:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+}
 module.exports = {
     homePage, faq, shopPage, categoryPage, wishlist, cart, contact, aboutPage, loginPage, logoutPage, productDetails, faqPage, loginedUser, errorPage, checkout, errorPage,
     forgotPassword, otpVerification, changePassword, insertUser, verifyOtp, otpResend, verifyUser, addNewAddress, address, editAddressPage, editedAddress,
     removeAddress, defaultAddress, editUser, forgotPasswordOtp, forgotOTPresend, sortFilter, addToCart, cartProductQuantity, removeFromCart, proceedCheckout,
     orderPage, forgotOtpSubmit, changePasswordVerify, cancelOrder, moreProduct, categoryFilter, addToWishlist, removeFromWishlist, applyCoupon, cartDetails, cancelProduct, cancelProductandCoupon,
-    orderPlace, walletPage, deliveredOrderPage, returnOrder, getCoupon, generatePdf, blockedLogin, logout,walletPayment
+    orderPlace, walletPage, deliveredOrderPage, returnOrder, getCoupon, generatePdf, blockedLogin, logout,walletPayment,addReview,search
 }

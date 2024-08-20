@@ -6,7 +6,64 @@
       border-radius: 5%;
       background: transparent;
     }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      background: #f0e0d6;
+      outline: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #c96;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      background-color: #a85;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #c96;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="range"]::-moz-range-thumb:hover {
+      background-color: #a85;
+    }
+
+    input[type="range"]::-ms-thumb {
+      width: 20px;
+      height: 20px;
+      background: #c96;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="range"]::-ms-thumb:hover {
+      background-color: #a85;
+    }
+
+    input[type="range"]:focus {
+      outline: none;
+      background: #f7e6da;
+    }
   </style>
+
   <main>
     <div class="container pt-8">
       <div class="row justify-content-center">
@@ -85,71 +142,63 @@
                             <a class="collapsed" role="button" data-toggle="collapse" href="#product-accordion-review"
                               aria-expanded="false" aria-controls="product-accordion-review"
                               style="background-color: transparent;">
-                              Reviews (2)
+                              Reviews (<%=reviews.length%>)
                             </a>
                           </h2>
                         </div><!-- End .card-header -->
                         <div id="product-accordion-review" class="collapse" aria-labelledby="product-review-heading"
                           data-parent="#product-accordion">
-                          <div class="card-body">
-                            <div class="reviews">
+                          <div class="card-body" style="height: 20em; overflow-y: auto;">
+                            <div style="padding: 1em;">
+                              <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                                <li class="nav-link">
+                                  <a id="tab-address-link" data-toggle="tab" href="#tab-addReview" role="tab"
+                                    aria-controls="tab-addProduct" aria-selected="false">Add Review</a>
+                                </li>
+                                <li class="nav-link">
+                                  <a href="/productDetails?id=<%=product._id%>">View Review</a>
+                                </li>
+                              </ul>
+                            </div>
+                            <% for(let i=0 ; i < reviews.length ; i++){%>
                               <div class="review">
                                 <div class="row no-gutters">
-                                  <div class="col-auto">
-                                    <h4><a href="#">Samanta J.</a></h4>
-                                    <div class="ratings-container">
+                                  <div class="col-12 d-flex justify-content-between">
+                                    <h4><a href="#">
+                                        <%=reviews[i].userName%>
+                                      </a></h4>
+                                    <div class="">
                                       <div class="ratings">
-                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                        <% const perc = reviews[i].reviewRating ;
+                                        const styleStar = `style=width:${perc};`%>
+                                        <div class="ratings-val"  <%= styleStar %>></div>
                                       </div><!-- End .ratings -->
                                     </div><!-- End .rating-container -->
-                                    <span class="review-date">6 days ago</span>
+                                    <% const now=new Date();
+                                     const createdAt=new Date(reviews[i].createdAt); 
+                                    const diffTime=Math.abs(now - createdAt); 
+                                      const diffDays=Math.ceil(diffTime / (1000 * 60 * 60 * 24));  %>
+                                      <span class="review-date">
+                                        <%=diffDays%> days ago
+                                      </span>
                                   </div><!-- End .col -->
-                                  <div class="col">
-                                    <h4>Good, perfect size</h4>
+                                  <div class="col-12">
+                                    <p><%=reviews[i].reviewTitle%></p>
+
 
                                     <div class="review-content">
-                                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus cum dolores
-                                        assumenda asperiores facilis porro reprehenderit animi culpa atque blanditiis
-                                        commodi perspiciatis doloremque, possimus, explicabo, autem fugit beatae quae
-                                        voluptas!</p>
+                                    <h4><%=reviews[i].reviewComment%></h4>
+
                                     </div><!-- End .review-content -->
 
-                                    <div class="review-action">
-                                      <a href="#"><i class="icon-thumbs-up"></i>Helpful (2)</a>
-                                      <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                    </div><!-- End .review-action -->
+                                  
                                   </div><!-- End .col-auto -->
                                 </div><!-- End .row -->
                               </div><!-- End .review -->
+                              <%}%>
 
-                              <div class="review">
-                                <div class="row no-gutters">
-                                  <div class="col-auto">
-                                    <h4><a href="#">John Doe</a></h4>
-                                    <div class="ratings-container">
-                                      <div class="ratings">
-                                        <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                      </div><!-- End .ratings -->
-                                    </div><!-- End .rating-container -->
-                                    <span class="review-date">5 days ago</span>
-                                  </div><!-- End .col -->
-                                  <div class="col">
-                                    <h4>Very good</h4>
 
-                                    <div class="review-content">
-                                      <p>Sed, molestias, tempore? Ex dolor esse iure hic veniam laborum blanditiis
-                                        laudantium iste amet. Cum non voluptate eos enim, ab cumque nam, modi, quas
-                                        iure illum repellendus, blanditiis perspiciatis beatae!</p>
-                                    </div><!-- End .review-content -->
 
-                                    <div class="review-action">
-                                      <a href="#"><i class="icon-thumbs-up"></i>Helpful (0)</a>
-                                      <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                    </div><!-- End .review-action -->
-                                  </div><!-- End .col-auto -->
-                                </div><!-- End .row -->
-                              </div><!-- End .review -->
-                            </div><!-- End .reviews -->
                           </div><!-- End .card-body -->
                         </div><!-- End .collapse -->
                       </div><!-- End .card -->
@@ -215,15 +264,11 @@
                             </a>
                           </h2>
                         </div><!-- End .card-header -->
-                        <div id="product-accordion-shipping" class="collapse show"
+                        <div id="product-accordion-shipping" class="collapse "
                           aria-labelledby="product-shipping-heading" data-parent="#product-accordion">
                           <div class="card-body">
                             <div class="product-desc-content">
-                              <p>We deliver to over 100 countries around the world. For full details of the
-                                delivery options we offer, please view our <a id="tab-address-link" data-toggle="tab"
-                                  href="#tab-addProduct" role="tab" aria-controls="tab-addProduct"
-                                  aria-selected="false">Delivery
-                                  information</a><br>
+                              <p>
                                 We hope you’ll love every purchase, but if you ever need to return an item you
                                 can do so within a week of receipt. If you want to return these product click here
                                 <a id="tab-address-link" data-toggle="tab" href="#tab-addProduct" role="tab"
@@ -244,202 +289,321 @@
         <div class="tab-content  col-md-4 col-lg-12 col-xl-4">
           <div class="tab-pane fade show active" id="tab-adfgdsroduct" role="tabpanel"
             aria-labelledby="tab-addsdess-link">
-            <div class="card-body">
-              <div class="reviews">
-                <div class="review">
-                  <div class="row no-gutters">
-                    <div class="col-auto">
-                      <h4><a href="#">Samanta J.</a></h4>
-                      <div class="ratings-container">
-                        <div class="ratings">
-                          <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                        </div><!-- End .ratings -->
-                      </div><!-- End .rating-container -->
-                      <span class="review-date">6 days ago</span>
-                    </div><!-- End .col -->
-                    <div class="col">
-                      <h4>Good, perfect size</h4>
+            <div class="">
+              <% for(let i=0; i < orders.length; i++) { let oldPriceTotal=0; let newPriceTotal=0; let totalItems=0; %>
+                    <table class="table table-wishlist table-mobile hello">
+                        <thead style="border-top: .1rem solid #ebebeb;">
+                            <tr>
+                                <th style="width: 13em; display: flex;">Cart Items </th>
+                                <th>Old Price</th>
+                                <th>New Price</th>
+                                <th>Qty</th>
+                                <th>Actual Price</th>
+                                <th>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody style="border-bottom: .1rem solid #ebebeb;">
+                            <% for(let j=0; j < orders[i].product.length; j++) {%>
+                                <tr>
+                                    <td >
+                                        <div class="">
 
-                      <div class="review-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus cum dolores
-                          assumenda asperiores facilis porro reprehenderit animi culpa atque blanditiis
-                          commodi perspiciatis doloremque, possimus, explicabo, autem fugit beatae quae
-                          voluptas!</p>
-                      </div><!-- End .review-content -->
+                                            <h3 class="product-title">
+                                                <a
+                                                    href="/productDetails?id=<%= orders[i].product[j].productDetails._id %>">
+                                                    <%=orders[i].product[j].productDetails.productName.split('–')[0]%>
+                                                </a>
+                                            </h3>
+                                        </div>
+                                    </td>
+                                    <td style="" class="price-col">
+                                        <%=orders[i].product[j].productDetails.productPrices.priceBefore%>
+                                    </td>
+                                    <td style=" text-align: center;" class="price-col">
+                                        <%=orders[i].product[j].productDetails.productPrices.priceAfter%>
+                                    </td>
+                                    <td style="" class="price-col">
+                                        <%=orders[i].product[j].quantity%>
+                                            <%totalItems +=orders[i].product[j].quantity%>
+                                    </td>
+                                    <td style="" class="price-col">
+                                        <%=
+                                            orders[i].product[j].quantity*orders[i].product[j].productDetails.productPrices.priceBefore%>
+                                            <%oldPriceTotal
+                                                +=orders[i].product[j].quantity*orders[i].product[j].productDetails.productPrices.priceBefore%>
+                                    </td>
+                                    <td style="" class="price-col">
+                                        <%=orders[i].product[j].quantity*orders[i].product[j].productDetails.productPrices.priceAfter%>
+                                    </td>
+                                  
+                                </tr>
 
-                      <div class="review-action">
-                        <a href="#"><i class="icon-thumbs-up"></i>Helpful (2)</a>
-                        <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                      </div><!-- End .review-action -->
-                    </div><!-- End .col-auto -->
-                  </div><!-- End .row -->
-                </div><!-- End .review -->
+                                <% } %>
+                        </tbody>
+                        <tbody style="border-bottom: .1rem solid #ebebeb; " class="cartDetails">
+                            <tr>
+                                <td style="border-bottom: none; text-align: start;padding-top: 1em; padding-bottom:6px;"
+                                    class="price-col">
+                                    <h6 style="margin: 0;">Price Amount</h6>
+                                </td>
+                                <td style="border-bottom: none; text-align: start;" class="" colspan="3"><h6>(
+                                    <%=totalItems%> items )</h6>
+                                </td>
+                                <td style="border-bottom: none ;padding-top: 1em; padding-bottom:6px;"
+                                    class="price-col">
+                                    <h6 style="margin: 0;">
+                                        <%=oldPriceTotal%>
+                                    </h6>
+                                </td>
+                                <td style="border-bottom: none ;padding-top: 1em; padding-bottom:6px;"
+                                    class="price-col">
+                                    <h6 style="margin: 0;">
+                                        <%=oldPriceTotal%>
+                                    </h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border-bottom: none; text-align: start;" class="price-col">
+                                    <h6 style="margin: 0;">You saved</h6>
+                                </td>
+                                <td style="border-bottom: none; text-align: start;" class="" colspan="3"><h6>(
+                                    <%=oldPriceTotal%> - <%=orders[i].totalPrice%> =
+                                            <%=oldPriceTotal-orders[i].totalPrice%> )</h6>
+                                </td>
+                                <td style="border-bottom: none;" class="price-col">
+                                    <h6 style="margin: 0;">- <%=oldPriceTotal-orders[i].totalPrice%></h6>
+                                </td>
+                                <td style="border-bottom: none;" class="price-col">
+                                    <h6 style="margin: 0;"><%=(oldPriceTotal)-(oldPriceTotal-orders[i].totalPrice)%>
+                                    </h6>
+                                </td>
 
-                <div class="review">
-                  <div class="row no-gutters">
-                    <div class="col-auto">
-                      <h4><a href="#">John Doe</a></h4>
-                      <div class="ratings-container">
-                        <div class="ratings">
-                          <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                        </div><!-- End .ratings -->
-                      </div><!-- End .rating-container -->
-                      <span class="review-date">5 days ago</span>
-                    </div><!-- End .col -->
-                    <div class="col">
-                      <h4>Very good</h4>
+                            </tr>
+                            <tr>
+                                <td style="border-bottom: none; text-align: start;" class="price-col">
+                                    <h6 style="margin: 0;">Coupon Discount</h6>
+                                </td>
+                                <td style="border-bottom: none; text-align: start;" class="" colspan="3"> <h6>(
+                                    <%=orders[i].appliedCoupon.couponCode%> )</h6>
+                                </td>
+                                <td style="border-bottom: none;" class="price-col">
+                                    <% if(orders[i].appliedCoupon.couponDiscount !=0){%>
+                                        <h6 style="margin: 0;">- <%=orders[i].appliedCoupon.couponDiscount%>
+                                                <%}else{%>
+                                                    <h6 style="margin: 0;">
+                                                        <%=orders[i].appliedCoupon.couponDiscount%>
 
-                      <div class="review-content">
-                        <p>Sed, molestias, tempore? Ex dolor esse iure hic veniam laborum blanditiis
-                          laudantium iste amet. Cum non voluptate eos enim, ab cumque nam, modi, quas
-                          iure illum repellendus, blanditiis perspiciatis beatae!</p>
-                      </div><!-- End .review-content -->
+                                                            <% }%>
+                                                    </h6>
+                                </td>
+                                <td style="border-bottom: none;" class="price-col">
+                                    <h6 style="margin: 0;">
+                                        <%=(oldPriceTotal)-(oldPriceTotal-orders[i].totalPrice+orders[i].appliedCoupon.couponDiscount)%>
+                                    </h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border-bottom: none; text-align: start;" class="price-col">
+                                    <h6 style="margin: 0;">Delivery Fee</h6>
+                                </td>
+                                <td style="border-bottom: none; text-align: start;" class="" colspan="3">(
+                                    <%=orders[i].shippingCharge.shippingType%> )
+                                </td>
+                                <td style="border-bottom: none;" class="price-col">
+                                    <h6 style="margin: 0;">
+                                        <%=orders[i].shippingCharge.shippingCharge%>
+                                    </h6>
+                                </td>
+                                <td style="border-bottom: none;" class="price-col">
+                                    <h6 style="margin: 0;">
+                                        <%=(oldPriceTotal+orders[i].shippingCharge.shippingCharge)-(oldPriceTotal-orders[i].totalPrice+orders[i].appliedCoupon.couponDiscount)%>
+                                    </h6>
+                                </td>
+                            </tr>
 
-                      <div class="review-action">
-                        <a href="#"><i class="icon-thumbs-up"></i>Helpful (0)</a>
-                        <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                      </div><!-- End .review-action -->
-                    </div><!-- End .col-auto -->
-                  </div><!-- End .row -->
-                </div><!-- End .review -->
-              </div><!-- End .reviews -->
+                        </tbody>
+                        <tbody style="border-bottom: .3rem solid #ebebeb; ">
+                            <tr>
+                                <td style="border-bottom: none; text-align: start; padding: 12px 0;" class="price-col">
+                                    <h5 style="margin: 0;color: #c96;">Total Price</h6>
+                                </td>
+                                <td style="border-bottom: none; text-align: start; padding: 12px 0;" class=""
+                                    colspan="4"></td>
+                                <td style="border-bottom: none; padding: 12px 0;" class="price-col">
+                                    <h5 style="margin: 0;color: #c96;">
+                                        <%=orders[i].grandTotalPrice%>
+                                    </h5>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <% } %>
             </div><!-- End .card-body -->
+          </div>
+          <div class="tab-pane fade" id="tab-addReview" role="tabpanel" aria-labelledby="tab-addsdess-link">
+            <form id="form-addreview">
+              <div class="card-body">
+                <div class="form-group">
+                  <input type="hidden" value="<%=order[0].product.productDetails._id%>" name="productId">
+                  <input type="hidden" value="<%=order[0].userId%>" name="userId">
+                  <label>Title</label>
+                  <input type="text" class="form-control" name="reviewTitle" required>
+                </div>
+                <div class="form-group">
+  <label for="reviewComment">Comment</label>
+  <textarea class="form-control" name="reviewComment" id="reviewComment" rows="5" required></textarea>
+</div>
+                <div class="form-group">
+                  <label for="formControlRange">Rating: <span id="rangeValue">1</span></label>
+                  <input type="range" name="reviewRating" class="form-control-range" id="formControlRange" value="100"
+                    min="1" max="100" style="color: #c96;">
+                </div>
+                <div class=" text-center">
+                  <button class="buttonStyle" type="submit" id="addReview">Submit</button>
+                </div>
+              </div>
+            </form>
           </div>
 
 
-
           <div class="tab-pane fade" id="tab-addProduct" role="tabpanel" aria-labelledby="tab-address-link">
-            
-              <form id="formData">
-                <% if(returnDate.expireDate> returnDate.today){%>
-                  <% let dateObject=new Date(returnDate.deliveredDate); let options={
-                    weekday: 'short' , year: 'numeric' , month: 'short' , day: '2-digit'
-                    }; let formattedDate=dateObject.toLocaleDateString('en-US',
-                    options); %>
-                    <div class="row align-items-center pl-5"><p style="margin: 0;">Delivered  date : </p> <h5 style="margin: 0;">&nbsp; <%=formattedDate%></h6></div>
-                  <%dateObject=new Date(returnDate.expireDate); options={
-                    weekday: 'short' , year: 'numeric' , month: 'short' , day: '2-digit'
-                    }; formattedDate=dateObject.toLocaleDateString('en-US',
-                    options); %>
-                  <div class="row align-items-center pl-5"><p style="margin: 0;">last date for return : </p> <h5 style="margin: 0;">&nbsp; <%=formattedDate%></h6></div>
-                <!-- <input type="hidden" value="<%= JSON.stringify(order[0])%>" name="order"> -->
-                <input type="hidden" value="<%=order[0]._id%>" name="orderId">
-                <input type="hidden" value="<%=order[0].product.productDetails._id%>" name="productId">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" class="form-control" name="fullName" required>
+
+            <form id="formData">
+              <% if(returnDate.expireDate >= returnDate.today){%>
+                <% let dateObject=new Date(returnDate.deliveredDate); let options={ weekday: 'short' , year: 'numeric' ,
+                  month: 'short' , day: '2-digit' }; let formattedDate=dateObject.toLocaleDateString('en-US', options);
+                  %>
+                  <div class="row align-items-center pl-5">
+                    <p style="margin: 0;">Delivered date : </p>
+                    <h5 style="margin: 0;">&nbsp; <%=formattedDate%>
+                        </h6>
                   </div>
-                  <div class="form-group">
-                    <label>Mobile</label>
-                    <input type="number" class="form-control" name="mobile" required>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Reason for Return:</label>
-                    <select class="form-control" style="height: 3em;" name="reason">
-                      <option value="defective">Defective Product</option>
-                      <option value="wrongItem">Wrong Item Received</option>
-                      <option value="notAsDescribed">Product Not as Described</option>
-                      <option value="changedMind">Changed Mind</option>
-                      <option value="betterPrice">Better Price Available</option>
-                      <option value="lateArrival">Product Arrived Late</option>
-                      <option value="quality">Quality Not Satisfactory</option>
-                      <option value="notNeeded">Product Not Needed Anymore</option>
-                      <option value="incorrectSize">Size/Dimensions Incorrect</option>
-                      <option value="incorrectQuantity">Incorrect Quantity Received</option>
-                      <option value="colorMismatch">Color/Style Mismatch</option>
-                      <option value="allergicReaction">Allergic Reaction</option>
-                      <option value="compatibility">Compatibility Issues</option>
-                      <option value="duplicateItem">Received a Duplicate Item</option>
-                      <option value="">Other</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <style>
-                      table {
-                        width: 100%;
-                        border-collapse: collapse;
-                      }
-
-                      th,
-                      td {
-                        border: 1px solid transparent;
-                        /* Fully transparent borders */
-                        padding: 8px;
-                        text-align: left;
-                      }
-                    </style>
-                    <label>Details</label>
-                    <table>
-                      <tr>
-                        <th>Product Actual Price</th>
-                        <td>
-                          <%=order[0].product.productDetails.productPrices.priceBefore%>
-                        </td>
-
-                      </tr>
-                      <tr>
-                        <th>Product Offerred Price</th>
-                        <td>
-                          <%=order[0].product.productDetails.productPrices.priceAfter%>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th>Product Quantity</th>
-                        <input type="hidden" value="<%=order[0].product.quantity%>" name="quantity">
-                        <td>
-                          <%=order[0].product.quantity%>
-                        </td>
-
-                      </tr>
-                      <tr>
-                        <th>Total Price Refund</th>
-                        <td>
-                          <%=order[0].product.productDetails.productPrices.priceAfter*order[0].product.quantity%>
-                        </td>
-                      </tr>
-                      <script>
-                        var rangeInput = document.getElementById('formControlRange');
-                        var rangeValue = document.getElementById('rangeValue');
-
-                        rangeValue.textContent = rangeInput.value + "%";
-
-                        rangeInput.addEventListener('input', function () {
-                          rangeValue.textContent = rangeInput.value + "%";
-                        });
-                      </script>
-                    </table>
-
-                  </div>
-                  <div class=" text-center">
-                    <button class="buttonStyle" type="submit" id="submitBtn">Submit</button>
-
-                  </div>
-              </form>
-              <% }else{%>
-
-                <div class="card">
-                  <div class="card-header">
-                    <h4>Out Of Return</h4>
-                  </div>
-                  <div class="card-body">
-                    <div class="empty-state" data-height="400">
-                      <div class="empty-state-icon">
-                      </div>
-                      <h2>We couldn't return this order <i class="
-                    fas fa-exclamation"></i></h2>
-                      <p class="lead">
-
-                        We are really sorry ! You can't return this order you are out of the last day to return this
-                        order.
-                      </p>
-                      <a href="#" class="mt-4 bb">Need Help?</a>
+                  <%dateObject=new Date(returnDate.expireDate); options={ weekday: 'short' , year: 'numeric' ,
+                    month: 'short' , day: '2-digit' }; formattedDate=dateObject.toLocaleDateString('en-US', options); %>
+                    <div class="row align-items-center pl-5">
+                      <p style="margin: 0;">last date for return : </p>
+                      <h5 style="margin: 0;">&nbsp; <%=formattedDate%>
+                          </h6>
                     </div>
+                    <!-- <input type="hidden" value="<%= JSON.stringify(order[0])%>" name="order"> -->
+                    <input type="hidden" value="<%=order[0]._id%>" name="orderId">
+                    <input type="hidden" value="<%=order[0].product.productDetails._id%>" name="productId">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" name="fullName" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Mobile</label>
+                        <input type="number" class="form-control" name="mobile" required>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Reason for Return:</label>
+                        <select class="form-control" style="height: 3em;" name="reason">
+                          <option value="defective">Defective Product</option>
+                          <option value="wrongItem">Wrong Item Received</option>
+                          <option value="notAsDescribed">Product Not as Described</option>
+                          <option value="changedMind">Changed Mind</option>
+                          <option value="betterPrice">Better Price Available</option>
+                          <option value="lateArrival">Product Arrived Late</option>
+                          <option value="quality">Quality Not Satisfactory</option>
+                          <option value="notNeeded">Product Not Needed Anymore</option>
+                          <option value="incorrectSize">Size/Dimensions Incorrect</option>
+                          <option value="incorrectQuantity">Incorrect Quantity Received</option>
+                          <option value="colorMismatch">Color/Style Mismatch</option>
+                          <option value="allergicReaction">Allergic Reaction</option>
+                          <option value="compatibility">Compatibility Issues</option>
+                          <option value="duplicateItem">Received a Duplicate Item</option>
+                          <option value="">Other</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <style>
+                          table {
+                            width: 100%;
+                            border-collapse: collapse;
+                          }
+
+                          th,
+                          td {
+                            border: 1px solid transparent;
+                            padding: 8px;
+                            text-align: left;
+                          }
+                        </style>
+                        <label>Details</label>
+                        <table>
+                          <tr>
+                            <th>Product Actual Price</th>
+                            <td>
+                              <%=order[0].product.productDetails.productPrices.priceBefore%>
+                            </td>
+
+                          </tr>
+                          <tr>
+                            <th>Product Offerred Price</th>
+                            <td>
+                              <%=order[0].product.productDetails.productPrices.priceAfter%>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>Product Quantity</th>
+                            <input type="hidden" value="<%=order[0].product.quantity%>" name="quantity">
+                            <td>
+                              <%=order[0].product.quantity%>
+                            </td>
+
+                          </tr>
+                          <tr>
+                            <th>Total Price Refund</th>
+                            <td>
+                              <%=order[0].product.productDetails.productPrices.priceAfter*order[0].product.quantity%>
+                            </td>
+                          </tr>
+                          <script>
+                            var rangeInput = document.getElementById('formControlRange');
+                            var rangeValue = document.getElementById('rangeValue');
+
+                            rangeValue.textContent = rangeInput.value + "%";
+
+                            rangeInput.addEventListener('input', function () {
+                              rangeValue.textContent = rangeInput.value + "%";
+                            });
+                          </script>
+                        </table>
+
+                      </div>
+                      <div class=" text-center">
+                        <button class="buttonStyle" type="submit" id="submitBtn">Submit</button>
+
+                      </div>
+            </form>
+            <% }else{%>
+
+              <div class="card">
+                <div class="card-header">
+                  <h4>Out Of Return</h4>
+                </div>
+                <div class="card-body">
+                  <div class="empty-state" data-height="400">
+                    <div class="empty-state-icon" style="background: #c96;"><i class="fas fa-exclamation"></i>
+                    </div>
+                    <h2>We couldn't return this order <i class="
+                    fas fa-exclamation"></i></h2>
+                    <p class="lead">
+                      <%dateObject=new Date(returnDate.expireDate); options={ weekday: 'short' , year: 'numeric' ,
+                      month: 'short' , day: '2-digit' }; formattedDate=dateObject.toLocaleDateString('en-US', options); %>
+                      We're really sorry! Unfortunately,
+                       you can't return this order as the return window has expired. The last day to return this order was <%=formattedDate%>.
+                    </p>
+                    <a href="#" class="mt-4 bb">Need Help?</a>
                   </div>
                 </div>
+              </div>
 
-                <%}%>
+              <%}%>
           </div>
         </div>
       </div>
@@ -455,6 +619,15 @@
   <script src="assets/js/superfish.min.js"></script>
   <script src="assets/js/owl.carousel.min.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const rangeInput = document.getElementById('formControlRange');
+      const rangeValue = document.getElementById('rangeValue');
+      rangeValue.textContent = rangeInput.value + '%';
+      rangeInput.addEventListener('input', function () {
+        rangeValue.textContent = rangeInput.value + '%';
+      });
+    });
+
     document.getElementById("formData").addEventListener("submit", function (event) {
       event.preventDefault();
       const formData = new FormData(document.getElementById("formData"));
@@ -482,7 +655,7 @@
               text: "Your return order is successfully submited, refund amount will be added to your wallet within 3 business days.",
               footer: ''
             });
-          }else{
+          } else {
             Swal.fire({
               icon: "error",
               title: "",
@@ -490,12 +663,54 @@
               footer: ''
             });
           }
-          document.getElementsByName('fullName')[0].value=''
-          document.getElementsByName('mobile')[0].value=''
+          document.getElementsByName('fullName')[0].value = ''
+          document.getElementsByName('mobile')[0].value = ''
 
 
         })
     })
+
+    document.getElementById('form-addreview').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const formData = new FormData(this);
+
+
+      const reviewTitle = formData.get('reviewTitle');
+      const reviewComment = formData.get('reviewComment');
+      const reviewRating = formData.get('reviewRating');
+      const productId = formData.get('productId')
+      const userId = formData.get('userId')
+      console.log('review request sended');
+
+
+      fetch('/addReview', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          reviewTitle, reviewComment, reviewRating, productId, userId
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          if (data.status) {
+            Swal.fire({
+              title: "",
+              text: "Review added successfully",
+              icon: "success"
+            }).then(() => {
+              location.reload()
+            })
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+
+        });
+    });
+
   </script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="assets/js/main.js"></script>

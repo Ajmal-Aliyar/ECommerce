@@ -65,6 +65,7 @@ userRoute.post('/changePasswordVerify',userController.changePasswordVerify)
 userRoute.post('/forgotOTPreSend',userController.forgotOTPresend)
 userRoute.get('/filter',userController.sortFilter)
 userRoute.post('/forgotOtpSubmit',userController.forgotOtpSubmit)
+userRoute.get('/search',userController.search)
 //cart
 userRoute.get('/cart',userAuth.isLogin,userController.cart)
 userRoute.post('/addToCart',userAuth.isLogin,userController.addToCart)
@@ -101,7 +102,7 @@ userRoute.post('/removeFromWishlist',userController.removeFromWishlist)
 
 //wallet
 userRoute.get('/wallet',userAuth.isLogin,userController.walletPage)
-
+userRoute.post('/addReview',userAuth.isLogin,userController.addReview)
 
 
 const Coupon = require('../model/couponModel')

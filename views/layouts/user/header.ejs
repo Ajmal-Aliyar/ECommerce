@@ -52,21 +52,21 @@
                     </div><!-- End .header-left -->
                     <!-- headerMiddle -->
                     <div class="header-right">
-                        <nav class="main-nav" <% if(typeof userId == 'undefined' ){%>
+                        <nav class="main-nav" <% if(typeof userId=='undefined' ){%>
                             style="margin-right: 41rem;"
-                        <%}else{%>
-                            style="margin-right: 20rem;"
-                        <%}%>>
+                            <%}else{%>
+                                style="margin-right: 20rem;"
+                                <%}%>>
 
-                            <ul class="menu sf-arrows">
-                                <!-- megamenu-container active ..put down for underline -->
-                                <li class="">
-                                    <a href="/" class="sf-with-ul">Home</a>
-                                </li>
-                                <li>
-                                    <a href="/shop" class="sf-with-ul">SHOP</a>
+                                    <ul class="menu sf-arrows">
+                                        <!-- megamenu-container active ..put down for underline -->
+                                        <li class="">
+                                            <a href="/" class="sf-with-ul">Home</a>
+                                        </li>
+                                        <li>
+                                            <a href="/shop" class="sf-with-ul">SHOP</a>
 
-                                    <ul>
+                                            <!-- <ul>
                                         <li>
                                             <a href="#">Outdoor</a>
                                             <ul>
@@ -104,72 +104,61 @@
                                                 <li><a href="">standard</a></li>
                                             </ul>
                                         </li>
-                                    </ul>
-                                </li>
-                                <!-- <li>
+                                    </ul> -->
+                                        </li>
+                                        <!-- <li>
                                     <a href="/shop" class="sf-with-ul">Shop</a>
                                 </li> -->
-                                <li>
-                                    <a href="/about" class="sf-with-ul">About us</a>
-
-                                    <ul>
                                         <li>
-                                            <a href="/about">About</a>
+                                            <a href="/about" class="sf-with-ul">About us</a>
 
-                                        </li>
-                                        <li>
-                                            <a href="/contact">Contact</a>
-                                        </li>
-                                        <li>
-                                            <a href="/faq">F.A.Q</a>
-                                        </li>
-                                        <li><a href="coming-soon.html">Coming Soon</a></li>
-                                    </ul>
-                                </li>
-                           
-                                <%if(typeof userId !='undefined' ){%>
-                                    <li>
-                                        <a href="/user" class="sf-with-ul">account</a>
+                                            <ul>
+                                                <li>
+                                                    <a href="/about">About</a>
 
-                                        <ul>
-                                            <li><a href="/user">user</a></li>
+                                                </li>
+                                                <li>
+                                                    <a href="/contact">Contact</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/faq">F.A.Q</a>
+                                                </li>
+
+                                            </ul>
+                                        </li>
+
+                                        <%if(typeof userId !='undefined' ){%>
                                             <li>
-                                                <a href="/address">address</a>
+                                                <a href="/user" class="sf-with-ul">account</a>
+
                                                 <ul>
+                                                    <li><a href="/user">user</a></li>
                                                     <li>
-                                                        <p style="padding-left: 30px;">sm street,new york,<br>pincode:
-                                                            843980</p>
+                                                        <a href="/address">address</a>
+
                                                     </li>
-                                                    <li><a href="/address">change address</a></li>
+                                                    <li><a href="/orders">orders</a></li>
+                                                    <li>
+                                                        <a href="/wallet">wallet</a>
+
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" onclick="logout()">log out</a>
+                                                    </li>
                                                 </ul>
                                             </li>
-                                            <li><a href="/orders">orders</a></li>
-                                            <li>
-                                                <a href="/wallet">wallet</a>
-                                                <ul>
-                                                    <li>
-                                                        <h6 style="padding-left: 30px;">$ 687</h6>
-                                                    </li>
-                                                    <li><a href="blog-grid-2cols.html">add money</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#" onclick="logout()">log out</a>
-                                            </li>
-                                        </ul>
-                                    </li>
 
-                            </ul><!-- End .menu -->
+                                    </ul><!-- End .menu -->
                         </nav><!-- End .main-nav -->
 
                         <div class="header-search">
                             <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
-                            <form action="#" method="get">
+                            <form id="searchForm">
                                 <div class="header-search-wrapper">
                                     <label for="q" class="sr-only">Search</label>
                                     <input type="search" class="form-control" name="q" id="q" placeholder="Search in..."
                                         required>
-                                </div><!-- End .header-search-wrapper -->
+                                </div>
                             </form>
                         </div><!-- End .header-search -->
 
@@ -179,7 +168,7 @@
                         </a>
 
                         <div class="dropdown cart-dropdown">
-                            <a href="/cart" class="dropdown-toggle" >
+                            <a href="/cart" class="dropdown-toggle">
                                 <!-- //role="button" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false" data-display="static" -->
                                 <i class="icon-shopping-cart"></i>
@@ -252,13 +241,13 @@
                                     <a href="#" class="sf-with-ul">Login</a>
 
                                     <ul>
-                                        
+
                                         <li>
                                             <a href="/signIn">SIGN IN</a>
                                         </li>
                                         <li>
                                             <a href="/signUp">SIGN UP</a>
-                                          
+
                                         </li>
                                     </ul>
                                 </li>
@@ -268,12 +257,12 @@
 
                                 <div class="header-search">
                                     <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
-                                    <form action="#" method="get">
+                                    <form id="searchForm">
                                         <div class="header-search-wrapper">
                                             <label for="q" class="sr-only">Search</label>
                                             <input type="search" class="form-control" name="q" id="q"
                                                 placeholder="Search in..." required>
-                                        </div><!-- End .header-search-wrapper -->
+                                        </div>
                                     </form>
                                 </div><!-- End .header-search -->
 
@@ -371,12 +360,20 @@
                     cancelButtonColor: "#c0001",
                     confirmButtonText: "logout"
                 }).then((result) => {
-                    if(result.isConfirmed){
-                        window.location.href='/logout'
+                    if (result.isConfirmed) {
+                        window.location.href = '/logout'
 
                     }
                 })
             }
+
+            document.getElementById('searchForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const searchQuery = document.getElementById('q').value;
+                if (searchQuery) {
+                    window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`;
+                }
+            });
 
         </script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
