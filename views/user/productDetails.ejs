@@ -1,14 +1,16 @@
 <%- include('../layouts/user/header.ejs')%>
-        <main class="main">
-            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
-                <div class="container d-flex align-items-center">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><%=product.productName%></li>
-                    </ol>
+    <main class="main">
+        <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+            <div class="container d-flex align-items-center">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <%=product.productName%>
+                    </li>
+                </ol>
 
-                    <!-- <nav class="product-pager ml-auto" aria-label="Product">
+                <!-- <nav class="product-pager ml-auto" aria-label="Product">
                         <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
                             <i class="icon-angle-left"></i>
                             <span>Prev</span>
@@ -19,78 +21,101 @@
                             <i class="icon-angle-right"></i>
                         </a>
                     </nav> -->
-                </div><!-- End .container -->
-            </nav><!-- End .breadcrumb-nav -->
+            </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
 
-            <div class="page-content">
-                <div class="container">
-                    <div class="product-details-top">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="product-gallery">
-                                    <figure class="product-main-image">
-                                        <span class="product-label label-sale">Sale</span>
-                                        <img id="product-zoom" src="<%=product.productImage[0]%>" data-zoom-image="<%=product.productImage[0]%>" alt="product image">
+        <div class="page-content">
+            <div class="container">
+                <div class="product-details-top">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="product-gallery">
+                                <figure class="product-main-image">
+                                    <span class="product-label label-sale">Sale</span>
+                                    <img id="product-zoom" src="<%=product.productImage[0]%>"
+                                        data-zoom-image="<%=product.productImage[0]%>" alt="product image">
 
-                                        <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                            <i class="icon-arrows"></i>
-                                        </a>
-                                    </figure><!-- End .product-main-image -->
+                                    <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                        <i class="icon-arrows"></i>
+                                    </a>
+                                </figure><!-- End .product-main-image -->
 
-                                    <div id="product-zoom-gallery" class="product-image-gallery product-gallery-masonry">
-                                        <a class="product-gallery-item" href="#" data-image="<%=product.productImage[0]%>" data-zoom-image="<%=product.productImage[0]%>">
-                                            <img src="<%=product.productImage[0]%>" alt="product cross">
-                                        </a>
-                                   
-                                        <a class="product-gallery-item gallery-item-wide" href="#" data-image="<%=product.productImage[0]%>" data-zoom-image="<%=product.productImage[0]%>">
-                                            <img src="<%=product.productImage[0]%>" alt="product with model">
-                                        </a>
+                                <div id="product-zoom-gallery" class="product-image-gallery product-gallery-masonry">
+                                    <a class="product-gallery-item" href="#" data-image="<%=product.productImage[0]%>"
+                                        data-zoom-image="<%=product.productImage[0]%>">
+                                        <img src="<%=product.productImage[0]%>" alt="product cross">
+                                    </a>
 
-                                        <a class="product-gallery-item" href="#" data-image="a<%=product.productImage[0]%>" data-zoom-image="<%=product.productImage[0]%>">
-                                            <img src="<%=product.productImage[0]%>" alt="product side">
-                                        </a>
-                                    </div><!-- End .product-image-gallery -->
-                                </div><!-- End .product-gallery -->
-                            </div><!-- End .col-md-6 -->
+                                    <a class="product-gallery-item gallery-item-wide" href="#"
+                                        data-image="<%=product.productImage[0]%>"
+                                        data-zoom-image="<%=product.productImage[0]%>">
+                                        <img src="<%=product.productImage[0]%>" alt="product with model">
+                                    </a>
 
-                            <div class="col-md-6">
-                                <div class="product-details sticky-content">
-                                    <h1 class="product-title"><%=product.productName%></h1><!-- End .product-title -->
+                                    <a class="product-gallery-item" href="#" data-image="a<%=product.productImage[0]%>"
+                                        data-zoom-image="<%=product.productImage[0]%>">
+                                        <img src="<%=product.productImage[0]%>" alt="product side">
+                                    </a>
+                                </div><!-- End .product-image-gallery -->
+                            </div><!-- End .product-gallery -->
+                        </div><!-- End .col-md-6 -->
 
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <%const ratings =[];
-                                            let val;
-                                            reviews.forEach(item => {
-                                                val = item.reviewRating.split('').pop()
-                                                // ratings.push(parseInt(val.join('')))
-                                                })%>
-                                            <p><%=val%></p>
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <a class="ratings-text" href="#product-accordion" id="review-link">( <%=reviews.length%> Reviews )</a>
-                                    </div><!-- End .rating-container -->
-                                    <%if(product.productPrices.offerRate==0){%>
-                                        <div class="product-price">
+                        <div class="col-md-6">
+                            <div class="product-details sticky-content">
+                                <h1 class="product-title">
+                                    <%=product.productName%>
+                                </h1><!-- End .product-title -->
 
-
-                                            <span class="new-price" style="color: black;font-weight: 500;font-size: 30px;">  ₹<%=product.productPrices.priceAfter%></span>
-                                        </div><!-- End .product-price -->
-                                   <% }else{%>
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <% const ratings=[]; 
+                                            reviews.forEach(item=> {
+                                                let val = parseInt(item.reviewRating.replace('%', ''));
+                                                ratings.push(val);
+                                            });
+                                            const rateperc = ratings.reduce((acc, item) => acc + item, 0) / ratings.length;
+                                           if(rateperc){
+                                                 const perc = rateperc+'%'
+                                        const styleStar = `style=width:${perc};`%>
+                                        <div class="ratings-val"  <%= styleStar %>></div>
+                                            <%}%>
+                                    </div><!-- End .ratings -->
+                                    <a class="ratings-text" href="#product-accordion" id="review-link">(
+                                        <%=reviews.length%> Reviews )
+                                    </a>
+                                </div><!-- End .rating-container -->
+                                <%if(product.productPrices.offerRate==0){%>
                                     <div class="product-price">
-                                        <span class="new-price" style="color: green; font-size: 20px;"><%=product.productPrices.offerRate%>% off</span>
-                                        <span class="old-price" style="text-decoration: line-through;margin: 0 0.41em 0  0;"> ₹<%=product.productPrices.priceBefore%> </span>
-                                        <span class="new-price" style="color: black;font-weight: 500;font-size: 30px;">  ₹<%=product.productPrices.priceAfter%></span>
+
+
+                                        <span class="new-price" style="color: black;font-weight: 500;font-size: 30px;">
+                                            ₹<%=product.productPrices.priceAfter%></span>
                                     </div><!-- End .product-price -->
-                                   <% }%>
+                                    <% }else{%>
+                                        <div class="product-price">
+                                            <span class="new-price" style="color: green; font-size: 20px;">
+                                                <%=product.productPrices.offerRate%>% off
+                                            </span>
+                                            <span class="old-price"
+                                                style="text-decoration: line-through;margin: 0 0.41em 0  0;"> ₹
+                                                <%=product.productPrices.priceBefore%>
+                                            </span>
+                                            <span class="new-price"
+                                                style="color: black;font-weight: 500;font-size: 30px;"> ₹
+                                                <%=product.productPrices.priceAfter%>
+                                            </span>
+                                        </div><!-- End .product-price -->
+                                        <% }%>
 
-                                    <div class="product-content">
-                                        <p><%=product.productDescription%>.</p>
-                                    </div><!-- End .product-content -->
+                                            <div class="product-content">
+                                                <p>
+                                                    <%=product.productDescription%>.
+                                                </p>
+                                            </div><!-- End .product-content -->
 
-                                    
 
-                                    <!-- <div class="details-filter-row details-row-size">
+
+                                            <!-- <div class="details-filter-row details-row-size">
                                         <label for="size">Coupon:</label>
                                         <div class="select-custom">
                                             <select name="size" id="size" class="form-control">
@@ -104,24 +129,27 @@
                                         <a href="#" class="size-guide"><i class="icon-th-list"></i>All Offers and Coupons </a>
                                     </div> -->
 
-                                    <!-- <div class="details-filter-row details-row-size">
+                                            <!-- <div class="details-filter-row details-row-size">
                                         <label for="qty">Qty:</label>
                                         <div class="product-details-quantity">
                                             <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                                         </div>
                                     </div> -->
 
-                                    <div class="details-filter-row details-row-size">
-                                        <label for="size">Stock :</label>
-                                        <%if(product.productStock==0){%>
-                                            <p style="color:red;"> Out of Stock!</p>
-                                        <%}else if(product.productStock<=10){%>
-                                            <p style="color:red;">! Hurry up only <%=product.productStock%>  lefts</p>
-                                        <%}else{%>
-                                            <label for=""><%=product.productStock%></label>
-                                        <%}%>
-                                    </div>
-                                    <!-- <div class="product-details-footer"style="padding: 1.5%;">
+                                            <div class="details-filter-row details-row-size">
+                                                <label for="size">Stock :</label>
+                                                <%if(product.productStock==0){%>
+                                                    <p style="color:red;"> Out of Stock!</p>
+                                                    <%}else if(product.productStock<=10){%>
+                                                        <p style="color:red;">! Hurry up only <%=product.productStock%>
+                                                                lefts</p>
+                                                        <%}else{%>
+                                                            <label for="">
+                                                                <%=product.productStock%>
+                                                            </label>
+                                                            <%}%>
+                                            </div>
+                                            <!-- <div class="product-details-footer"style="padding: 1.5%;">
                                         <div class="product-cat d-flex justify-content-center" >
                                             <span>Delivery To : <p>Ajmal Ta , 567800</p></span>
                                             
@@ -134,163 +162,221 @@
                                         </div>
 
                                     </div> -->
-                                    <div class="product-details-footer pb-1"></div>
-                                    <%if(typeof userId == 'undefined'){%>
-                                        <div class="product-details-action justify-content-center mb-2">
-                                            <a href="/signIn" class="btn-product btn-cart"><span>add to cart</span></a>
-    
-                                          
-                                        </div><!-- End .product-details-action -->
-                                   <% }else{%>
-                                        <div class="product-details-action justify-content-center">
-                                            <% if (carts.some(cart=> cart.userId == userId
-                                            && cart.productId.toString() ==
-                                            product._id)) { %>
-                                            <a 
-                                                class="btn-product btn-cart cart-button"
-                                                id="cart-button-<%= product._id %>"
-                                                data-user-id="<%= userId %>"
-                                                onclick="handleCartButton('<%= product._id %>', '<%= userId %>')">
-                                                <span
-                                                    id="button-text-<%= product._id %>">Go
-                                                    to Cart</span></a>
-                                            <% }else{ %>
-                                                <a 
-                                                    class="btn-product btn-cart cart-button"
-                                                    id="cart-button-<%= product._id %>"
-                                                    data-user-id="<%= userId %>"
-                                                    onclick="handleCartButton('<%= product._id %>', '<%= userId %>')">
-                                                    <span
-                                                        id="button-text-<%= product._id %>">Add
-                                                        to Cart</span></a>
-                                                <%}%>
-    
-                                            
-                                        </div><!-- End .product-details-action -->
-                                   <% }%>
-                                   
+                                            <div class="product-details-footer pb-1"></div>
+                                            <%if(typeof userId=='undefined' ){%>
+                                                <div class="product-details-action justify-content-center mb-2">
+                                                    <a href="/signIn" class="btn-product btn-cart"><span>add to
+                                                            cart</span></a>
 
-                                   
-                                    <div class="product-details-footer">
-                                        <div class="product-cat">
-                                            <span>Category:</span>
-                                            <%product.productTags.forEach((tag)=>{%>
-                                                <a href="#"><%=tag%></a>,
-                                            <%})%>
-                                            
-                                        </div><!-- End .product-cat -->
 
-                                        <div class="social-icons social-icons-sm">
-                                            <span class="social-label">Share:</span>
-                                            <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-                                            <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                                            <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
-                                            <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
-                                        </div>
-                                    </div><!-- End .product-details-footer -->
+                                                </div><!-- End .product-details-action -->
+                                                <% }else{%>
+                                                    <div class="product-details-action justify-content-center">
+                                                        <% if (carts.some(cart=> cart.userId == userId
+                                                            && cart.productId.toString() ==
+                                                            product._id)) { %>
+                                                            <a class="btn-product btn-cart cart-button"
+                                                                id="cart-button-<%= product._id %>"
+                                                                data-user-id="<%= userId %>"
+                                                                onclick="handleCartButton('<%= product._id %>', '<%= userId %>')">
+                                                                <span id="button-text-<%= product._id %>">Go
+                                                                    to Cart</span></a>
+                                                            <% }else{ %>
+                                                                <a class="btn-product btn-cart cart-button"
+                                                                    id="cart-button-<%= product._id %>"
+                                                                    data-user-id="<%= userId %>"
+                                                                    onclick="handleCartButton('<%= product._id %>', '<%= userId %>')">
+                                                                    <span id="button-text-<%= product._id %>">Add
+                                                                        to Cart</span></a>
+                                                                <%}%>
 
-                                    <div class="accordion accordion-plus product-details-accordion" id="product-accordion">
-                                        <div class="card card-box card-sm">
-                                            <div class="card-header" id="product-desc-heading">
-                                                <h2 class="card-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" href="#product-accordion-desc" aria-expanded="false" aria-controls="product-accordion-desc">
-                                                        Description
-                                                    </a>
-                                                </h2>
-                                            </div><!-- End .card-header -->
-                                            <div id="product-accordion-desc" class="collapse" aria-labelledby="product-desc-heading" data-parent="#product-accordion">
-                                                <div class="card-body">
-                                                    <div class="product-desc-content">
-                                                        <p>
-                                                            <%=product.productDescription%>.
-                                                        </p>
-                                                       
 
-                                                    </div><!-- End .product-desc-content -->
-                                                </div><!-- End .card-body -->
-                                            </div><!-- End .collapse -->
-                                        </div><!-- End .card -->
+                                                    </div><!-- End .product-details-action -->
+                                                    <% }%>
 
-                                        
 
-                                        <div class="card card-box card-sm">
-                                            <div class="card-header" id="product-shipping-heading">
-                                                <h2 class="card-title">
-                                                    <a role="button" data-toggle="collapse" href="#product-accordion-shipping" aria-expanded="true" aria-controls="product-accordion-shipping">
-                                                        Shipping & Returns
-                                                    </a>
-                                                </h2>
-                                            </div><!-- End .card-header -->
-                                            <div id="product-accordion-shipping" class="collapse show" aria-labelledby="product-shipping-heading" data-parent="#product-accordion">
-                                                <div class="card-body">
-                                                    <div class="product-desc-content">
-                                                        <p>We proudly deliver to over 100 countries around the globe, ensuring that no matter where you are, you can enjoy our products. We are committed to your satisfaction, and we strive to make every purchase a delightful experience. However, we understand that sometimes things don't work out as expected. That's why we offer a hassle-free return policy. If you ever need to return an item, you can do so within one week of receiving it. Our goal is to make the process as smooth and convenient as possible, so you can shop with confidence, knowing that your satisfaction is our top priority.</p>
-                                                    </div><!-- End .product-desc-content -->
-                                                </div><!-- End .card-body -->
-                                            </div><!-- End .collapse -->
-                                        </div><!-- End .card -->
 
-                                        <div class="card card-box card-sm">
-                                            <div class="card-header" id="product-review-heading">
-                                                <h2 class="card-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" href="#product-accordion-review" aria-expanded="false" aria-controls="product-accordion-review">
-                                                        Reviews (<%=reviews.length%>)
-                                                    </a>
-                                                </h2>
-                                            </div><!-- End .card-header -->
-                                            <div id="product-accordion-review" class="collapse" aria-labelledby="product-review-heading" data-parent="#product-accordion">
-                                                <div class="card-body" style="overflow-y: auto; height: 30em;">
-                                                    <div class="reviews">
-                                                        <% for(let i=0 ; i < reviews.length ; i++){%>
-                              <div class="review">
-                                <div class="row no-gutters">
-                                  <div class="col-auto">
-                                    <h4><a href="#">
-                                        <%=reviews[i].userName%>
-                                      </a></h4>
-                                    <div class="ratings-container">
-                                      <div class="ratings">
-                                        <% const perc = reviews[i].reviewRating ;
-                                        const styleStar = `style=width:${perc};`%>
-                                        <div class="ratings-val"  <%= styleStar %>></div>
-                                      </div><!-- End .ratings -->
-                                    </div><!-- End .rating-container -->
-                                    <% const now=new Date();
-                                     const createdAt=new Date(reviews[i].createdAt); 
-                                    const diffTime=Math.abs(now - createdAt); 
-                                      const diffDays=Math.ceil(diffTime / (1000 * 60 * 60 * 24));  %>
-                                      <span class="review-date">
-                                        <%=diffDays%> days ago
-                                      </span>
-                                  </div><!-- End .col -->
-                                  <div class="col">
-                                    <h4><%=reviews[i].reviewTitle%></h4>
+                                                        <div class="product-details-footer">
+                                                            <div class="product-cat">
+                                                                <span>Category:</span>
+                                                                <%product.productTags.forEach((tag)=>{%>
+                                                                    <a href="#">
+                                                                        <%=tag%>
+                                                                    </a>,
+                                                                    <%})%>
 
-                                    <div class="review-content">
-                                      <p><%=reviews[i].reviewComment%></p>
-                                    </div><!-- End .review-content -->
+                                                            </div><!-- End .product-cat -->
 
-                                  
-                                  </div><!-- End .col-auto -->
-                                </div><!-- End .row -->
-                              </div><!-- End .review -->
-                              <%}%>
-                                                        
-                                                    </div><!-- End .reviews -->
-                                                </div><!-- End .card-body -->
-                                            </div><!-- End .collapse -->
-                                        </div><!-- End .card -->
-                                    </div><!-- End .accordion -->
-                                </div><!-- End .product-details -->
-                            </div><!-- End .col-md-6 -->
-                        </div><!-- End .row -->
-                    </div><!-- End .product-details-top -->
+                                                            <div class="social-icons social-icons-sm">
+                                                                <span class="social-label">Share:</span>
+                                                                <a href="#" class="social-icon" title="Facebook"
+                                                                    target="_blank"><i class="icon-facebook-f"></i></a>
+                                                                <a href="#" class="social-icon" title="Twitter"
+                                                                    target="_blank"><i class="icon-twitter"></i></a>
+                                                                <a href="#" class="social-icon" title="Instagram"
+                                                                    target="_blank"><i class="icon-instagram"></i></a>
+                                                                <a href="#" class="social-icon" title="Pinterest"
+                                                                    target="_blank"><i class="icon-pinterest"></i></a>
+                                                            </div>
+                                                        </div><!-- End .product-details-footer -->
 
-                    <hr class="mt-3 mb-5">
+                                                        <div class="accordion accordion-plus product-details-accordion"
+                                                            id="product-accordion">
+                                                            <div class="card card-box card-sm">
+                                                                <div class="card-header" id="product-desc-heading">
+                                                                    <h2 class="card-title">
+                                                                        <a class="collapsed" role="button"
+                                                                            data-toggle="collapse"
+                                                                            href="#product-accordion-desc"
+                                                                            aria-expanded="false"
+                                                                            aria-controls="product-accordion-desc">
+                                                                            Description
+                                                                        </a>
+                                                                    </h2>
+                                                                </div><!-- End .card-header -->
+                                                                <div id="product-accordion-desc" class="collapse"
+                                                                    aria-labelledby="product-desc-heading"
+                                                                    data-parent="#product-accordion">
+                                                                    <div class="card-body">
+                                                                        <div class="product-desc-content">
+                                                                            <p>
+                                                                                <%=product.productDescription%>.
+                                                                            </p>
 
-                    <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
-                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
-                        data-owl-options='{
+
+                                                                        </div><!-- End .product-desc-content -->
+                                                                    </div><!-- End .card-body -->
+                                                                </div><!-- End .collapse -->
+                                                            </div><!-- End .card -->
+
+
+
+                                                            <div class="card card-box card-sm">
+                                                                <div class="card-header" id="product-shipping-heading">
+                                                                    <h2 class="card-title">
+                                                                        <a role="button" data-toggle="collapse"
+                                                                            href="#product-accordion-shipping"
+                                                                            aria-expanded="true"
+                                                                            aria-controls="product-accordion-shipping">
+                                                                            Shipping & Returns
+                                                                        </a>
+                                                                    </h2>
+                                                                </div><!-- End .card-header -->
+                                                                <div id="product-accordion-shipping"
+                                                                    class="collapse show"
+                                                                    aria-labelledby="product-shipping-heading"
+                                                                    data-parent="#product-accordion">
+                                                                    <div class="card-body">
+                                                                        <div class="product-desc-content">
+                                                                            <p>We proudly deliver to over 100 countries
+                                                                                around the globe, ensuring that no
+                                                                                matter where you are, you can enjoy our
+                                                                                products. We are committed to your
+                                                                                satisfaction, and we strive to make
+                                                                                every purchase a delightful experience.
+                                                                                However, we understand that sometimes
+                                                                                things don't work out as expected.
+                                                                                That's why we offer a hassle-free return
+                                                                                policy. If you ever need to return an
+                                                                                item, you can do so within one week of
+                                                                                receiving it. Our goal is to make the
+                                                                                process as smooth and convenient as
+                                                                                possible, so you can shop with
+                                                                                confidence, knowing that your
+                                                                                satisfaction is our top priority.</p>
+                                                                        </div><!-- End .product-desc-content -->
+                                                                    </div><!-- End .card-body -->
+                                                                </div><!-- End .collapse -->
+                                                            </div><!-- End .card -->
+
+                                                            <div class="card card-box card-sm">
+                                                                <div class="card-header" id="product-review-heading">
+                                                                    <h2 class="card-title">
+                                                                        <a class="collapsed" role="button"
+                                                                            data-toggle="collapse"
+                                                                            href="#product-accordion-review"
+                                                                            aria-expanded="false"
+                                                                            aria-controls="product-accordion-review">
+                                                                            Reviews (<%=reviews.length%>)
+                                                                        </a>
+                                                                    </h2>
+                                                                </div><!-- End .card-header -->
+                                                                <div id="product-accordion-review" class="collapse"
+                                                                    aria-labelledby="product-review-heading"
+                                                                    data-parent="#product-accordion">
+                                                                    <div class="card-body"
+                                                                        style="overflow-y: auto; height: 30em;">
+                                                                        <div class="reviews">
+                                                                            <% for(let i=0 ; i < reviews.length ;
+                                                                                i++){%>
+                                                                                <div class="review">
+                                                                                    <div class="row no-gutters">
+                                                                                        <div class="col-auto">
+                                                                                            <h4><a href="#">
+                                                                                                    <%=reviews[i].userName%>
+                                                                                                </a></h4>
+                                                                                            <div
+                                                                                                class="ratings-container">
+                                                                                                <div class="ratings">
+                                                                                                    <% const
+                                                                                                        perc=reviews[i].reviewRating
+                                                                                                        ; const
+                                                                                                        styleStar=`style=width:${perc};`%>
+                                                                                                        <div class="ratings-val"
+                                                                                                            <%=styleStar
+                                                                                                            %>></div>
+                                                                                                </div>
+                                                                                                <!-- End .ratings -->
+                                                                                            </div>
+                                                                                            <!-- End .rating-container -->
+                                                                                            <% const now=new Date();
+                                                                                                const createdAt=new
+                                                                                                Date(reviews[i].createdAt);
+                                                                                                const
+                                                                                                diffTime=Math.abs(now -
+                                                                                                createdAt); const
+                                                                                                diffDays=Math.ceil(diffTime
+                                                                                                / (1000 * 60 * 60 *
+                                                                                                24)); %>
+                                                                                                <span
+                                                                                                    class="review-date">
+                                                                                                    <%=diffDays%> days
+                                                                                                        ago
+                                                                                                </span>
+                                                                                        </div><!-- End .col -->
+                                                                                        <div class="col">
+                                                                                            <h4>
+                                                                                                <%=reviews[i].reviewTitle%>
+                                                                                            </h4>
+
+                                                                                            <div class="review-content">
+                                                                                                <p>
+                                                                                                    <%=reviews[i].reviewComment%>
+                                                                                                </p>
+                                                                                            </div>
+                                                                                            <!-- End .review-content -->
+
+
+                                                                                        </div><!-- End .col-auto -->
+                                                                                    </div><!-- End .row -->
+                                                                                </div><!-- End .review -->
+                                                                                <%}%>
+
+                                                                        </div><!-- End .reviews -->
+                                                                    </div><!-- End .card-body -->
+                                                                </div><!-- End .collapse -->
+                                                            </div><!-- End .card -->
+                                                        </div><!-- End .accordion -->
+                            </div><!-- End .product-details -->
+                        </div><!-- End .col-md-6 -->
+                    </div><!-- End .row -->
+                </div><!-- End .product-details-top -->
+
+                <hr class="mt-3 mb-5">
+
+                <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
+                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                    data-owl-options='{
                             "nav": false, 
                             "dots": true,
                             "margin": 20,
@@ -315,55 +401,21 @@
                                 }
                             }
                         }'>
-                        <%data.forEach((data)=>{%>
-                            <div class="product product-7">
-                                <figure class="product-media">
-                                    <span class="product-label label-out">new</span>
-                                    <a href="product.html">
-                                        <img src="<%=data.productImage[0]%>" alt="Product image" class="product-image">
-                                    </a>
-    
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                        <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                    </div><!-- End .product-action-vertical -->
-    
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-    
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Jackets</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html"><%=data.productName%></a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        <span class="out-price">$120.00</span>
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 6 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        <%})%>
-                        
-
+                    <%data.forEach((data)=>{%>
                         <div class="product product-7">
                             <figure class="product-media">
-                                <span class="product-label label-top">Top</span>
+                                <span class="product-label label-out">new</span>
                                 <a href="product.html">
-                                    <img src="assets/images/products/product-11.jpg" alt="Product image" class="product-image">
+                                    <img src="<%=data.productImage[0]%>" alt="Product image" class="product-image">
                                 </a>
 
                                 <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
+                                            wishlist</span></a>
+                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview"
+                                        title="Quick view"><span>Quick view</span></a>
+                                    <a href="#" class="btn-product-icon btn-compare"
+                                        title="Compare"><span>Compare</span></a>
                                 </div><!-- End .product-action-vertical -->
 
                                 <div class="product-action">
@@ -373,180 +425,242 @@
 
                             <div class="product-body">
                                 <div class="product-cat">
-                                    <a href="#">Shoes</a>
+                                    <a href="#">Jackets</a>
                                 </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Light brown studded Wide fit wedges</a></h3><!-- End .product-title -->
+                                <h3 class="product-title"><a href="product.html">
+                                        <%=data.productName%>
+                                    </a></h3><!-- End .product-title -->
                                 <div class="product-price">
-                                    $110.00
+                                    <span class="out-price">$120.00</span>
                                 </div><!-- End .product-price -->
                                 <div class="ratings-container">
                                     <div class="ratings">
                                         <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
                                     </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 1 Reviews )</span>
-                                </div><!-- End .rating-container -->
-
-                                <div class="product-nav product-nav-thumbs">
-                                    <a href="#" class="active">
-                                        <img src="assets/images/products/product-11-thumb.jpg" alt="product desc">
-                                    </a>
-                                    <a href="#">
-                                        <img src="assets/images/products/product-11-2-thumb.jpg" alt="product desc">
-                                    </a>
-
-                                    <a href="#">
-                                        <img src="assets/images/products/product-11-3-thumb.jpg" alt="product desc">
-                                    </a>
-                                </div><!-- End .product-nav -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product product-7">
-                            <figure class="product-media">
-                                <a href="product.html">
-                                    <img src="assets/images/products/product-10.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div>
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">Jumpers</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Yellow button front tea top</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $56.00
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 0 Reviews )</span>
+                                    <span class="ratings-text">( 6 Reviews )</span>
                                 </div><!-- End .rating-container -->
                             </div><!-- End .product-body -->
                         </div><!-- End .product -->
+                        <%})%>
 
-                        <div class="product product-7">
-                            <figure class="product-media">
-                                <a href="product.html">
-                                    <img src="assets/images/products/product-7.jpg" alt="Product image" class="product-image">
-                                </a>
 
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
+                            <div class="product product-7">
+                                <figure class="product-media">
+                                    <span class="product-label label-top">Top</span>
+                                    <a href="product.html">
+                                        <img src="assets/images/products/product-11.jpg" alt="Product image"
+                                            class="product-image">
+                                    </a>
 
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
+                                    <div class="product-action-vertical">
+                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
+                                                wishlist</span></a>
+                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview"
+                                            title="Quick view"><span>Quick view</span></a>
+                                        <a href="#" class="btn-product-icon btn-compare"
+                                            title="Compare"><span>Compare</span></a>
+                                    </div><!-- End .product-action-vertical -->
 
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">Jeans</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Blue utility pinafore denim dress</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $76.00
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 2 Reviews )</span>
-                                </div><!-- End .rating-container -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-                    </div><!-- End .owl-carousel -->
-                </div><!-- End .container -->
-            </div><!-- End .page-content -->
-        </main><!-- End .main -->
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                    </div><!-- End .product-action -->
+                                </figure><!-- End .product-media -->
 
-        <footer class="footer">
-        	<div class="footer-middle">
-	            <div class="container">
-	            	<div class="row">
-	            		<div class="col-sm-6 col-lg-3">
-	            			<div class="widget widget-about">
-	            				<img src="assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
-	            				<p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a href="#">Shoes</a>
+                                    </div><!-- End .product-cat -->
+                                    <h3 class="product-title"><a href="product.html">Light brown studded Wide fit
+                                            wedges</a></h3><!-- End .product-title -->
+                                    <div class="product-price">
+                                        $110.00
+                                    </div><!-- End .product-price -->
+                                    <div class="ratings-container">
+                                        <div class="ratings">
+                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                        </div><!-- End .ratings -->
+                                        <span class="ratings-text">( 1 Reviews )</span>
+                                    </div><!-- End .rating-container -->
 
-	            				<div class="social-icons">
-	            					<a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
-	            					<a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
-	            					<a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
-	            					<a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
-	            					<a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a>
-	            				</div><!-- End .soial-icons -->
-	            			</div><!-- End .widget about-widget -->
-	            		</div><!-- End .col-sm-6 col-lg-3 -->
+                                    <div class="product-nav product-nav-thumbs">
+                                        <a href="#" class="active">
+                                            <img src="assets/images/products/product-11-thumb.jpg" alt="product desc">
+                                        </a>
+                                        <a href="#">
+                                            <img src="assets/images/products/product-11-2-thumb.jpg" alt="product desc">
+                                        </a>
 
-	            		<div class="col-sm-6 col-lg-3">
-	            			<div class="widget">
-	            				<h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+                                        <a href="#">
+                                            <img src="assets/images/products/product-11-3-thumb.jpg" alt="product desc">
+                                        </a>
+                                    </div><!-- End .product-nav -->
+                                </div><!-- End .product-body -->
+                            </div><!-- End .product -->
 
-	            				<ul class="widget-list">
-	            					<li><a href="about.html">About Molla</a></li>
-	            					<li><a href="#">How to shop on Molla</a></li>
-	            					<li><a href="#">FAQ</a></li>
-	            					<li><a href="contact.html">Contact us</a></li>
-	            					<li><a href="login.html">Log in</a></li>
-	            				</ul><!-- End .widget-list -->
-	            			</div><!-- End .widget -->
-	            		</div><!-- End .col-sm-6 col-lg-3 -->
+                            <div class="product product-7">
+                                <figure class="product-media">
+                                    <a href="product.html">
+                                        <img src="assets/images/products/product-10.jpg" alt="Product image"
+                                            class="product-image">
+                                    </a>
 
-	            		<div class="col-sm-6 col-lg-3">
-	            			<div class="widget">
-	            				<h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+                                    <div class="product-action-vertical">
+                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
+                                                wishlist</span></a>
+                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview"
+                                            title="Quick view"><span>Quick view</span></a>
+                                        <a href="#" class="btn-product-icon btn-compare"
+                                            title="Compare"><span>Compare</span></a>
+                                    </div><!-- End .product-action-vertical -->
 
-	            				<ul class="widget-list">
-	            					<li><a href="#">Payment Methods</a></li>
-	            					<li><a href="#">Money-back guarantee!</a></li>
-	            					<li><a href="#">Returns</a></li>
-	            					<li><a href="#">Shipping</a></li>
-	            					<li><a href="#">Terms and conditions</a></li>
-	            					<li><a href="#">Privacy Policy</a></li>
-	            				</ul><!-- End .widget-list -->
-	            			</div><!-- End .widget -->
-	            		</div><!-- End .col-sm-6 col-lg-3 -->
+                                    <div class="product-action">
+                                        <a href="" class="btn-product btn-cart"><span>add to cart</span></a>
+                                    </div>
+                                </figure><!-- End .product-media -->
 
-	            		<div class="col-sm-6 col-lg-3">
-	            			<div class="widget">
-	            				<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a href="#">Jumpers</a>
+                                    </div><!-- End .product-cat -->
+                                    <h3 class="product-title"><a href="product.html">Yellow button front tea top</a>
+                                    </h3><!-- End .product-title -->
+                                    <div class="product-price">
+                                        $56.00
+                                    </div><!-- End .product-price -->
+                                    <div class="ratings-container">
+                                        <div class="ratings">
+                                            <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
+                                        </div><!-- End .ratings -->
+                                        <span class="ratings-text">( 0 Reviews )</span>
+                                    </div><!-- End .rating-container -->
+                                </div><!-- End .product-body -->
+                            </div><!-- End .product -->
 
-	            				<ul class="widget-list">
-	            					<li><a href="#">Sign In</a></li>
-	            					<li><a href="cart.html">View Cart</a></li>
-	            					<li><a href="#">My Wishlist</a></li>
-	            					<li><a href="#">Track My Order</a></li>
-	            					<li><a href="#">Help</a></li>
-	            				</ul><!-- End .widget-list -->
-	            			</div><!-- End .widget -->
-	            		</div><!-- End .col-sm-6 col-lg-3 -->
-	            	</div><!-- End .row -->
-	            </div><!-- End .container -->
-	        </div><!-- End .footer-middle -->
+                            <div class="product product-7">
+                                <figure class="product-media">
+                                    <a href="product.html">
+                                        <img src="assets/images/products/product-7.jpg" alt="Product image"
+                                            class="product-image">
+                                    </a>
 
-	        <div class="footer-bottom">
-	        	<div class="container">
-	        		<p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p><!-- End .footer-copyright -->
-	        		<figure class="footer-payments">
-	        			<img src="assets/images/payments.png" alt="Payment methods" width="272" height="20">
-	        		</figure><!-- End .footer-payments -->
-	        	</div><!-- End .container -->
-	        </div><!-- End .footer-bottom -->
-        </footer><!-- End .footer -->
+                                    <div class="product-action-vertical">
+                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
+                                                wishlist</span></a>
+                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview"
+                                            title="Quick view"><span>Quick view</span></a>
+                                        <a href="#" class="btn-product-icon btn-compare"
+                                            title="Compare"><span>Compare</span></a>
+                                    </div><!-- End .product-action-vertical -->
+
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                    </div><!-- End .product-action -->
+                                </figure><!-- End .product-media -->
+
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a href="#">Jeans</a>
+                                    </div><!-- End .product-cat -->
+                                    <h3 class="product-title"><a href="product.html">Blue utility pinafore denim
+                                            dress</a></h3><!-- End .product-title -->
+                                    <div class="product-price">
+                                        $76.00
+                                    </div><!-- End .product-price -->
+                                    <div class="ratings-container">
+                                        <div class="ratings">
+                                            <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
+                                        </div><!-- End .ratings -->
+                                        <span class="ratings-text">( 2 Reviews )</span>
+                                    </div><!-- End .rating-container -->
+                                </div><!-- End .product-body -->
+                            </div><!-- End .product -->
+                </div><!-- End .owl-carousel -->
+            </div><!-- End .container -->
+        </div><!-- End .page-content -->
+    </main><!-- End .main -->
+
+    <footer class="footer">
+        <div class="footer-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget widget-about">
+                            <img src="assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="105"
+                                height="25">
+                            <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna
+                                eros eu erat. </p>
+
+                            <div class="social-icons">
+                                <a href="#" class="social-icon" target="_blank" title="Facebook"><i
+                                        class="icon-facebook-f"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Twitter"><i
+                                        class="icon-twitter"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Instagram"><i
+                                        class="icon-instagram"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Youtube"><i
+                                        class="icon-youtube"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Pinterest"><i
+                                        class="icon-pinterest"></i></a>
+                            </div><!-- End .soial-icons -->
+                        </div><!-- End .widget about-widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="about.html">About Molla</a></li>
+                                <li><a href="#">How to shop on Molla</a></li>
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="contact.html">Contact us</a></li>
+                                <li><a href="login.html">Log in</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="#">Payment Methods</a></li>
+                                <li><a href="#">Money-back guarantee!</a></li>
+                                <li><a href="#">Returns</a></li>
+                                <li><a href="#">Shipping</a></li>
+                                <li><a href="#">Terms and conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="#">Sign In</a></li>
+                                <li><a href="cart.html">View Cart</a></li>
+                                <li><a href="#">My Wishlist</a></li>
+                                <li><a href="#">Track My Order</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .footer-middle -->
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
+                <!-- End .footer-copyright -->
+                <figure class="footer-payments">
+                    <img src="assets/images/payments.png" alt="Payment methods" width="272" height="20">
+                </figure><!-- End .footer-payments -->
+            </div><!-- End .container -->
+        </div><!-- End .footer-bottom -->
+    </footer><!-- End .footer -->
     </div><!-- End .page-wrapper -->
     <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
 
@@ -559,10 +673,11 @@
 
             <form action="#" method="get" class="mobile-search">
                 <label for="mobile-search" class="sr-only">Search</label>
-                <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
+                <input type="search" class="form-control" name="mobile-search" id="mobile-search"
+                    placeholder="Search in..." required>
                 <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
             </form>
-            
+
             <nav class="mobile-nav">
                 <ul class="mobile-menu">
                     <li class="active">
@@ -602,10 +717,12 @@
                             <li><a href="category-2cols.html">Shop Grid 2 Columns</a></li>
                             <li><a href="category.html">Shop Grid 3 Columns</a></li>
                             <li><a href="category-4cols.html">Shop Grid 4 Columns</a></li>
-                            <li><a href="category-boxed.html"><span>Shop Boxed No Sidebar<span class="tip tip-hot">Hot</span></span></a></li>
+                            <li><a href="category-boxed.html"><span>Shop Boxed No Sidebar<span
+                                            class="tip tip-hot">Hot</span></span></a></li>
                             <li><a href="category-fullwidth.html">Shop Fullwidth No Sidebar</a></li>
                             <li><a href="product-category-boxed.html">Product Category Boxed</a></li>
-                            <li><a href="product-category-fullwidth.html"><span>Product Category Fullwidth<span class="tip tip-new">New</span></span></a></li>
+                            <li><a href="product-category-fullwidth.html"><span>Product Category Fullwidth<span
+                                            class="tip tip-new">New</span></span></a></li>
                             <li><a href="cart.html">Cart</a></li>
                             <li><a href="checkout.html">Checkout</a></li>
                             <li><a href="wishlist.html">Wishlist</a></li>
@@ -617,7 +734,8 @@
                         <ul>
                             <li><a href="product.html">Default</a></li>
                             <li><a href="product-centered.html">Centered</a></li>
-                            <li><a href="product-extended.html"><span>Extended Info<span class="tip tip-new">New</span></span></a></li>
+                            <li><a href="product-extended.html"><span>Extended Info<span
+                                            class="tip tip-new">New</span></span></a></li>
                             <li><a href="product-gallery.html">Gallery</a></li>
                             <li><a href="product-sticky.html">Sticky Info</a></li>
                             <li><a href="product-sidebar.html">Boxed With Sidebar</a></li>
@@ -735,23 +853,28 @@
                         <div class="form-tab">
                             <ul class="nav nav-pills nav-fill" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin" role="tab" aria-controls="signin" aria-selected="true">Sign In</a>
+                                    <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin"
+                                        role="tab" aria-controls="signin" aria-selected="true">Sign In</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab"
+                                        aria-controls="register" aria-selected="false">Register</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="tab-content-5">
-                                <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
+                                <div class="tab-pane fade show active" id="signin" role="tabpanel"
+                                    aria-labelledby="signin-tab">
                                     <form action="#">
                                         <div class="form-group">
                                             <label for="singin-email">Username or email address *</label>
-                                            <input type="text" class="form-control" id="singin-email" name="singin-email" required>
+                                            <input type="text" class="form-control" id="singin-email"
+                                                name="singin-email" required>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-group">
                                             <label for="singin-password">Password *</label>
-                                            <input type="password" class="form-control" id="singin-password" name="singin-password" required>
+                                            <input type="password" class="form-control" id="singin-password"
+                                                name="singin-password" required>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-footer">
@@ -761,8 +884,10 @@
                                             </button>
 
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="signin-remember">
-                                                <label class="custom-control-label" for="signin-remember">Remember Me</label>
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="signin-remember">
+                                                <label class="custom-control-label" for="signin-remember">Remember
+                                                    Me</label>
                                             </div><!-- End .custom-checkbox -->
 
                                             <a href="#" class="forgot-link">Forgot Your Password?</a>
@@ -790,12 +915,14 @@
                                     <form action="#">
                                         <div class="form-group">
                                             <label for="register-email">Your email address *</label>
-                                            <input type="email" class="form-control" id="register-email" name="register-email" required>
+                                            <input type="email" class="form-control" id="register-email"
+                                                name="register-email" required>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-group">
                                             <label for="register-password">Password *</label>
-                                            <input type="password" class="form-control" id="register-password" name="register-password" required>
+                                            <input type="password" class="form-control" id="register-password"
+                                                name="register-password" required>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-footer">
@@ -805,8 +932,10 @@
                                             </button>
 
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="register-policy" required>
-                                                <label class="custom-control-label" for="register-policy">I agree to the <a href="#">privacy policy</a> *</label>
+                                                <input type="checkbox" class="custom-control-input" id="register-policy"
+                                                    required>
+                                                <label class="custom-control-label" for="register-policy">I agree to the
+                                                    <a href="#">privacy policy</a> *</label>
                                             </div><!-- End .custom-checkbox -->
                                         </div><!-- End .form-footer -->
                                     </form>
@@ -852,10 +981,10 @@
     <script src="assets/js/jquery.sticky-kit.min.js"></script>
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
-</body>
+    </body>
 
-<script>
-    function handleCartButton(productId, userId) {
+    <script>
+        function handleCartButton(productId, userId) {
             const buttonText = document.getElementById(`button-text-${productId}`);
             if (buttonText.innerText === 'ADD TO CART') {
                 addToCart(productId, userId);
@@ -909,5 +1038,6 @@
         function goToCart() {
             window.location.href = '/cart';
         }
-</script>
-</html>
+    </script>
+
+    </html>

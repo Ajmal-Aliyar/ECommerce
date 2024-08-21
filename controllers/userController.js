@@ -31,7 +31,7 @@ const shopPage = async (req, res) => {
         if (req.session.user_id) {
             const userId = req.session.user_id
             const carts = await Cart.find({ userId: userId })
-            const data = await Product.find({}).limit(4)
+            const data = await Product.find({}).limit(8)
             const category = await Category.find({})
             const user_id = new ObjectId(userId)
             const wishlist = await Wishlist.aggregate([
@@ -45,7 +45,7 @@ const shopPage = async (req, res) => {
         } else {
 
             const category = await Category.find({})
-            const data = await Product.find({}).limit(4)
+            const data = await Product.find({}).limit(8)
             res.render('shop', { data, category });
         }
     } catch (err) {
