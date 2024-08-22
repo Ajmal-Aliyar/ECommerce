@@ -416,7 +416,7 @@
                                                             </td>
                                                         </tr><!-- End .summary-total -->
                                                         <input id="grandTotalPriceInput" type="hidden"
-                                                            value="<%=totalPrice%>" name="grandTotalPrice">
+                                                            value="<%=totalPrice+shippingCharge%>" name="grandTotalPrice">
                                             </tbody>
                                         </table><!-- End .table table-summary -->
 
@@ -566,10 +566,10 @@
             if (this.checked) {
                 if (walletBalance < totalAmount) {
                     const walletAlert = document.getElementById('walletAlert')
-                    walletAlert.innerText = "You don't have much sufficient wallet balance.";
+                    walletAlert.innerText = "You don't have much sufficient wallet balance rust of the money should payed by razorpay";
                     walletAlert.style = 'color:#c30e0eb0;'
                 } else {
-                    document.getElementById('walletAlert').innerText = "You have selected Wallet as your payment method.";
+                    document.getElementById('walletAlert').innerText = "pay by wallet balance.";
 
                 }
             }
@@ -652,14 +652,83 @@
                 const walletBalance = parseInt(document.getElementById('walletBalance').innerText)
                 let totalAmount = document.getElementById('grandTotalPrice').innerText
                 totalAmount = parseInt(totalAmount.split(' ')[1])
+                console.log(totalAmount,'heoioi');
                 if (totalAmount > walletBalance) {
-                    Swal.fire({
-                        title: "Can't do payment !",
-                        text: "Your wallet does not have sufficient balance !",
-                        icon: "error"
-                    });
+                    let grandTotalPrice = totalAmount
+                    console.log(grandTotalPrice,'ahjsdf');
+                    console.log(walletBalance,'lijsdf');
+                     grandTotalPrice -= walletBalance
+                    console.log(grandTotalPrice,'jksdbfia');
+                    fetch('/create-order', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            grandTotalPrice, shippingCharge
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(order => {
+                            var options = {
+                                "key": "rzp_test_j329lgmyv1688D",
+                                "amount": grandTotalPrice,
+                                "currency": "INR",
+                                "name": "Hash Cart",
+                                "description": "Your payment was successful. Thank you for your purchase!",
+                                "image": "/assets/images/hashcart.jpeg",
+                                "order_id": order.id,
+                                "handler": function (response) {
+
+
+
+                                    const formData = new FormData(document.getElementById("checkoutForm"));
+                                    const jsonObject = {};
+                                    formData.forEach((value, key) => {
+                                        jsonObject[key] = value;
+                                    });
+
+                                    jsonObject.paymentId = response.razorpay_payment_id;
+                                    jsonObject.paymentSignature = response.razorpay_signature;
+                                    jsonObject.paymentOrderId = response.razorpay_order_id;
+                                    fetch('/walletPayed', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            totalAmount, walletBalance
+                                        })
+                                    })
+                                    fetch('/proceedCheckout', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(jsonObject)
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+
+                                            window.location.href = '/orderPlace?orderId=' + data.orderId
+                                        })
+                                        .catch(error => {
+                                            console.error('Error:', error);
+                                        });
+                                },
+                                "prefill": {
+                                    "name": "Ajmal",
+                                    "email": "ajmal@example.com",
+                                    "contact": "9090909090"
+                                },
+                                "theme": {
+                                    "color": "#c96"
+                                }
+                            };
+                            var rzp1 = new Razorpay(options);
+                            rzp1.open();
+                        })
                 } else {
-                    console.log('worked');
                     fetch('/walletPayed', {
                         method: 'POST',
                         headers: {
@@ -669,7 +738,7 @@
                             totalAmount, walletBalance
                         })
                     }).then(response => response.json())
-                    .then( data => {
+                        .then(data => {
                             if (data.status) {
                                 const formData = new FormData(document.getElementById("checkoutForm"));
                                 const jsonObject = {};

@@ -81,7 +81,7 @@
                     <table class="table table-wishlist table-mobile ">
                         <thead class="hello">
                             <tr>
-                                <th style="text-align: start;">Cart</th>
+                                <th style="text-align: start; ">Cart</th>
                                 <th style="width: 25em;">Expected on</th>
                                 <th>Status</th>
 
@@ -92,18 +92,16 @@
                             <% for(let i=0; i < orders.length; i++) { %>
                                 <tr>
                                     <td class="product-col">
-                                        <div class="product">
-                                            <figure class="product-media">
-                                                <a href="#">
+                                        <a href="/cartDetails?id=<%=orders[i]._id%>" class="product-link">
+                                            <div class="product">
+                                                <figure class="product-media">
                                                     <img src="/assets/images/shopping_cart.png" alt="Product image">
-                                                </a>
-                                            </figure>
-                                            <h3 class="product-title">
-                                                <a href="/cartDetails?id=<%=orders[i]._id%>">
-                                                    <%=orders[i]._id%>
-                                                </a>
-                                            </h3>
-                                        </div>
+                                                </figure>
+                                                <h3 class="product-title">
+                                                    view details <!-- Assuming there's a product name to display -->
+                                                </h3>
+                                            </div>
+                                        </a>
                                     </td>
 
                                     <td class="price-col" id="expectedDate-<%=i%>"></td>
