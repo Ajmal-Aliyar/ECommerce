@@ -214,7 +214,6 @@
                                                                 <table class="table  table-mobile">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>Cart ID</th>
                                                                             <th>Customer</th>
                                                                             <th>Address</th>
                                                                             <th>Total Price</th>
@@ -233,22 +232,11 @@
                                 
                                 
                                                                             <tr>
-                                                                                <td class="price-col">
-                                                                                    <div class="product">
-                                
-                                
-                                                                                        <h3 class="product-title ">
-                                                                                            <a
-                                                                                                href="/admin/productDetails?id= <%=orders[i].product[0].productDetails.productName%>">
-                                                                                                <%=orders[i]._id%>
-                                                                                            </a>
-                                                                                        </h3>
-                                                                                    </div>
-                                                                                </td>
+                                                                               
                                                                                 <td class="price-col ">
                                                                                     <%=orders[i].shippingAddress.firstName%>
                                                                                         <%=orders[i].shippingAddress.lastName%>
-                                                                                            (<%=orders[i].userId%>)
+                                                                                         
                                                                                 </td>
                                                                                 <td class="price-col ">
                                                                                     pin: <%=orders[i].shippingAddress.pinCode%>,<br>
@@ -311,7 +299,6 @@
                                                                     <thead>
                                                                         <tr>
                                                                             <th style="width: 4em;">hello</th>
-                                                                            <th>product ID</th>
                                                                             <th>Product</th>
                                                                             <th>Price</th>
                                                                             <th>Quantity</th>
@@ -331,13 +318,11 @@
         
                                                                             <tr>
                                                                                 <td>
-                                                                                    <img alt="image"
+                                                                                    <img alt="image" style="padding: 4px;"
                                                                                         src="<%=order.product.productDetails.productImage[0]%>"
                                                                                         class="rounded-circle author-box-picture">
                                                                                 </td>
-                                                                                <td class="price-col">
-                                                                                    <%=order.product.productDetails._id%>
-                                                                                </td>
+                                                                                
                                                                                 <td class="price-col ">
                                                                                     <%=order.product.productDetails.productName%>
                                                                                 </td>
@@ -382,7 +367,6 @@
                                                                 <table class="table  table-mobile">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>Cart ID</th>
                                                                             <th>Customer</th>
                                                                             <th>Address</th>
                                                                             <th>Total Price</th>
@@ -400,22 +384,10 @@
                                                                         <% for(let i=0 ; i < allOrders.length ;i++){%>
         
                                                                             <tr>
-                                                                                <td class="price-col">
-                                                                                    <div class="product">
-        
-        
-                                                                                        <h3 class="product-title ">
-                                                                                            <a
-                                                                                                href="/admin/productDetails?id= <%=allOrders[i].product[0].productDetails.productName%>">
-                                                                                                <%=allOrders[i]._id%>
-                                                                                            </a>
-                                                                                        </h3><!-- End .product-title -->
-                                                                                    </div><!-- End .product -->
-                                                                                </td>
+                                                                               
                                                                                 <td class="price-col ">
                                                                                     <%=allOrders[i].shippingAddress.firstName%>
                                                                                         <%=allOrders[i].shippingAddress.lastName%>
-                                                                                            (<%=allOrders[i].userId%>)
                                                                                 </td>
                                                                                 <td class="price-col ">
                                                                                     pin:
@@ -527,7 +499,7 @@
                                                         <table class="table  table-mobile">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Cart ID</th>
+
                                                                     <th>Customer</th>
                                                                     <th>Address</th>
                                                                     <th>Total Price</th>
@@ -545,22 +517,11 @@
                                                                 <% for(let i=0 ; i < deliveredOrders.length ;i++){%>
 
                                                                     <tr>
-                                                                        <td class="price-col">
-                                                                            <div class="product">
-
-
-                                                                                <h3 class="product-title ">
-                                                                                    <a
-                                                                                        href="/admin/productDetails?id= <%=deliveredOrders[i].product[0].productDetails.productName%>">
-                                                                                        <%=deliveredOrders[i]._id%>
-                                                                                    </a>
-                                                                                </h3><!-- End .product-title -->
-                                                                            </div><!-- End .product -->
-                                                                        </td>
+                                                                        
                                                                         <td class="price-col ">
                                                                             <%=deliveredOrders[i].shippingAddress.firstName%>
                                                                                 <%=deliveredOrders[i].shippingAddress.lastName%>
-                                                                                    (<%=deliveredOrders[i].userId%>)
+
                                                                         </td>
                                                                         <td class="price-col ">
                                                                             pin:
@@ -655,8 +616,7 @@
                                                                 <table class="table  table-mobile">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>Order ID</th>
-                                                                            <th>product ID</th>
+
                                                                             <th>Customer</th>
                                                                             <th>Reason</th>
                                                                             <th>Total Price</th>
@@ -676,22 +636,7 @@
     
     
                                                                             <tr>
-                                                                                <td class="price-col">
-                                                                                    <%=request.orderId%>
-                                                                                </td>
-    
-                                                                                <td class="price-col">
-                                                                                    <div class="product">
-    
-    
-                                                                                        <h3 class="product-title ">
-                                                                                            <a
-                                                                                                href="/admin/productDetails?id= <%=request.productId%>">
-                                                                                                <%=request.productId%>
-                                                                                            </a>
-                                                                                        </h3>
-                                                                                    </div>
-                                                                                </td>
+                                                                                
                                                                                 <td class="price-col ">
                                                                                     <%=request.fullName%>
                                                                                 </td>
@@ -737,7 +682,7 @@
                                                                 <table class="table  table-mobile">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>Cart ID</th>
+
                                                                             <th>Customer</th>
                                                                             <th>Address</th>
                                                                             <th>Total Price</th>
@@ -755,22 +700,11 @@
                                                                         <% for(let i=0 ; i < returnedCarts.length ;i++){%>
         
                                                                             <tr>
-                                                                                <td class="price-col">
-                                                                                    <div class="product">
-        
-        
-                                                                                        <h3 class="product-title ">
-                                                                                            <a
-                                                                                                href="/admin/productDetails?id= <%=returnedCarts[i].product[0].productDetails.productName%>">
-                                                                                                <%=returnedCarts[i]._id%>
-                                                                                            </a>
-                                                                                        </h3><!-- End .product-title -->
-                                                                                    </div><!-- End .product -->
-                                                                                </td>
+                                                                                
                                                                                 <td class="price-col ">
                                                                                     <%=returnedCarts[i].shippingAddress.firstName%>
                                                                                         <%=returnedCarts[i].shippingAddress.lastName%>
-                                                                                            (<%=returnedCarts[i].userId%>)
+
                                                                                 </td>
                                                                                 <td class="price-col ">
                                                                                     pin:
@@ -853,8 +787,8 @@
                                                                 <table class="table  table-mobile">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th style="width: 4em;">hello</th>
-                                                                            <th>product ID</th>
+                                                                            <th style="width: 4em;"></th>
+
                                                                             <th>Product</th>
                                                                             <th>Price</th>
                                                                             <th>Quantity</th>
@@ -874,13 +808,11 @@
         
                                                                             <tr>
                                                                                 <td>
-                                                                                    <img alt="image"
+                                                                                    <img alt="image" style="padding: 4px;"
                                                                                         src="<%=order.product.productDetails.productImage[0]%>"
                                                                                         class="rounded-circle author-box-picture">
                                                                                 </td>
-                                                                                <td class="price-col">
-                                                                                    <%=order.product.productDetails._id%>
-                                                                                </td>
+                                                                              
                                                                                 <td class="price-col ">
                                                                                     <%=order.product.productDetails.productName%>
                                                                                 </td>
@@ -944,8 +876,8 @@
                                                         <table class="table  table-mobile">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="width: 4em;">hello</th>
-                                                                    <th>product ID</th>
+                                                                    <th style="width: 4em;"></th>
+
                                                                     <th>Product</th>
                                                                     <th>Price</th>
                                                                     <th>Quantity</th>
@@ -965,13 +897,11 @@
 
                                                                     <tr>
                                                                         <td>
-                                                                            <img alt="image"
+                                                                            <img alt="image" style="padding: 4px;"
                                                                                 src="<%=order.product.productDetails.productImage[0]%>"
                                                                                 class="rounded-circle author-box-picture">
                                                                         </td>
-                                                                        <td class="price-col">
-                                                                            <%=order.product.productDetails._id%>
-                                                                        </td>
+
                                                                         <td class="price-col ">
                                                                             <%=order.product.productDetails.productName%>
                                                                         </td>

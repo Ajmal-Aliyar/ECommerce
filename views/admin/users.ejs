@@ -62,7 +62,7 @@
                             <table class="table  table-mobile">
                                 <thead>
                                     <tr>
-                                        <th>id</th>
+
                                         <th>username</th>
                                         <th>email</th>
                                         <th>mobile</th>
@@ -76,12 +76,7 @@
 
                                     <% userData.forEach((data)=> { %>
                                         <tr id="<%= data._id %>">
-                                            <td class="product-col" <% if (data.isBlocked==1) { %>
-                                                style="color: red;"
-                                                <% } %>
-                                                    >
-                                                    <%= data._id %>
-                                            </td>
+                                           
                                             <td class="product-col" <% if (data.isBlocked==1) { %>
                                                 style="color: red;"
                                                 <% } %>

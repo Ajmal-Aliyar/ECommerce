@@ -1727,9 +1727,12 @@ const logout = async (req, res) => {
 const walletPayment = async(req,res)=>{
     try{
 
-        const {walletBalance,totalAmount} = req.body
+        let {walletBalance,totalAmount} = req.body
         const userId = req.session.user_id
-
+        console.log(walletBalance,totalAmount);
+        if(walletBalance < totalAmount){
+            totalAmount = walletBalance
+        }
         const result = await Wallet.updateOne(
             { userId: new ObjectId(userId) },
             {
