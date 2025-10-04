@@ -1,7 +1,7 @@
 const User = require('../model/userModel')
 const Order = require('../model/orderModel')
 const Product = require('../model/productModel')
-const Category = require('../model/categoryModel')
+
 const adminDashboard = async (req, res) => {
     try {
         const data = await User.find({})
