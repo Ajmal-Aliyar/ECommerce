@@ -122,7 +122,7 @@ const setupRTL = (targetElement) => {
 }
 
 /**
- * Add modal + backdrop + no-war message for Russians to DOM
+ * Add modal + backdrop to DOM
  *
  * @param {SweetAlertOptions} params
  */
@@ -142,8 +142,15 @@ export const init = (params) => {
   }
   setInnerHtml(container, sweetHTML)
 
+  container.dataset['swal2Theme'] = params.theme
+
   const targetElement = getTarget(params.target)
   targetElement.appendChild(container)
+
+  if (params.topLayer) {
+    container.setAttribute('popover', '')
+    container.showPopover()
+  }
 
   setupAccessibility(params)
   setupRTL(targetElement)
