@@ -13,13 +13,20 @@ const bodyParser = require('body-parser')
 
 const config = require('./config/config')
 
-// Middleware setup
+
 app.use(session({
-    secret: config,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 24 * 60 * 60 * 1000 }
-}))
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    collectionName: "sessions"
+  }),
+  cookie: {
+    secure: false, 
+    maxAge: 1000 * 60 * 60 * 24
+  }
+}));
 
 app.use(nocache())
 app.use(bodyParser.json())
