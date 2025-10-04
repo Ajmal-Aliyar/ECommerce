@@ -2,7 +2,7 @@ const multer = require('multer');
 const path = require('path');
 
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
+    destination: function(_req, _file, cb) {
         cb(null, './public/assets/images/productImage'); 
     },
     filename: function(req, file, cb) {
@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 const uploadProduct = multer({
     storage: storage,
     limits: { fileSize: 1024 * 1024 * 5 }, 
-    fileFilter: function(req, file, cb) {
+    fileFilter: function(_req, file, cb) {
         checkFileType(file, cb);
     }
 }).array('productImage[]', 5); // Expect multiple files under the same field name as an array

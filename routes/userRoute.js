@@ -130,8 +130,8 @@ userRoute.get('/api/coupons', async (req, res) => {
 const Razorpay = require('razorpay');
 
 const instance = new Razorpay({
-    key_id: 'rzp_test_j329lgmyv1688D',
-    key_secret: 'moO56wKle8KqnECzrvW4Ws0W'
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
 });
 
 userRoute.post('/create-order', (req, res) => {

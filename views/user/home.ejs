@@ -53,7 +53,7 @@
                             <li class="active"><a href="/shop" data-filter="*">All</a></li>
                            
                             <% for(let i=0; i< 3; i++){%>
-                                <li><a href="/categoryFilter?id=<%=category[i].categoryName.toLowerCase()%>" ><%=category[i].categoryName.toLowerCase()%></a></li>
+                                <li><a href="/categoryFilter?id=<%=category[i]?.categoryName?.toLowerCase()%>" ><%=category[i]?.categoryName?.toLowerCase()%></a></li>
                             <%}%>
                     </div><!-- End .toolbox-right -->
                 </div><!-- End .filter-toolbox -->
@@ -61,7 +61,7 @@
                 
                 
                 <div class="products-container" data-layout="fitRows">
-                   <%data.forEach((product)=>{%>
+                   <%data?.forEach((product)=>{%>
 
                     <div class="product-item lighting col-6 col-md-4 col-lg-3">
                         <div class="product product-4">
@@ -152,7 +152,7 @@
             <nav class="mobile-nav">
                 <ul class="mobile-menu">
                     <li class="active">
-                        <a href="index.html">Home</a>
+                        <a href="/">Home</a>
 
                         <ul>
                             <li><a href="index-1.html">01 - furniture store</a></li>

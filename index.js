@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
-console.log(process.env.MONGODB_URL);
-mongoose.connect(process.env.MONGODB_URL)
+
+mongoose.connect(process.env.MONGODB_URI)
 const express = require("express")
 const app = express()
 const path = require('path')
@@ -41,7 +41,7 @@ app.use('/',userRoute)
 app.use('/auth',googleauth)
 app.use('/admin',adminRoute)
 
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 3;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}/signUp`);
 });
