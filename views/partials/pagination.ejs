@@ -1,0 +1,51 @@
+<style>
+  .pagination-container .btn {
+    color: black;
+  min-width: 40px;
+  text-align: center;
+}
+.pagination-container .btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-outline-primary {
+  border: 1px solid #c96;
+}
+
+.btn-outline-primary:hover {
+  background: #c96 !important;
+}
+
+.btn-primary {
+  background-color: #c96;
+  border: 1px solid #c96;
+}
+.btn-primary:hover {
+  background-color: #c96 !important;
+}
+</style>
+<% if (pagination && pagination.totalPages > 1) { %>
+  <div class="pagination-container" style="display:flex;justify-content:center;gap:8px;margin:20px 0;">
+    
+    <% if (pagination.hasPrevPage) { %>
+      <a href="?page=<%= pagination.prevPage %>" class="btn btn-outline-primary">Prev</a>
+    <% } else { %>
+      <button disabled class="btn btn-outline-secondary">Prev</button>
+    <% } %>
+
+    <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+      <a href="?page=<%= i %>"
+         class="btn <%= pagination.currentPage === i ? 'btn-primary' : 'btn-outline-primary' %>">
+         <%= i %>
+      </a>
+    <% } %>
+
+    <% if (pagination.hasNextPage) { %>
+      <a href="?page=<%= pagination.nextPage %>" class="btn btn-outline-primary">Next</a>
+    <% } else { %>
+      <button disabled class="btn btn-outline-secondary">Next</button>
+    <% } %>
+
+  </div>
+<% } %>

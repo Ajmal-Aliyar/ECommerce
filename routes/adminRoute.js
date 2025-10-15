@@ -20,6 +20,7 @@ adminRoute.get('/users',adminAuth.isLogin,adminController.usersPage)
 adminRoute.patch('/unblock',adminController.unblockUser)
 adminRoute.patch('/block',adminController.blockUser)
 adminRoute.get('/logout',adminController.logout)
+
 //category
 const categoryController = require('../controllers/categoryController')
 adminRoute.get('/categories',adminAuth.isLogin,categoryController.categories)

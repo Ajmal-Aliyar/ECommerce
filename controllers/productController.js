@@ -1,12 +1,18 @@
 const Product = require('../model/productModel')
-const Category = require('../model/categoryModel')
+const Category = require('../model/categoryModel');
+const { paginate } = require('../utils/paginate');
+
 const products = async (req, res) => {
     try {
-        const data = await Product.find({}).sort({ createdAt: -1 });
-        res.render('products', { data })
-    } catch (err) {
-        console.log(err);
-    }
+    const page = req.query.page || 1;
+    const limit = 6;
+
+    const { data, pagination } = await paginate(Product, {}, { page, limit });
+
+    res.render('products', { data, pagination });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 const addProductsPage = async (req, res) => {

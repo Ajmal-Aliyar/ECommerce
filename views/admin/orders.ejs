@@ -83,7 +83,7 @@
                                 <div class="padding-20">
                                     <div class="text-right">
                                         <h3 class="font-light mb-0">
-                                            <i class="ti-arrow-up text-success"></i> <%=allOrders.length%>
+                                            <i class="ti-arrow-up text-success"></i> <%=allOrders.pagination.totalPages*6%>
                                         </h3>
                                         <span class="text-muted">All Orders</span>
                                     </div>
@@ -105,7 +105,7 @@
                                 <div class="padding-20">
                                     <div class="text-right">
                                         <h3 class="font-light mb-0">
-                                            <i class="ti-arrow-up text-success"></i> <%=deliveredOrders.length%>
+                                            <i class="ti-arrow-up text-success"></i> <%=deliveredOrders.pagination.totalPages*6%>
                                         </h3>
                                         <span class="text-muted">Delivered Orders</span>
                                     </div>
@@ -129,7 +129,7 @@
                                 <div class="padding-20">
                                     <div class="text-right">
                                         <h3 class="font-light mb-0">
-                                            <i class="ti-arrow-up text-success"></i> <%=returnedOrders.length%>
+                                            <i class="ti-arrow-up text-success"></i> <%=returnedOrders.pagination.totalPages*6%>
                                         </h3>
                                         <span class="text-muted">Returned Orders</span>
                                     </div>
@@ -149,7 +149,7 @@
                                 <div class="padding-20">
                                     <div class="text-right">
                                         <h3 class="font-light mb-0">
-                                            <i class="ti-arrow-up text-success" aria-hidden="true"></i> <%=cancelledOrders.length%>
+                                            <i class="ti-arrow-up text-success" aria-hidden="true"></i> <%=cancelledOrders.pagination.totalPages*6%>
                                         </h3>
                                         <span class="text-muted">Cancelled Orders</span>
                                     </div>
@@ -210,7 +210,7 @@
                                                     <div class="tab-content" id="myTabContent">
                                                         <div class="tab-pane fade active show" id="allRequest" role="tabpanel"
                                                             aria-labelledby="home-tab">
-                                                            <%if(orders.length > 0){%>
+                                                            <%if(orders.data.length > 0){%>
                                                                 <table class="table  table-mobile">
                                                                     <thead>
                                                                         <tr>
@@ -228,44 +228,44 @@
                                 
                                 
                                                                     <tbody>
-                                                                        <% for(let i=0 ; i < orders.length ;i++){%>
+                                                                        <% for(let i=0 ; i < orders.data.length ;i++){%>
                                 
                                 
                                                                             <tr>
                                                                                
                                                                                 <td class="price-col ">
-                                                                                    <%=orders[i].shippingAddress.firstName%>
-                                                                                        <%=orders[i].shippingAddress.lastName%>
+                                                                                    <%=orders.data[i].shippingAddress.firstName%>
+                                                                                        <%=orders.data[i].shippingAddress.lastName%>
                                                                                          
                                                                                 </td>
                                                                                 <td class="price-col ">
-                                                                                    pin: <%=orders[i].shippingAddress.pinCode%>,<br>
-                                                                                        mob: <%=orders[i].shippingAddress.mobile%>, <br>
-                                                                                            place: <%=orders[i].shippingAddress.state%>,
-                                                                                                <%=orders[i].shippingAddress.district%>,
-                                                                                                    <%=orders[i].shippingAddress.place%>
+                                                                                    pin: <%=orders.data[i].shippingAddress.pinCode%>,<br>
+                                                                                        mob: <%=orders.data[i].shippingAddress.mobile%>, <br>
+                                                                                            place: <%=orders.data[i].shippingAddress.state%>,
+                                                                                                <%=orders.data[i].shippingAddress.district%>,
+                                                                                                    <%=orders.data[i].shippingAddress.place%>
                                                                                 </td>
                                                                                 <td class="price-col">
-                                                                                    Rs. <%=orders[i].grandTotalPrice%>
+                                                                                    Rs. <%=orders.data[i].grandTotalPrice%>
                                                                                 </td>
-                                                                                <td class="price-col" data-date="<%= orders[i].createdAt %>">
+                                                                                <td class="price-col" data-date="<%=orders.data[i].createdAt %>">
                                                                                     <span class="formatted-date"></span>
                                                                                 </td>
                                                                                 <td class="price-col">
-                                                                                    <select name="orderStatus" id="orderStatus-<%=orders[i]._id%>"
+                                                                                    <select name="orderStatus" id="orderStatus-<%=orders.data [i]._id%>"
                                                                                         class="form-control" required
-                                                                                        onchange="updateOrderStatus('<%= orders[i]._id %>')"
+                                                                                        onchange="updateOrderStatus('<%=orders.data[i]._id %>')"
                                                                                         style="padding: 0;">
-                                                                                        <option value="delivered" <%=orders[i].status==='delivered'
+                                                                                        <option value="delivered" <%=orders.data  [i].status==='delivered'
                                                                                             ? 'selected' : '' %>>delivered</option>
                                                                                         <option value="out for delivery"
-                                                                                            <%=orders[i].status==='out for delivery' ? 'selected' : ''
+                                                                                            <%=orders.data[i].status==='out for delivery' ? 'selected' : ''
                                                                                             %>
                                                                                             >out for delivery</option>
-                                                                                        <option value="shipped" <%=orders[i].status==='shipped'
+                                                                                        <option value="shipped" <%=orders.data[i].status==='shipped'
                                                                                             ? 'selected' : '' %>>shipped</option>
                                                                                         <option value="order placed"
-                                                                                            <%=orders[i].status==='order placed' ? 'selected' : '' %>
+                                                                                            <%=orders.data[i].status==='order placed' ? 'selected' : '' %>
                                                                                             >order placed</option>
                                                                                     </select>
                                 
@@ -273,7 +273,7 @@
                                 
                                 
                                                                                 <td class="remove-col "><button class="btn-remove"
-                                                                                        onclick="more('<%=orders[i]._id%>')"><i
+                                                                                        onclick="more('<%=orders.data [i]._id%>')"><i
                                                                                             class="icon-long-arrow-right"
                                                                                             style="color: rgb(0, 0, 0);"></i></button></td>
                                                                             </tr>
@@ -286,6 +286,7 @@
                                 
                                 
                                                                 </table>
+                                                                <%- include('../partials/pagination', { pagination: orders.pagination }) %>
                                                             <%}else{%>
                                                                 <p style="color: grey;padding: 1em; width: 100%;"> No requests ! </p>
                                                             <%}%>
@@ -294,7 +295,7 @@
                                                         
                                                         <div class="tab-pane fade" id="allOrders" role="tabpanel"
                                                             aria-labelledby="contact-tab">
-                                                            <%if(allProduct.length > 0){%>
+                                                            <%if(allProduct.data.length > 0){%>
                                                                 <table class="table  table-mobile">
                                                                     <thead>
                                                                         <tr>
@@ -313,7 +314,7 @@
                                                                     <tbody>
 
 
-                                                                        <%for(let order of allProduct){%>
+                                                                        <%for(let order of allProduct.data){%>
         
         
                                                                             <tr>
@@ -357,13 +358,14 @@
     
     
                                                                 </table>
+                                                                <%- include('../partials/pagination', { pagination: orders.pagination }) %>
                                                             <%}else{%>
                                                                 <p style="color: grey;padding: 1em; width: 100%;"> No requests ! </p>
                                                             <%}%>
                                                         </div>
                                                         <div class="tab-pane fade" id="allCarts" role="tabpanel"
                                                             aria-labelledby="profile-tab">
-                                                            <%if(allOrders.length > 0){%>
+                                                            <%if(allOrders.data.length > 0){%>
                                                                 <table class="table  table-mobile">
                                                                     <thead>
                                                                         <tr>
@@ -380,64 +382,64 @@
         
         
         
-                                                                    <tbody>
-                                                                        <% for(let i=0 ; i < allOrders.length ;i++){%>
+                                                                    <tbody >
+                                                                        <% for(let i=0 ; i < allOrders.data.length ;i++){%>
         
                                                                             <tr>
                                                                                
                                                                                 <td class="price-col ">
-                                                                                    <%=allOrders[i].shippingAddress.firstName%>
-                                                                                        <%=allOrders[i].shippingAddress.lastName%>
+                                                                                    <%=allOrders.data[i].shippingAddress.firstName%>
+                                                                                        <%=allOrders.data[i].shippingAddress.lastName%>
                                                                                 </td>
                                                                                 <td class="price-col ">
                                                                                     pin:
-                                                                                    <%=allOrders[i].shippingAddress.pinCode%>
+                                                                                    <%=allOrders.data[i].shippingAddress.pinCode%>
                                                                                         ,<br>
                                                                                         mob:
-                                                                                        <%=allOrders[i].shippingAddress.mobile%>
+                                                                                        <%=allOrders.data[i].shippingAddress.mobile%>
                                                                                             ,
                                                                                             <br>
                                                                                             place:
-                                                                                            <%=allOrders[i].shippingAddress.state%>
+                                                                                            <%=allOrders.data[i].shippingAddress.state%>
                                                                                                 ,
-                                                                                                <%=allOrders[i].shippingAddress.district%>
+                                                                                                <%=allOrders.data[i].shippingAddress.district%>
                                                                                                     ,
-                                                                                                    <%=allOrders[i].shippingAddress.place%>
+                                                                                                    <%=allOrders.data[i].shippingAddress.place%>
                                                                                 </td>
                                                                                 <td class="price-col">
-                                                                                    Rs. <%=allOrders[i].grandTotalPrice%>
+                                                                                    Rs. <%=allOrders.data[i].grandTotalPrice%>
                                                                                 </td>
                                                                                 <td class="price-col"
-                                                                                    data-date="<%= allOrders[i].createdAt %>">
+                                                                                    data-date="<%= allOrders.data[i].createdAt %>">
                                                                                     <span class="formatted-date"></span>
                                                                                 </td>
                                                                                 <td class="price-col">
-                                                                                    <% if(allOrders[i].status=='cancelled' ){%>
+                                                                                    <% if(allOrders.data[i].status=='cancelled' ){%>
                                                                                         <span
                                                                                             style="color: gray;">cancelled</span>
                                                                                         <%}else
-                                                                                            if(allOrders[i].status=='delivered'
+                                                                                            if(allOrders.data[i].status=='delivered'
                                                                                             ){%>
                                                                                             <span
                                                                                                 style="color: #008000b0">delivered</span>
                                                                                             <%}else
-                                                                                                if(allOrders[i].status=='shipped'
+                                                                                                if(allOrders.data[i].status=='shipped'
                                                                                                 ){%>
                                                                                                 <span
                                                                                                     style="color: #ff6700d1">shipped</span>
                                                                                                 <%}else
-                                                                                                    if(allOrders[i].status=='out for delivery'
+                                                                                                    if(allOrders.data[i].status=='out for delivery'
                                                                                                     ){%>
                                                                                                     <span
                                                                                                         style="color: #ffa500bd">out
                                                                                                         for delivery</span>
                                                                                                     <%}else
-                                                                                                        if(allOrders[i].status=='order placed'
+                                                                                                        if(allOrders.data[i].status=='order placed'
                                                                                                         ){%>
                                                                                                         <span
                                                                                                             style="color: #00ff1a60">order
                                                                                                             placed</span>
-                                                                                                        <%}else if(allOrders[i].status=='returned' ){%>
+                                                                                                        <%}else if(allOrders.data[i].status=='returned' ){%>
                                                                                                             <span  style="color:#cc5555 ;">returned</span>
                                                                                                                     <%}%>
         
@@ -446,20 +448,16 @@
         
                                                                                 <td class="remove-col "><button
                                                                                         class="btn-remove"
-                                                                                        onclick="more('<%=allOrders[i]._id%>')"><i
+                                                                                        onclick="more('<%=allOrders.data[i]._id%>')"><i
                                                                                             class="icon-long-arrow-right"
                                                                                             style="color: rgb(0, 0, 0);"></i></button>
                                                                                 </td>
                                                                             </tr>
         
-        
                                                                             <%}%>
-                                                                    </tbody>
-        
-        
-        
-        
-                                                                </table>
+                                                                            </tbody>
+                                                                            </table>
+                                                                            <%- include('../partials/pagination', { pagination: allOrders.pagination }) %>
                                                             <%}else{%>
                                                                 <p style="color: grey;padding: 1em; width: 100%;"> No requests ! </p>
                                                             <%}%>
@@ -514,44 +512,44 @@
 
 
                                                             <tbody>
-                                                                <% for(let i=0 ; i < deliveredOrders.length ;i++){%>
+                                                                <% for(let i=0 ; i < deliveredOrders.data.length ;i++){%>
 
                                                                     <tr>
                                                                         
                                                                         <td class="price-col ">
-                                                                            <%=deliveredOrders[i].shippingAddress.firstName%>
-                                                                                <%=deliveredOrders[i].shippingAddress.lastName%>
+                                                                            <%=deliveredOrders.data[i].shippingAddress.firstName%>
+                                                                                <%=deliveredOrders.data[i].shippingAddress.lastName%>
 
                                                                         </td>
                                                                         <td class="price-col ">
                                                                             pin:
-                                                                            <%=deliveredOrders[i].shippingAddress.pinCode%>
+                                                                            <%=deliveredOrders.data[i].shippingAddress.pinCode%>
                                                                                 ,<br>
                                                                                 mob:
-                                                                                <%=deliveredOrders[i].shippingAddress.mobile%>
+                                                                                <%=deliveredOrders.data[i].shippingAddress.mobile%>
                                                                                     ,
                                                                                     <br>
                                                                                     place:
-                                                                                    <%=deliveredOrders[i].shippingAddress.state%>
+                                                                                    <%=deliveredOrders.data[i].shippingAddress.state%>
                                                                                         ,
-                                                                                        <%=deliveredOrders[i].shippingAddress.district%>
+                                                                                        <%=deliveredOrders.data[i].shippingAddress.district%>
                                                                                             ,
-                                                                                            <%=deliveredOrders[i].shippingAddress.place%>
+                                                                                            <%=deliveredOrders.data[i].shippingAddress.place%>
                                                                         </td>
                                                                         <td class="price-col">
-                                                                            Rs. <%=deliveredOrders[i].grandTotalPrice%>
+                                                                            Rs. <%=deliveredOrders.data[i].grandTotalPrice%>
                                                                         </td>
                                                                         <td class="price-col"
-                                                                            data-date="<%= deliveredOrders[i].createdAt %>">
+                                                                            data-date="<%= deliveredOrders.data[i].createdAt %>">
                                                                             <span class="formatted-date"></span>
                                                                         </td>
                                                                         <td class="price-col">
-                                                                            <% if(deliveredOrders[i].status=='cancelled'
+                                                                            <% if(deliveredOrders.data[i].status=='cancelled'
                                                                                 ){%>
                                                                                 <span
                                                                                     style="color: gray;">cancelled</span>
                                                                                 <%}else
-                                                                                    if(deliveredOrders[i].status=='delivered'
+                                                                                    if(deliveredOrders.data[i].status=='delivered'
                                                                                     ){%>
                                                                                     <span
                                                                                         style="color: #008000b0">delivered</span>
@@ -562,7 +560,7 @@
 
                                                                         <td class="remove-col "><button
                                                                                 class="btn-remove"
-                                                                                onclick="more('<%=deliveredOrders[i]._id%>')"><i
+                                                                                onclick="more('<%=deliveredOrders.data[i]._id%>')"><i
                                                                                     class="icon-long-arrow-right"
                                                                                     style="color: rgb(0, 0, 0);"></i></button>
                                                                         </td>
@@ -576,6 +574,7 @@
 
 
                                                         </table>
+                                                         <%- include('../partials/pagination', { pagination: allOrders.pagination }) %>
                                                     </div>
                                                 </div>
                                             </div>
@@ -612,7 +611,7 @@
                                                     <div class="tab-content" id="myTabContent">
                                                         <div class="tab-pane fade active show" id="home" role="tabpanel"
                                                             aria-labelledby="home-tab">
-                                                            <%if(returnRequests.length > 0){%>
+                                                            <%if(returnRequests.data.length > 0){%>
                                                                 <table class="table  table-mobile">
                                                                     <thead>
                                                                         <tr>
@@ -632,7 +631,7 @@
     
     
                                                                     <tbody>
-                                                                        <% for(let request of returnRequests){%>
+                                                                        <% for(let request of returnRequests.data){%>
     
     
                                                                             <tr>
@@ -671,6 +670,7 @@
     
     
                                                                 </table>
+                                                                <%- include('../partials/pagination', { pagination: allOrders.pagination }) %>
                                                             <%}else{%>
                                                                 <p style="color: grey;padding: 1em; width: 100%;"> No requests ! </p>
                                                             <%}%>
@@ -678,7 +678,7 @@
                                                         </div>
                                                         <div class="tab-pane fade" id="profile" role="tabpanel"
                                                             aria-labelledby="profile-tab">
-                                                            <%if(returnedCarts.length > 0){%>
+                                                            <%if(returnedCarts.data.length > 0){%>
                                                                 <table class="table  table-mobile">
                                                                     <thead>
                                                                         <tr>
@@ -697,64 +697,64 @@
         
         
                                                                     <tbody>
-                                                                        <% for(let i=0 ; i < returnedCarts.length ;i++){%>
+                                                                        <% for(let i=0 ; i < returnedCarts.data.length ;i++){%>
         
                                                                             <tr>
                                                                                 
                                                                                 <td class="price-col ">
-                                                                                    <%=returnedCarts[i].shippingAddress.firstName%>
-                                                                                        <%=returnedCarts[i].shippingAddress.lastName%>
+                                                                                    <%=returnedCarts.data[i].shippingAddress.firstName%>
+                                                                                        <%=returnedCarts.data[i].shippingAddress.lastName%>
 
                                                                                 </td>
                                                                                 <td class="price-col ">
                                                                                     pin:
-                                                                                    <%=returnedCarts[i].shippingAddress.pinCode%>
+                                                                                    <%=returnedCarts.data[i].shippingAddress.pinCode%>
                                                                                         ,<br>
                                                                                         mob:
-                                                                                        <%=returnedCarts[i].shippingAddress.mobile%>
+                                                                                        <%=returnedCarts.data[i].shippingAddress.mobile%>
                                                                                             ,
                                                                                             <br>
                                                                                             place:
-                                                                                            <%=returnedCarts[i].shippingAddress.state%>
+                                                                                            <%=returnedCarts.data[i].shippingAddress.state%>
                                                                                                 ,
-                                                                                                <%=returnedCarts[i].shippingAddress.district%>
+                                                                                                <%=returnedCarts.data[i].shippingAddress.district%>
                                                                                                     ,
-                                                                                                    <%=returnedCarts[i].shippingAddress.place%>
+                                                                                                    <%=returnedCarts.data[i].shippingAddress.place%>
                                                                                 </td>
                                                                                 <td class="price-col">
-                                                                                    Rs. <%=returnedCarts[i].grandTotalPrice%>
+                                                                                    Rs. <%=returnedCarts.data[i].grandTotalPrice%>
                                                                                 </td>
                                                                                 <td class="price-col"
-                                                                                    data-date="<%= returnedCarts[i].createdAt %>">
+                                                                                    data-date="<%= returnedCarts.data[i].createdAt %>">
                                                                                     <span class="formatted-date"></span>
                                                                                 </td>
                                                                                 <td class="price-col">
-                                                                                    <% if(returnedCarts[i].status=='cancelled' ){%>
+                                                                                    <% if(returnedCarts.data[i].status=='cancelled' ){%>
                                                                                         <span
                                                                                             style="color: gray;">cancelled</span>
                                                                                         <%}else
-                                                                                            if(returnedCarts[i].status=='delivered'
+                                                                                            if(returnedCarts.data[i].status=='delivered'
                                                                                             ){%>
                                                                                             <span
                                                                                                 style="color: #008000b0">delivered</span>
                                                                                             <%}else
-                                                                                                if(returnedCarts[i].status=='shipped'
+                                                                                                if(returnedCarts.data[i].status=='shipped'
                                                                                                 ){%>
                                                                                                 <span
                                                                                                     style="color: #ff6700d1">shipped</span>
                                                                                                 <%}else
-                                                                                                    if(returnedCarts[i].status=='out for delivery'
+                                                                                                    if(returnedCarts.data[i].status=='out for delivery'
                                                                                                     ){%>
                                                                                                     <span
                                                                                                         style="color: #ffa500bd">out
                                                                                                         for delivery</span>
                                                                                                     <%}else
-                                                                                                        if(returnedCarts[i].status=='order placed'
+                                                                                                        if(returnedCarts.data[i].status=='order placed'
                                                                                                         ){%>
                                                                                                         <span
                                                                                                             style="color: #00ff1a60">order
                                                                                                             placed</span>
-                                                                                                        <%}else if(returnedCarts[i].status=='returned' ){%>
+                                                                                                        <%}else if(returnedCarts.data[i].status=='returned' ){%>
                                                                                                             <span  style="color:#cc5555 ;">returned</span>
                                                                                                                     <%}%>
         
@@ -763,7 +763,7 @@
         
                                                                                 <td class="remove-col "><button
                                                                                         class="btn-remove"
-                                                                                        onclick="more('<%=returnedCarts[i]._id%>')"><i
+                                                                                        onclick="more('<%=returnedCarts.data[i]._id%>')"><i
                                                                                             class="icon-long-arrow-right"
                                                                                             style="color: rgb(0, 0, 0);"></i></button>
                                                                                 </td>
@@ -777,13 +777,14 @@
         
         
                                                                 </table>
+                                                                <%- include('../partials/pagination', { pagination: allOrders.pagination }) %>
                                                             <%}else{%>
                                                                 <p style="color: grey;padding: 1em; width: 100%;"> No requests ! </p>
                                                             <%}%>
                                                         </div>
                                                         <div class="tab-pane fade" id="contact" role="tabpanel"
                                                             aria-labelledby="contact-tab">
-                                                            <%if(returnedOrders.length > 0){%>
+                                                            <%if(returnedOrders.data.length > 0){%>
                                                                 <table class="table  table-mobile">
                                                                     <thead>
                                                                         <tr>
@@ -803,7 +804,7 @@
                                                                     <tbody>
 
 
-                                                                        <%for(let order of returnedOrders){%>
+                                                                        <%for(let order of returnedOrders.data){%>
         
         
                                                                             <tr>
@@ -839,6 +840,7 @@
     
     
                                                                 </table>
+                                                                 <%- include('../partials/pagination', { pagination: allOrders.pagination }) %>
                                                             <%}else{%>
                                                                 <p style="color: grey;padding: 1em; width: 100%;"> No requests ! </p>
                                                             <%}%>
@@ -892,7 +894,7 @@
                                                             <tbody>
 
 
-                                                                <%for(let order of cancelledOrders){%>
+                                                                <%for(let order of cancelledOrders.data){%>
 
 
                                                                     <tr>
@@ -961,6 +963,8 @@
 
 
                                                         </table><!-- End .table table-wishlist -->
+
+                                                        <%- include('../partials/pagination', { pagination: allOrders.pagination }) %>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1089,43 +1093,43 @@
                         
                                                                             <h3 class="product-title ">
                                                                                 <a
-                                                                                    href="/admin/productDetails?id= <%=orders[i].product[0].productDetails.productName%>">
-                                                                                    <%=orders[i]._id%>
+                                                                                    href="/admin/productDetails?id= <%=orders.data[i].product[0].productDetails.productName%>">
+                                                                                    <%=orders.data[i]._id%>
                                                                                 </a>
                                                                             </h3>
                                                                         </div>
                                                                     </td>
                                                                     <td class="price-col ">
-                                                                        <%=orders[i].shippingAddress.firstName%>
-                                                                            <%=orders[i].shippingAddress.lastName%>
-                                                                                (<%=orders[i].userId%>)
+                                                                        <%=orders.data[i].shippingAddress.firstName%>
+                                                                            <%=orders.data[i].shippingAddress.lastName%>
+                                                                                (<%=orders.dat[i].userId%>)
                                                                     </td>
                                                                     <td class="price-col ">
-                                                                        pin: <%=orders[i].shippingAddress.pinCode%>,<br>
-                                                                            mob: <%=orders[i].shippingAddress.mobile%>, <br>
-                                                                                place: <%=orders[i].shippingAddress.state%>,
-                                                                                    <%=orders[i].shippingAddress.district%>,
-                                                                                        <%=orders[i].shippingAddress.place%>
+                                                                        pin: <%=orders.dat[i].shippingAddress.pinCode%>,<br>
+                                                                            mob: <%=orders.dat[i].shippingAddress.mobile%>, <br>
+                                                                                place: <%=orders.data [i].shippingAddress.state%>,
+                                                                                    <%=orders.data[i].shippingAddress.district%>,
+                                                                                        <%=orders.data[i].shippingAddress.place%>
                                                                     </td>
                                                                     <td class="price-col">
-                                                                        Rs. <%=orders[i].grandTotalPrice%>
+                                                                        Rs. <%=orders.data[i].grandTotalPrice%>
                                                                     </td>
                                                                     <td class="price-col" data-date="<%= orders[i].createdAt %>">
                                                                         <span class="formatted-date"></span>
                                                                     </td>
                                                                     <td class="price-col">
-                                                                        <select name="orderStatus" id="orderStatus-<%=orders[i]._id%>"
+                                                                        <select name="orderStatus" id="orderStatus-<%=orders.data [i]._id%>"
                                                                             class="form-control" required
                                                                             onchange="updateOrderStatus('<%= orders[i]._id %>')"
                                                                             style="padding: 0;">
-                                                                            <option value="delivered" <%=orders[i].status==='delivered'
+                                                                            <option value="delivered" <%=orders.data  [i].status==='delivered'
                                                                                 ? 'selected' : '' %>>delivered</option>
                                                                             <option value="out for delivery"
-                                                                                <%=orders[i].status==='out for delivery' ? 'selected' : '' %>
+                                                                                <%=orders.data[i].status==='out for delivery' ? 'selected' : '' %>
                                                                                 >out for delivery</option>
-                                                                            <option value="shipped" <%=orders[i].status==='shipped' ? 'selected'
+                                                                            <option value="shipped" <%=orders.data[i].status==='shipped' ? 'selected'
                                                                                 : '' %>>shipped</option>
-                                                                            <option value="order placed" <%=orders[i].status==='order placed'
+                                                                            <option value="order placed" <%=orders.dat[i].status==='order placed'
                                                                                 ? 'selected' : '' %>
                                                                                 >order placed</option>
                                                                         </select>
@@ -1134,7 +1138,7 @@
                         
                         
                                                                     <td class="remove-col "><button class="btn-remove"
-                                                                            onclick="more('<%=orders[i]._id%>')"><i
+                                                                            onclick="more('<%=orders.data [i]._id%>')"><i
                                                                                 class="icon-long-arrow-right"
                                                                                 style="color: rgb(0, 0, 0);"></i></button></td>
                                                                 </tr>
