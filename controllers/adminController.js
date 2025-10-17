@@ -1,7 +1,7 @@
 const User = require("../model/userModel");
 const Order = require("../model/orderModel");
 const Product = require("../model/productModel");
-const { paginate } = require("../utils/paginate");
+const paginate = require("../utils/paginate");
 
 const adminDashboard = async (req, res) => {
   try {

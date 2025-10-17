@@ -1,4 +1,4 @@
-export const paginate = async (Model, query = {}, options = {}) => {
+const paginate = async (Model, query = {}, options = {}) => {
   const page = parseInt(options.page) || 1;
   const limit = parseInt(options.limit) || 10;
   const sort = options.sort || { createdAt: -1 };
@@ -25,3 +25,5 @@ export const paginate = async (Model, query = {}, options = {}) => {
     }
   };
 };
+
+module.exports = paginate
