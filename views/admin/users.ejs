@@ -445,3 +445,45 @@
     <!-- molla/cart.html  22 Nov 2019 09:55:06 GMT -->
 
     </html>
+
+    <script>
+  function status(stat, col) {
+    const row = document.getElementById(stat);
+    const cells = row.getElementsByTagName('td');
+    const isBlocked = cells[0].style.color === 'red';
+    const action = isBlocked ? 'unblock' : 'block';
+
+    // 🟢 Ask for confirmation first
+    const confirmed = confirm(`Are you sure you want to ${action.toUpperCase()} this user?`);
+    if (!confirmed) return; // stop if cancelled
+
+    for (let i = 0; i < cells.length; i++) {
+      // Update color instantly for UX feedback
+      cells[i].style.color = isBlocked ? 'black' : 'red';
+    }
+
+    const url = `/admin/${isBlocked ? 'unblock' : 'block'}`;
+
+    fetch(url, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: stat })
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error('Request failed');
+        console.log(`${action.toUpperCase()} request succeeded`);
+      })
+      .catch((error) => {
+        console.error(error);
+        // revert UI if error occurs
+        for (let i = 0; i < cells.length; i++) {
+          cells[i].style.color = isBlocked ? 'red' : 'black';
+        }
+        alert(`Failed to ${action} user.`);
+      });
+  }
+
+  function dashboard() {
+    window.location.href = '/admin/dashboard';
+  }
+</script>

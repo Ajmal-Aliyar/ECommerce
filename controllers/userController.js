@@ -209,50 +209,56 @@ const sendOTP = async (email, otp) => {
 
 
 const insertUser = async (req, res) => {
-    try {
-        userdata.username = req.body.username
-        userdata.userEmail = req.body.userEmail
-        userdata.userMobile = req.body.userMobile
-
-        const { username, userEmail, userMobile, userPassword } = req.body
-        email = userEmail
-        const usernameExists = await checkUsernameExists(userEmail);
-        if (username.length < 3) {
-            return res.render('signUp', { message: 'Username should contain a minimum of three characters' })
-        } else if (userEmail.split('@')[1] !== 'gmail.com') {
-            return res.render('signUp', { message: 'Enter a valid email' })
-        } else if (userMobile.toString().length != 10) {
-            return res.render('signUp', { message: 'Mobile number is not valid' })
-        } else if (userPassword.length < 8) {
-            return res.render('signUp', { message: 'User password is not strong !' })
-        } else if (usernameExists) {
-            return res.render('signUp', { message: 'User already exists. Please choose another.' });
-        } else {
-            otp = generateOTP()
-            userdata.otp = otp
-            console.log("OTP = ", otp);
-            const otpSent = await sendOTP(userEmail, otp)
-
-            if (!otpSent) {
-                throw new Error('Failed to send OTP');
-            } else {
-                res.redirect('/otpVerification')
-            }
-            const hashedPassword = await hashPassword(userPassword)
-            user = new userModel({
-                username,
-                userEmail,
-                userMobile,
-                userPassword: hashedPassword,
-                isBlocked: 0,
-            })
-        }
-
-
-    } catch (error) {
-        console.error(error.message);
+  try {
+    const { username, userEmail, userMobile, userPassword } = req.body;
+    userdata.username = username;
+    userdata.userEmail = userEmail;
+    userdata.userMobile = userMobile;
+    const usernameExists = await checkUsernameExists(userEmail);
+    if (username.trim().length < 3) {
+      return res.render('signUp', { message: 'Username should contain at least 3 characters' });
     }
-}
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(userEmail)) {
+        return res.render('signUp', { message: 'Enter a valid email address' });
+    }
+    const mobileRegex = /^[0-9]{10}$/;
+    if (!mobileRegex.test(userMobile)) {
+        return res.render('signUp', { message: 'Mobile number must be 10 digits' });
+    }
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    if (!passwordRegex.test(userPassword)) {
+        return res.render('signUp', {
+            message:
+            'Password must be at least 8 characters long, include uppercase, lowercase, number, and special character',
+        });
+    }
+    if (usernameExists) {
+      return res.render('signUp', { message: 'User already exists. Please choose another.' });
+    }
+    otp = generateOTP();
+    userdata.otp = otp;
+    console.log('OTP = ', otp);
+
+    const otpSent = await sendOTP(userEmail, otp);
+    if (!otpSent) {
+      throw new Error('Failed to send OTP');
+    }
+    const hashedPassword = await hashPassword(userPassword);
+    user = new userModel({
+      username,
+      userEmail,
+      userMobile,
+      userPassword: hashedPassword,
+      isBlocked: 0,
+    });
+    res.redirect('/otpVerification');
+  } catch (error) {
+    console.error(error.message);
+    res.render('signUp', { message: error.message });
+  }
+};
+
 const verifyOtp = async (req, res) => {
     try {
         console.log(userdata.email);

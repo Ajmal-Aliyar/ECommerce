@@ -86,9 +86,9 @@
 
 
                                 <tbody>
-                                    <%for(let i =0 ;i < coupons.length;i++){%>
+                                    <%for(let i =0 ;i < coupons.data.length;i++){%>
                                        
-                                        <%if(coupons[i].couponHide==true){%>
+                                        <%if(coupons.data[i].couponHide==true){%>
                                             <%if(0==(i%2)){%>
                                                 <tr style="background-color: #e9e4e4a4;">
                                                     <td class="product-col" >
@@ -101,28 +101,28 @@
 
                                                         <h3 class="product-title res">
                                                             <a href="#">
-                                                                <%=coupons[i].couponCode%>
+                                                                <%=coupons.data[i].couponCode%>
                                                             </a>
                                                         </h3><!-- End .product-title -->
                                                     </div><!-- End .product -->
                                                 </td>
                                                 <td class="price-col res">
-                                                    <%=coupons[i].couponStart%>>
+                                                    <%=coupons.data[i].couponStart%>>
                                                 </td>
                                                 <td class="total-col res">
-                                                    <%=coupons[i].couponExpire%>
+                                                    <%=coupons.data[i].couponExpire%>
                                                 </td>
                                                 <td class=" total-col res">
-                                                    <%=coupons[i].minimumAmount%>/-
+                                                    <%=coupons.data[i].minimumAmount%>/-
                                                 </td>
                                                 <td class="price-col res">
-                                                    <%=coupons[i].couponLimit%>
+                                                    <%=coupons.data[i].couponLimit%>
                                                 </td>
                                                 <td class="total-col res">
-                                                    <%=coupons[i].couponDiscount%>
+                                                    <%=coupons.data[i].couponDiscount%>
                                                 </td>
                                                 <td class="remove-col "><button class="btn-remove"
-                                                        onclick="edit('<%=coupons[i]._id%>')"><i
+                                                        onclick="edit('<%=coupons.data[i]._id%>')"><i
                                                             class="icon-long-arrow-right"
                                                             style="color: rgb(250, 5, 5);"></i></button></td>
                                             </tr>
@@ -139,28 +139,28 @@
                                                     
                                                 <h3 class="product-title " >
                                                     <a href="#">
-                                                        <%=coupons[i].couponCode%>
+                                                        <%=coupons.data[i].couponCode%>
                                                     </a>
                                                 </h3><!-- End .product-title -->
                                             </div><!-- End .product -->
                                         </td>
                                         <td class="price-col " >
-                                            <%=coupons[i].couponStart%>
+                                            <%=coupons.data[i].couponStart%>
                                         </td>
                                         <td class="price-col ">
-                                            <%=coupons[i].couponExpire%>
+                                            <%=coupons.data[i].couponExpire%>
                                         </td>
                                         <td class=" price-col ">
-                                            <%=coupons[i].minimumAmount%>/-
+                                            <%=coupons.data[i].minimumAmount%>/-
                                         </td>
                                         <td class="price-col">
-                                            <%=coupons[i].couponLimit%>
+                                            <%=coupons.data[i].couponLimit%>
                                         </td>
                                         <td class="price-col ">
-                                            <%=coupons[i].couponDiscount%>
+                                            <%=coupons.data[i].couponDiscount%>
                                         </td>
                                                     <td class="remove-col "><button class="btn-remove"
-                                                            onclick="edit('<%=coupons[i]._id%>')"><i
+                                                            onclick="edit('<%=coupons.data[i]._id%>')"><i
                                                                 class="icon-long-arrow-right"
                                                                 style="color: rgb(0, 0, 0);"></i></button></td>
                                                 </tr>
@@ -171,7 +171,7 @@
 
 
                             </table><!-- End .table table-wishlist -->
-
+                            <%- include('../partials/pagination', { pagination: coupons.pagination }) %>
 
                         </div><!-- End .col-lg-9 -->
 
